@@ -1,4 +1,4 @@
-# pyrhate
+# pyrathe
 python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardkorebob/tinywm) {in: scrot below}
 
 THIS IS NOT A TEXT EDITOR
