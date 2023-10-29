@@ -6,9 +6,8 @@
 # ratde.py: Rapid App & Text Dev Env
 # codwolf_Software HARDKOREBOB.github.io
 # Warranty: FREE WARRANTY 4 LIFE
-# License: This software is provided under PRIVATE LICENSE
-# PyRathe v.0(python rapid app & txt handling env by RoberRodri hardkorebob@gmail.com <customer service is NOT free>
-import tkinter as tk
+# License: This software is provided under PRIVATE LICENSE.
+# PyRathe v.0(python rapid app & txt handling env
 import tkinter.ttk as ttk
 import tkinter.font as font
 import threading, os, sys, re, time, datetime, subprocess
