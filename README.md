@@ -1,5 +1,5 @@
 # pyrhate
-python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardkorebob/tinywm)
+python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardkorebob/tinywm) {in: scrot belo}
 
 THIS IS NOT A TEXT EDITOR
 
