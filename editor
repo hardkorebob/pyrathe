@@ -24,9 +24,9 @@ class App:
         self.root.pack(fill=tk.BOTH, expand=1)
         self.zkr_init()
         self.setup_keybindings()
-        self.style.configure("TNotebook", background="#000");
-        self.style.map("TNotebook.Tab", background=[("selected", "#000")], foreground=[("selected", "orange")]);
-        self.style.configure("TNotebook.Tab", background="#000", foreground="#000");
+        self.style.configure("TNotebook", background="#696969");
+        self.style.map("TNotebook.Tab", background=[("selected", "#696969")], foreground=[("selected", "orange")]);
+        self.style.configure("TNotebook.Tab", background="#696969", foreground="#000");
     def setup_keybindings(self):
         # defaults
         # ctrl t = transpose char
@@ -84,12 +84,12 @@ class App:
         self.horizontal_split.grid(row=1, column=0, sticky='nsew') 
         self.primary_frame.grid_columnconfigure(0, weight=1)
         self.primary_frame.grid_rowconfigure(1, weight=1)
-        self.term2 = tk.Frame(self.horizontal_split, bg="#000", relief=tk.FLAT, width=900)
+        self.term2 = tk.Frame(self.horizontal_split, bg="#000", relief=tk.FLAT, width=900, bd=0)
         self.term2.grid(row=0, column=0, sticky='nsew')
         wid = self.term2.winfo_id()
         os.system('xterm -into %d -geometry 150x50 &' % wid)
         self.horizontal_split.add(self.term2)
-        self.term = tk.Frame(self.horizontal_split, bg="#000", relief=tk.FLAT, width=900)
+        self.term = tk.Frame(self.horizontal_split, bg="#000", relief=tk.FLAT, width=900, bd=0)
         self.term.grid(row=0, column=0, sticky='nsew')
         wid = self.term.winfo_id()
         os.system('xterm -into %d -geometry 150x50 -e python3 &' % wid)
@@ -136,28 +136,28 @@ class App:
         self.progress_var = tk.DoubleVar()
         self.progress_bar = ttk.Progressbar(self.status_bar, variable=self.progress_var, maximum=20*60, mode='determinate')
         self.progress_bar.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
-        self.timer_label = tk.Label(self.status_bar, text='20:00', bg=self.theme_bg, fg="#089143")
+        self.timer_label = tk.Label(self.status_bar, text='20:00', bg="#000", fg="#089143")
         self.timer_label.grid(row=0, column=1, padx=2, pady=2)
         self.start_button_20min = tk.Button(self.status_bar, text="Work", command=self.start_timer, takefocus=False, bg="#089143", fg="orange")
         self.start_button_20min.grid(row=0, column=2, padx=5, pady=5)
         self.progress_var_5min = tk.DoubleVar()
         self.progress_bar_5min = ttk.Progressbar(self.status_bar, variable=self.progress_var_5min, maximum=5*60, mode='determinate')
         self.progress_bar_5min.grid(row=0, column=5, padx=10, pady=10, sticky='nsew')
-        self.timer_label_5min = tk.Label(self.status_bar, text='05:00', bg=self.theme_bg, fg="#910813")
+        self.timer_label_5min = tk.Label(self.status_bar, text='05:00', bg="#000", fg="#910813")
         self.timer_label_5min.grid(row=0, column=4, padx=2, pady=2)
-        self.start_button_5min = tk.Button(self.status_bar, text="Break", command=self.start_timer_5min, takefocus=False, bg="#910813", fg="orange")
+        self.start_button_5min = tk.Button(self.status_bar, text="Break", command=self.start_timer_5min, takefocus=False, bg="red", fg="black")
         self.start_button_5min.grid(row=0, column=3, padx=2, pady=2)      
         self.cpos = tk.Label(self.status_bar, text='1,0', bg="#000", fg="orange", width=14)
         self.cpos.grid(row=0, column=6, padx=2, pady=2)
         self.gridr_label = tk.Label(self.status_bar, text='R', bg="#000", fg="#d9d9d9")
         self.gridr_label.grid(row=0, column=7, padx=2, pady=8)    
         self.row_var = tk.StringVar()
-        self.gridr_entry = tk.Entry(self.status_bar, relief=tk.FLAT, width=3, bg="#000", fg="red", textvariable=self.row_var)
+        self.gridr_entry = tk.Entry(self.status_bar, relief=tk.FLAT, width=3, bg="#000", fg="red", textvariable=self.row_var, cursor="target")
         self.gridr_entry.grid(row=0, column=8, padx=2, pady=5)
         self.gridc_label = tk.Label(self.status_bar, text='C', bg="#000", fg="#d9d9d9")
         self.gridc_label.grid(row=0, column=9, padx=2, pady=8)
         self.col_var = tk.StringVar()
-        self.gridc_entry = tk.Entry(self.status_bar, relief=tk.FLAT, width=3, bg="#000", fg="orange", textvariable=self.col_var)
+        self.gridc_entry = tk.Entry(self.status_bar, relief=tk.FLAT, width=3, bg="#000", fg="orange", textvariable=self.col_var, cursor="target")
         self.gridc_entry.grid(row=0, column=10, padx=2, pady=5)     
     def start_timer(self):
         self.start_time = time.time()
@@ -272,72 +272,3 @@ if __name__ == "__main__":
     root.title("#$%&*^  [Zettlekastenrhok]    (PyRathe) {#allerrorsmatter #0xfu #dfc #ghd #rthade}")
     app = App(root)
     root.mainloop()
-#$%&*^ 21:26 cat /usr/local/bin/editor
-#$%&*^ 11:21 cat /usr/local/bin/editor
-#$%&*^ 11:50 cat editor
-#$%&*^ 11:53 cat editor
-#$%&*^ 12:01 cat s0
-#$%&*^ 12:06 cat editor
-#$%&*^ 12:11 cat editor
-#$%&*^ 13:15 cat editor
-#$%&*^ 13:16 cat editor
-#$%&*^ 13:17 cat editor
-#$%&*^ 13:26 cat editor
-#$%&*^ 14:51 cat editor
-#$%&*^ 14:55 cat editor
-#$%&*^ 15:41 cat /usr/local/bin/editor
-#$%&*^ 15:50 cat editor
-#$%&*^ 17:40 cat editor
-#$%&*^ 17:47 cat editor
-#$%&*^ 18:41 cat editor
-#$%&*^ 18:45 cat /usr/local/bin/editor
-#$%&*^ 18:46 cat editor
-#$%&*^ 18:48 cat editor > /usr/local/bin/editor
-#$%&*^ 19:34 cat editor
-#$%&*^ 19:47 cat editor
-#$%&*^ 19:49 cat editor
-#$%&*^ 22:11 cat editor
-#$%&*^ 22:21 cat editor
-#$%&*^ 22:24 cat editor
-#$%&*^ 22:37 cat editor
-#$%&*^ 22:45 cat editor
-#$%&*^ 22:46 cat editor
-#$%&*^ 22:48 cat editor
-#$%&*^ 22:51 cat editor
-#$%&*^ 22:53 cat editor
-#$%&*^ 22:56 cat s1
-#$%&*^ 22:58 cat s1
-#$%&*^ 23:01 cat editor
-#$%&*^ 23:05 cat /usr/local/bin/editor
-#$%&*^ 23:19 cat editor
-#$%&*^ 23:21 cat editor
-#$%&*^ 23:24 cat editor
-#$%&*^ 23:25 cat editor
-#$%&*^ 23:27 cat editor
-#$%&*^ 23:29 cat editor
-#$%&*^ 23:35 cat editor
-#$%&*^ 23:39 cat editor
-#$%&*^ 23:51 cat s1
-#$%&*^ 23:53 cat s1
-#$%&*^ 00:00 cat editor
-#$%&*^ 00:01 cat editor
-#$%&*^ 00:03 cat editor
-#$%&*^ 00:05 cat editor
-#$%&*^ 00:10 cat editor
-#$%&*^ 00:16 cat editor
-#$%&*^ 00:17 cat editor
-#$%&*^ 00:23 cat editor
-#$%&*^ 00:24 cat editor
-#$%&*^ 00:25 cat editor
-#$%&*^ 00:26 cat editor
-#$%&*^ 00:30 cat editor
-#$%&*^ 00:33 cat editor
-#$%&*^ 00:46 cat editor
-#$%&*^ 00:47 cat editor
-#$%&*^ 00:48 cat editor
-#$%&*^ 00:52 cat editor
-#$%&*^ 01:20 cat editor
-#$%&*^ 01:23 cat editor
-#$%&*^ 01:24 cat editor
-
-#$%&*^ 02:31 cat editor
