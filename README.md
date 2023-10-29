@@ -1,5 +1,5 @@
 # pyrhate
-python rapid app &amp; txt handling env
+python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardkorebob/tinywm)
 
 ![scrot](https://github.com/hardkorebob/pyrhate/blob/main/scrot.png)
 
