@@ -10,9 +10,8 @@
 # PyRathe v.0(python rapid app & txt handling env by RoberRodri hardkorebob@gmail.com <customer service is NOT free>
 import tkinter as tk
 import tkinter.ttk as ttk
-import subprocess
 import tkinter.font as font
-import threading, os, sys, re, time, datetime
+import threading, os, sys, re, time, datetime, subprocess
 from idlelib.percolator import Percolator
 from idlelib.colorizer import ColorDelegator
 class App:
