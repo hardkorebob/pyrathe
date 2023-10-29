@@ -6,10 +6,10 @@ python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardko
 github.com/AlDanial/cloc v 1.94  T=0.02 s (47.3 files/s, 15756.0 lines/s)
 
 
-Language                     files          blank        comment           code
+Language   Python                    files 1          blank 0       comment 81           code 252
 
 
-Python                           1              0             81            252
+                                    
 
 GitHub 274 lines (274 loc) · 14.5 KB
 
