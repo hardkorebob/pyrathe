@@ -23,8 +23,11 @@ Language   Python                    files 1          blank 0       comment 81  
 
 GitHub 274 lines (274 loc) · 14.5 KB
 
+Improvements coming! 🕉🇵🇷🤓
 
-flake8 is flaky (#idgaf)
+🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
+
+flake8 is flaky 😅
 
 editor:10:80: E501 line too long (116 > 79 characters)
 editor:15:17: E401 multiple imports on one line
