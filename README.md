@@ -10,7 +10,9 @@ Depends:
   python-idle : Syntax Highlighting
   
   python-tkinter : GUI Toolkit
-  
+
+---
+
 github.com/AlDanial/cloc v 1.94  T=0.02 s (47.3 files/s, 15756.0 lines/s)
 
 
