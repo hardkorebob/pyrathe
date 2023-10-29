@@ -3,6 +3,10 @@ python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardko
 
 THIS IS NOT A TEXT EDITOR
 
+Runs on OpenBSD74, Mint, Chimera(musl) & Kali Linux.
+
+🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
+
 ![scrot](https://github.com/hardkorebob/pyrhate/blob/main/scrot.png)
 
 Depends:
