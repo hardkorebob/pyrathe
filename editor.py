@@ -89,7 +89,7 @@ class App:
         wid = self.term2.winfo_id()
         os.system('xterm -into %d -geometry 150x50 &' % wid)
         self.horizontal_split.add(self.term2)
-        self.term = tk.Frame(self.horizontal_split, bg="#000", relief=tk.FLAT, width=900, bd=0)
+        self.term = tk.Frame(self.horizontal_split, bg="#000", relief=tk.FLAT, width=400, bd=0)
         self.term.grid(row=0, column=0, sticky='nsew')
         wid = self.term.winfo_id()
         os.system('xterm -into %d -geometry 150x50 -e python3 &' % wid)
