@@ -122,29 +122,31 @@ class App:
 
     def add_py_tab(self, event=None):
         self.py_frame = tk.Frame(self.paned, bg="black")
-        self.py_frame.grid(row=0, column=0, sticky='nsew')
-        wid = self.py_frame.winfo_id()
-        os.system('xterm -into %d -geometry 100x50 -e python3 &' % wid)
         self.py_frame.columnconfigure(0, weight=1)
         self.py_frame.rowconfigure(0, weight=1)
-        self.txtPad_frames.append(self.py_frame)
+        self.py_frame.grid(row=0, column=0, sticky='nsew')
+
+        wid = self.py_frame.winfo_id()
+        py_xterm = os.system('xterm -into %d -geometry 100x50 -e python3 &' % wid)
+        self.txtPad_frames.append((self.py_frame, py_xterm))
         self.paned.add(self.py_frame)
 
     def add_term_tab(self, event=None):
         self.term_frame = tk.Frame(self.paned, bg="black")
-        self.term_frame.grid(row=0, column=0, sticky='nsew')
-        wid = self.term_frame.winfo_id()
-        os.system('xterm -into %d -geometry 100x50 &' % wid)
         self.term_frame.columnconfigure(0, weight=1)
         self.term_frame.rowconfigure(0, weight=1)
-        self.txtPad_frames.append(self.term_frame)
+        self.term_frame.grid(row=0, column=0, sticky='nsew')
+
+        wid = self.term_frame.winfo_id()
+        xterm = os.system('xterm -into %d -geometry 100x50 &' % wid)
+        self.txtPad_frames.append((self.term_frame, xterm))
         self.paned.add(self.term_frame)
 
     def del_new_tab(self, event=None):
         if self.txtPad_frames:
             last_frame, last_txtPad = self.txtPad_frames.pop()
             self.paned.forget(last_frame)
-            last_frame.forget()
+            last_frame.destroy()
         return "break"
 
     def update_cursor_position(self, event):
@@ -280,6 +282,7 @@ if __name__ == "__main__":
 #$%&*^ 14:11 cat me.py
 #$%&*^ 14:12 cat me.py
 #$%&*^ 14:14 cat me.py
+
 #$%&*^ 14:15 cat me.py
 #$%&*^ 14:18 cat me.py
 #$%&*^ 14:19 cat me.py
@@ -292,6 +295,7 @@ if __name__ == "__main__":
 #$%&*^ 14:24 cat me.py
 #$%&*^ 14:25 cat me.py
 #$%&*^ 14:26 cat me.py
+
 #$%&*^ 14:27 cat me.py
 #$%&*^ 14:28 cat me.py
 #$%&*^ 14:28 cat me.py
@@ -319,4 +323,8 @@ if __name__ == "__main__":
 #$%&*^ 18:03 cat me.py
 #$%&*^ 18:06 cat me.py
 #$%&*^ 18:08 cat me.py
-#$%&*^ 18:09 cat me.py
+#$%&*^ 18:10 cat me.py
+#$%&*^ 18:19 cat me.py
+#$%&*^ 18:21 cat me.py
+#$%&*^ 18:24 cat me.py
+#$%&*^ 18:25 cat me.py
