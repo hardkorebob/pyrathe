@@ -68,7 +68,7 @@ editor:110:46: W291 trailing whitespace
 editor:115:80: E501 line too long (245 > 79 characters)
 editor:122:5: E301 expected 1 blank line, found 0
 editor:123:80: E501 line too long (99 > 79 characters)
-editor:123:100: W291 trailing whitespace
+editor:123:100 W291 trailing whitespace
 editor:137:80: E501 line too long (123 > 79 characters)
 editor:138:80: E501 line too long (80 > 79 characters)
 editor:139:80: E501 line too long (91 > 79 characters)
