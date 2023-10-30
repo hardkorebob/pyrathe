@@ -21,8 +21,7 @@ class App:
         self.root.columnconfigure(1, weight=1)
         self.root.rowconfigure(0, weight=0)
         self.root.rowconfigure(1, weight=1)
-        self.root.rowconfigure(2, weight=1)
-
+        self.root.rowconfigure(2, weight=0)
         self.font = font.nametofont("TkFixedFont")
         self.font.configure(size=11)
         self.pyrathe_init()
@@ -42,6 +41,7 @@ class App:
         # ctrl a = begin of line
         # ctrl o = add a newline
         # ctrl y = paste
+
         self.root.bind_all("<Control-l>", self.clear_buffer)
         self.root.bind_all("<Control-s>", self.save_focused_to_file)
         self.root.bind_all("<Control-S>", self.save_me_to_file)
@@ -54,7 +54,6 @@ class App:
         self.root.bind_all("<Control-Alt-a>", self.select_all_text)
         self.root.bind_all('<ButtonRelease-1>', self.update_cursor_position)
         self.root.bind_all("<KeyRelease>", self.update_cursor_position)
-        self.root.bind_all('<MouseWheel>', self.update_cursor_position)
         self.root.bind_all("<Control-r>", self.rss_program)
         self.root.bind_all("<Control-Q>", self.quit_program)
         self.root.bind_all("<Control-D>", self.add_new_tab)
@@ -67,16 +66,15 @@ class App:
     def pyrathe_init(self):
         self.s_name = 0
         self.s_filetype = "_txt"
+        self.txtPad_frames = []
         self.create()
         self.timeline()
-        self.txtPad_frames = []
 
     def create(self):
         self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10, pady=15)
         self.msgBarFrame.rowconfigure(1, weight=0)
         self.msgBarFrame.columnconfigure(0, weight=1)
         self.msgBarFrame.grid(row=0, column=0, sticky='nsew', columnspan=2)
-
         self.msgBar = tk.Text(self.msgBarFrame, fg="red", bg="black", relief=tk.FLAT, highlightcolor="red", insertbackground="orange", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=4)
         self.msgBar.grid(row=1, column=0, sticky='nsew')
 
@@ -84,18 +82,17 @@ class App:
         self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(1, weight=1)
         self.lineFrame.grid(row=1, column=0, sticky='nsew')
-
         self.line_numbers = tk.Text(self.lineFrame, width=5, relief=tk.FLAT, bg="#000", fg="#666", font=self.font, highlightbackground="black", cursor="spider")
         self.line_numbers.grid(row=0, column=0, sticky='nsew')
 
-        self.paned = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashrelief=tk.RAISED, sashwidth=10, cursor="spider", bg="black")
+        self.paned = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashrelief=tk.RAISED, sashwidth=10, cursor="target", bg="black")
         self.paned.rowconfigure(0, weight=1)
-        self.paned.columnconfigure(1, weight=1)
-        self.paned.grid(row=1, column=1, sticky='nsew', columnspan=2)
+        self.paned.columnconfigure(0, weight=1)
+        self.paned.grid(row=1, column=1, sticky='nsew')
 
         self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=5)
-        self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.rowconfigure(0, weight=1)
+        self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky='nsew')
 
         self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="#666", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
@@ -104,12 +101,24 @@ class App:
         self.txtPad.focus_set()
         self.paned.add(self.mainTxtFrame)
 
-        self.cposFrame = tk.Frame(self.root, bg="black", pady=5)
+        self.cposFrame = tk.Frame(self.root, bg="black", pady=15)
         self.cposFrame.rowconfigure(0, weight=1)
         self.cposFrame.columnconfigure(0, weight=1)
         self.cposFrame.grid(row=2, column=1, sticky='nsew', columnspan=2)
         self.cpos = tk.Label(self.cposFrame, text='1,0', bg="black", fg="#777", font=self.font)
         self.cpos.grid(row=0, column=0, sticky='sw')
+
+    def add_new_tab(self, event=None):
+        self.new_frame = tk.Frame(self.paned, bg="black")
+        self.new_frame.columnconfigure(0, weight=1)
+        self.new_frame.rowconfigure(0, weight=1)
+        self.new_frame.grid(row=0, column=0, sticky='nsew')
+
+        self.new_txtPad = tk.Text(self.new_frame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
+        self.new_txtPad.grid(row=0, column=0, sticky='nsew')
+        self.paned.add(self.new_frame)
+        self.txtPad_frames.append((self.new_frame, self.new_txtPad))
+        self.new_txtPad.focus_set()
 
     def add_py_tab(self, event=None):
         self.py_frame = tk.Frame(self.paned, bg="black")
@@ -131,22 +140,11 @@ class App:
         self.txtPad_frames.append(self.term_frame)
         self.paned.add(self.term_frame)
 
-    def add_new_tab(self, event=None):
-        self.new_frame = tk.Frame(self.paned, bg="black")
-        self.new_frame.grid(row=0, column=0, sticky='nsew')
-        self.new_txtPad = tk.Text(self.new_frame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
-        self.new_txtPad.grid(row=0, column=1, sticky='nsew')
-        self.new_frame.columnconfigure(0, weight=1)
-        self.new_frame.rowconfigure(0, weight=1)
-        self.paned.add(self.new_frame)
-        self.txtPad_frames.append((self.new_frame, self.new_txtPad))
-        self.new_txtPad.focus_set()
-
     def del_new_tab(self, event=None):
         if self.txtPad_frames:
             last_frame, last_txtPad = self.txtPad_frames.pop()
             self.paned.forget(last_frame)
-            last_frame.destroy()
+            last_frame.forget()
         return "break"
 
     def update_cursor_position(self, event):
@@ -157,10 +155,10 @@ class App:
             self.cpos.configure(text=f"{line},{col}")
             self.line_numbers.configure(state='normal')
             self.line_numbers.delete('1.0', tk.END)
-            first, last = self.txtPad.yview()
+            first, last = focused.yview()
 
-            first_line = int(first * float(self.txtPad.index('end').split('.')[0]))
-            last_line = int(last * float(self.txtPad.index('end').split('.')[0]))
+            first_line = int(first * float(focused.index('end').split('.')[0]))
+            last_line = int(last * float(focused.index('end').split('.')[0]))
 
             line_numbers = "\n".join(str(i) for i in range(first_line+1, last_line))
             self.line_numbers.insert('1.0', line_numbers)
@@ -282,7 +280,6 @@ if __name__ == "__main__":
 #$%&*^ 14:11 cat me.py
 #$%&*^ 14:12 cat me.py
 #$%&*^ 14:14 cat me.py
-
 #$%&*^ 14:15 cat me.py
 #$%&*^ 14:18 cat me.py
 #$%&*^ 14:19 cat me.py
@@ -295,7 +292,6 @@ if __name__ == "__main__":
 #$%&*^ 14:24 cat me.py
 #$%&*^ 14:25 cat me.py
 #$%&*^ 14:26 cat me.py
-
 #$%&*^ 14:27 cat me.py
 #$%&*^ 14:28 cat me.py
 #$%&*^ 14:28 cat me.py
@@ -308,3 +304,19 @@ if __name__ == "__main__":
 #$%&*^ 14:41 cat me.py
 #$%&*^ 14:41 cat me.py
 #$%&*^ 14:43 cat me.py
+#$%&*^ 14:51 cat me.py
+#$%&*^ 17:46 cat me.py
+#$%&*^ 17:50 cat me.py
+#$%&*^ 17:53 cat me.py
+#$%&*^ 17:54 cat me.py
+#$%&*^ 17:54 cat me.py
+#$%&*^ 17:56 cat me.py
+#$%&*^ 17:57 cat me.py
+#$%&*^ 17:58 cat me.py
+#$%&*^ 18:00 cat me.py
+#$%&*^ 18:00 cat me.py
+#$%&*^ 18:01 cat me.py
+#$%&*^ 18:03 cat me.py
+#$%&*^ 18:06 cat me.py
+#$%&*^ 18:08 cat me.py
+#$%&*^ 18:09 cat me.py
