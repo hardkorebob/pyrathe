@@ -98,7 +98,7 @@ class App:
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky='nsew')
 
-        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
+        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap='none', relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
         Percolator(self.txtPad).insertfilter(ColorDelegator())
         self.txtPad.grid(row=0, column=0, sticky='nsew')
         self.txtPad.focus_set()
@@ -131,15 +131,15 @@ class App:
         self.paned.add(self.term_frame)
 
     def add_new_tab(self, event=None):
-        new_frame = tk.Frame(self.paned, bg="black")
-        new_frame.grid(row=0, column=0, sticky='nsew')
-        new_txtPad = tk.Text(new_frame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
-        new_txtPad.grid(row=0, column=1, sticky='nsew')
-        new_frame.columnconfigure(0, weight=1)
-        new_frame.rowconfigure(0, weight=1)
-        self.paned.add(new_frame)
-        self.txtPad_frames.append((new_frame, new_txtPad))
-        new_txtPad.focus_set()
+        self.new_frame = tk.Frame(self.paned, bg="black")
+        self.new_frame.grid(row=0, column=0, sticky='nsew')
+        self.new_txtPad = tk.Text(self.new_frame, fg="orange", bg="black", wrap='none', relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
+        self.new_txtPad.grid(row=0, column=1, sticky='nsew')
+        self.new_frame.columnconfigure(0, weight=1)
+        self.new_frame.rowconfigure(0, weight=1)
+        self.paned.add(self.new_frame)
+        self.txtPad_frames.append((self.new_frame, self.new_txtPad))
+        self.new_txtPad.focus_set()
 
     def del_new_tab(self, event=None):
         if self.txtPad_frames:
