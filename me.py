@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Written by Roberto Rodriguez Jr
-# This editor is better than most!
+# This editor rulez!
 import tkinter as tk
 import tkinter.font as font
 import threading
@@ -86,6 +86,13 @@ class App:
         self.msgBar.grid(row=0, column=0, sticky='nsew')
 
     def myTimer(self):
+        self.timerFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
+        self.timerFrame.columnconfigure(0, weight=1)
+        self.timerFrame.rowconfigure(0, weight=1)
+        self.timerFrame.grid(row=0, column=0, sticky='nsew', columnspan=2)
+        self.timerBar = tk.Text(self.timerFrame, fg="green", bg="black", relief=tk.FLAT, highlightcolor="green", insertbackground="green", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=2)
+        self.timerBar.grid(row=0, column=0, sticky='nsew')
+
         self.timerLabelFrame = tk.Frame(self.root, bg="black", padx=10)
         self.timerLabelFrame.rowconfigure(0, weight=1)
         self.timerLabelFrame.columnconfigure(0, weight=1)
@@ -93,7 +100,7 @@ class App:
 
         self.timerLabel = tk.Label(self.timerLabelFrame, bg="black", fg="green", text='000', font=self.font)
         self.timerLabel.grid(row=0, column=0, sticky='sw')
-        self.timeline()
+        self.timelineThread()
 
     def textPad(self):
         self.paned = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashrelief=tk.RAISED, sashwidth=10, cursor="target", bg="black")
@@ -168,13 +175,7 @@ class App:
             last_frame.destroy()
         return "break"
 
-    def timeline(self):
-        self.timerFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
-        self.timerFrame.columnconfigure(0, weight=1)
-        self.timerFrame.rowconfigure(0, weight=1)
-        self.timerFrame.grid(row=0, column=0, sticky='nsew', columnspan=2)
-        self.timerBar = tk.Text(self.timerFrame, fg="green", bg="black", relief=tk.FLAT, highlightcolor="green", insertbackground="green", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=2)
-        self.timerBar.grid(row=0, column=0, sticky='nsew')
+    def timelineThread(self):
         self.char_line = threading.Thread(target=self.update_timeline)
         self.char_line.daemon = True
         self.char_line.start()
@@ -306,3 +307,5 @@ if __name__ == "__main__":
     root.configure(background="black")
     app = App(root)
     root.mainloop()
+
+#$%&*^ 19:57 cat me.py
