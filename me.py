@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # Written by Roberto Rodriguez Jr
+# This editor is better than most!
 import tkinter as tk
 import tkinter.font as font
 import threading
