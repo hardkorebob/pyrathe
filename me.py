@@ -18,10 +18,10 @@ class App:
     def __init__(self, root):
         self.root = root
         self.rootConfig()
+        self.setup_keybindings()
         self.font = font.nametofont("TkFixedFont")
         self.font.configure(size=11)
         self.pyrathe_init()
-        self.setup_keybindings()
 
     def rootConfig(self):
         self.root.columnconfigure(0, weight=0)
@@ -71,11 +71,9 @@ class App:
         self.s_name = 0
         self.s_filetype = "_txt"
         self.txtPad_frames = []
-        self.msgBar()
-        self.lineNumbers()
-        self.textPad()
         self.myTimer()
-        self.cursorPositions()
+        self.msgBar()
+        self.textPad()
 
     def msgBar(self):
         self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10)
@@ -85,24 +83,6 @@ class App:
 
         self.msgBar = tk.Text(self.msgBarFrame, fg="red", bg="black", relief=tk.FLAT, highlightcolor="red", insertbackground="orange", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=6)
         self.msgBar.grid(row=0, column=0, sticky='nsew')
-
-    def lineNumbers(self):
-        self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
-        self.lineFrame.rowconfigure(0, weight=1)
-        self.lineFrame.columnconfigure(1, weight=1)
-        self.lineFrame.grid(row=2, column=0, sticky='nsew')
-
-        self.line_numbers = tk.Text(self.lineFrame, width=5, relief=tk.FLAT, bg="#000", fg="#666", font=self.font, highlightbackground="black", cursor="spider", spacing1=10.5, spacing3=10)
-        self.line_numbers.grid(row=0, column=0, sticky='nsew')
-
-    def cursorPositions(self):
-        self.cposFrame = tk.Frame(self.root, bg="black", padx=10)
-        self.cposFrame.rowconfigure(0, weight=1)
-        self.cposFrame.columnconfigure(0, weight=1)
-        self.cposFrame.grid(row=3, column=1, sticky='sw')
-
-        self.cpos = tk.Label(self.cposFrame, text='1,0', bg="black", fg="#777", font=self.font)
-        self.cpos.grid(row=0, column=0, sticky='sw')
 
     def myTimer(self):
         self.timerLabelFrame = tk.Frame(self.root, bg="black", padx=10)
@@ -131,6 +111,21 @@ class App:
 
         self.paned.add(self.mainTxtFrame)
         self.txtPad.focus_set()
+        self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
+        self.lineFrame.rowconfigure(0, weight=1)
+        self.lineFrame.columnconfigure(1, weight=1)
+        self.lineFrame.grid(row=2, column=0, sticky='nsew')
+
+        self.line_numbers = tk.Text(self.lineFrame, width=5, relief=tk.FLAT, bg="#000", fg="#666", font=self.font, highlightbackground="black", cursor="spider", spacing1=10.5, spacing3=10)
+        self.line_numbers.grid(row=0, column=0, sticky='nsew')
+
+        self.cposFrame = tk.Frame(self.root, bg="black", padx=10)
+        self.cposFrame.rowconfigure(0, weight=1)
+        self.cposFrame.columnconfigure(0, weight=1)
+        self.cposFrame.grid(row=3, column=1, sticky='sw')
+
+        self.cpos = tk.Label(self.cposFrame, text='1,0', bg="black", fg="#777", font=self.font)
+        self.cpos.grid(row=0, column=0, sticky='sw')
 
     def add_new_tab(self, event=None):
         self.new_frame = tk.Frame(self.paned, bg="black")
@@ -310,4 +305,3 @@ if __name__ == "__main__":
     root.configure(background="black")
     app = App(root)
     root.mainloop()
-
