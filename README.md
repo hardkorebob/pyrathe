@@ -1,7 +1,9 @@
 # pyrathe
 python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardkorebob/tinywm) {in: scrot below}
 
-Runs on OpenBSD74, Mint, Chimera(musl) & Kali Linux.
+Development under OpenBSD74 and dwm.
+
+Tested on Debian, Mint, Chimera(musl) & Kali Linux.
 
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
 
