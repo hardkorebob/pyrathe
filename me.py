@@ -20,8 +20,9 @@ class App:
         self.root.columnconfigure(0, weight=0)
         self.root.columnconfigure(1, weight=1)
         self.root.rowconfigure(0, weight=0)
-        self.root.rowconfigure(1, weight=1)
-        self.root.rowconfigure(2, weight=0)
+        self.root.rowconfigure(1, weight=0)
+        self.root.rowconfigure(2, weight=1)
+        self.root.rowconfigure(3, weight=0)
         self.font = font.nametofont("TkFixedFont")
         self.font.configure(size=11)
         self.pyrathe_init()
@@ -71,42 +72,56 @@ class App:
         self.timeline()
 
     def create(self):
-        self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10, pady=15)
-        self.msgBarFrame.rowconfigure(1, weight=0)
+
+        self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10)
+        self.msgBarFrame.rowconfigure(0, weight=1)
         self.msgBarFrame.columnconfigure(0, weight=1)
-        self.msgBarFrame.grid(row=0, column=0, sticky='nsew', columnspan=2)
-        self.msgBar = tk.Text(self.msgBarFrame, fg="red", bg="black", relief=tk.FLAT, highlightcolor="red", insertbackground="orange", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=4)
-        self.msgBar.grid(row=1, column=0, sticky='nsew')
+        self.msgBarFrame.grid(row=1, column=1, sticky='nsew')
+
+        self.msgBar = tk.Text(self.msgBarFrame, fg="red", bg="black", relief=tk.FLAT, highlightcolor="red", insertbackground="orange", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=6)
+        self.msgBar.grid(row=0, column=0, sticky='nsew')
 
         self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
         self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(1, weight=1)
-        self.lineFrame.grid(row=1, column=0, sticky='nsew')
-        self.line_numbers = tk.Text(self.lineFrame, width=5, relief=tk.FLAT, bg="#000", fg="#666", font=self.font, highlightbackground="black", cursor="spider")
+        self.lineFrame.grid(row=2, column=0, sticky='nsew')
+
+        self.line_numbers = tk.Text(self.lineFrame, width=5, relief=tk.FLAT, bg="#000", fg="#666", font=self.font, highlightbackground="black", cursor="spider", spacing1=10.5, spacing3=10)
         self.line_numbers.grid(row=0, column=0, sticky='nsew')
 
         self.paned = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashrelief=tk.RAISED, sashwidth=10, cursor="target", bg="black")
         self.paned.rowconfigure(0, weight=1)
         self.paned.columnconfigure(0, weight=1)
-        self.paned.grid(row=1, column=1, sticky='nsew')
+        self.paned.grid(row=2, column=1, sticky='nsew')
 
-        self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=5)
+        self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=10)
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky='nsew')
 
-        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="#666", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
+        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="#666", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black", insertwidth=10, spacing1=10, spacing3=10)
         Percolator(self.txtPad).insertfilter(ColorDelegator())
         self.txtPad.grid(row=0, column=0, sticky='nsew')
-        self.txtPad.focus_set()
-        self.paned.add(self.mainTxtFrame)
 
-        self.cposFrame = tk.Frame(self.root, bg="black", pady=15)
+        self.paned.add(self.mainTxtFrame)
+        self.txtPad.focus_set()
+
+        self.cposFrame = tk.Frame(self.root, bg="black", padx=10)
         self.cposFrame.rowconfigure(0, weight=1)
         self.cposFrame.columnconfigure(0, weight=1)
-        self.cposFrame.grid(row=2, column=1, sticky='nsew', columnspan=2)
+        self.cposFrame.grid(row=3, column=1, sticky='sw')
+
         self.cpos = tk.Label(self.cposFrame, text='1,0', bg="black", fg="#777", font=self.font)
         self.cpos.grid(row=0, column=0, sticky='sw')
+        
+        self.timerLabelFrame = tk.Frame(self.root, bg="black", padx=10)
+        self.timerLabelFrame.rowconfigure(0, weight=1)
+        self.timerLabelFrame.columnconfigure(0, weight=1)
+        self.timerLabelFrame.grid(row=3, column=0, sticky='sw')
+
+        self.timerLabel = tk.Label(self.timerLabelFrame, bg="black", fg="green", text='000', font=self.font)
+        self.timerLabel.grid(row=0, column=0, sticky='sw')
+
 
     def add_new_tab(self, event=None):
         self.new_frame = tk.Frame(self.paned, bg="black")
@@ -119,6 +134,7 @@ class App:
         self.paned.add(self.new_frame)
         self.txtPad_frames.append((self.new_frame, self.new_txtPad))
         self.new_txtPad.focus_set()
+
 
     def add_py_tab(self, event=None):
         self.py_frame = tk.Frame(self.paned, bg="black")
@@ -251,18 +267,32 @@ class App:
         os.execv(sys.executable, ['python3'] + sys.argv)
 
     def timeline(self):
+        self.timerFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
+        self.timerFrame.columnconfigure(0, weight=1)
+        self.timerFrame.rowconfigure(0, weight=1)
+        self.timerFrame.grid(row=0, column=0, sticky='nsew', columnspan=2)
+
+        self.timerBar = tk.Text(self.timerFrame, fg="green", bg="black", relief=tk.FLAT, highlightcolor="green", insertbackground="green", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=2)
+        self.timerBar.grid(row=0, column=0, sticky='nsew')
+
         self.char_line = threading.Thread(target=self.update_timeline)
         self.char_line.daemon = True
         self.char_line.start()
+        
+    def update_time_position(self, event=None):
+        cursor_position = self.timerBar.index(tk.INSERT)
+        line, col = cursor_position.split('.')
+        i = int(col)
+        c = int(line) - 1
+        self.timerLabel.configure(text=f"{str(c)}{str(i)}")
 
     def update_timeline(self):
-        sym = ">"
         while True:
-            self.update_timer_buffer(sym)
+            self.timerBar.insert("end", ">")
+            self.update_time_position()
             time.sleep(60)
 
-    def update_timer_buffer(self, sym):
-        self.msgBar.insert("end", sym)
+
 
     def add_indent(self, event):
         text = event.widget
@@ -328,3 +358,31 @@ if __name__ == "__main__":
 #$%&*^ 18:21 cat me.py
 #$%&*^ 18:24 cat me.py
 #$%&*^ 18:25 cat me.py
+
+#$%&*^ 18:38 cat me.py
+#$%&*^ 18:40 cat  me.py
+#$%&*^ 18:41 cat me.py
+#$%&*^ 18:42 cat me.py
+#$%&*^ 18:43 cat me.py
+#$%&*^ 18:45 cat me.py
+
+#$%&*^ 18:51 cat me.py
+#$%&*^ 18:52 cat me.py
+#$%&*^ 18:54 cat me.py
+#$%&*^ 18:54 cat me.py
+#$%&*^ 19:00 cat me.py
+
+#$%&*^ 19:09 cat me.py
+#$%&*^ 19:10 cat me.py
+#$%&*^ 19:13 cat me.py
+#$%&*^ 19:14 cat me.py
+#$%&*^ 19:15 cat me.py
+#$%&*^ 19:15 cat me.py
+#$%&*^ 19:18 cat me.py
+#$%&*^ 19:19 cat me.py
+#$%&*^ 19:20 cat me.py
+#$%&*^ 19:21 cat me.py
+#$%&*^ 19:22 cat me.py
+#$%&*^ 19:23 cat me.py
+#$%&*^ 19:23 cat me.py
+#$%&*^ 19:24 cat me.py
