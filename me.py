@@ -72,12 +72,12 @@ class App:
         self.txtPad_frames = []
 
     def create(self):
-        self.lineFrame = tk.Frame(self.root, bg="black", padx=5)
+        self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
         self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(0, weight=1)
         self.lineFrame.grid(row=1, column=0, sticky='nsew')
 
-        self.line_numbers = tk.Text(self.lineFrame, width=5, relief=tk.FLAT, bg="black", fg="orange", font=self.font, highlightbackground="black", cursor="spider")
+        self.line_numbers = tk.Text(self.lineFrame, width=5, relief=tk.FLAT, bg="#000", fg="#666", font=self.font, highlightbackground="black", cursor="spider")
         self.line_numbers.grid(row=0, column=0, sticky='nsew')
 
         self.msgBarFrame = tk.Frame(self.root, bg="black", padx=57, pady=18)
@@ -93,12 +93,12 @@ class App:
         self.paned.columnconfigure(0, weight=1)
         self.paned.grid(row=1, column=1, sticky='nsew')
 
-        self.mainTxtFrame = tk.Frame(self.paned, bg="black")
+        self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=5)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky='nsew')
 
-        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap='none', relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
+        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap='none', relief=tk.FLAT, highlightcolor="#666", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
         Percolator(self.txtPad).insertfilter(ColorDelegator())
         self.txtPad.grid(row=0, column=0, sticky='nsew')
         self.txtPad.focus_set()
@@ -107,7 +107,7 @@ class App:
         self.cposFrame.rowconfigure(0, weight=1)
         self.cposFrame.columnconfigure(0, weight=1)
         self.cposFrame.grid(row=2, column=1, sticky='nsew')
-        self.cpos = tk.Label(self.cposFrame, text='1,0', bg="black", fg="orange", font=self.font)
+        self.cpos = tk.Label(self.cposFrame, text='1,0', bg="black", fg="#777", font=self.font)
         self.cpos.grid(row=0, column=0, sticky='w')
 
     def add_py_tab(self, event=None):
@@ -199,7 +199,7 @@ class App:
     def save_me_to_file(self, event):
         focused = self.root.focus_get()
         content = focused.get("1.0", "end-1c")
-        filename = "me"
+        filename = "me.py"
         with open(filename, "w") as file:
             file.write(content)
         self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {filename} _Myself & I Saved\n")
@@ -257,10 +257,10 @@ class App:
     def update_timeline(self):
         sym = ">"
         while True:
-            self.update_buffer(sym)
+            self.update_timer_buffer(sym)
             time.sleep(60)
 
-    def update_buffer(self, sym):
+    def update_timer_buffer(self, sym):
         self.msgBar.insert("end", sym)
 
     def add_indent(self, event):
@@ -277,3 +277,5 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
+#$%&*^ 13:58 cat me
+#$%&*^ 13:58 cat me.py
