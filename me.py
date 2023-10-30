@@ -21,7 +21,7 @@ class App:
         self.root.columnconfigure(1, weight=1)
         self.root.rowconfigure(0, weight=0)
         self.root.rowconfigure(1, weight=1)
-        self.root.rowconfigure(2, weight=0)
+        self.root.rowconfigure(2, weight=1)
 
         self.font = font.nametofont("TkFixedFont")
         self.font.configure(size=11)
@@ -72,43 +72,44 @@ class App:
         self.txtPad_frames = []
 
     def create(self):
+        self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10, pady=15)
+        self.msgBarFrame.rowconfigure(1, weight=0)
+        self.msgBarFrame.columnconfigure(0, weight=1)
+        self.msgBarFrame.grid(row=0, column=0, sticky='nsew', columnspan=2)
+
+        self.msgBar = tk.Text(self.msgBarFrame, fg="red", bg="black", relief=tk.FLAT, highlightcolor="red", insertbackground="orange", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=4)
+        self.msgBar.grid(row=1, column=0, sticky='nsew')
+
         self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
         self.lineFrame.rowconfigure(0, weight=1)
-        self.lineFrame.columnconfigure(0, weight=1)
+        self.lineFrame.columnconfigure(1, weight=1)
         self.lineFrame.grid(row=1, column=0, sticky='nsew')
 
         self.line_numbers = tk.Text(self.lineFrame, width=5, relief=tk.FLAT, bg="#000", fg="#666", font=self.font, highlightbackground="black", cursor="spider")
         self.line_numbers.grid(row=0, column=0, sticky='nsew')
 
-        self.msgBarFrame = tk.Frame(self.root, bg="black", padx=57, pady=18)
-        self.msgBarFrame.rowconfigure(0, weight=1)
-        self.msgBarFrame.columnconfigure(0, weight=1)
-        self.msgBarFrame.grid(row=0, column=0, sticky='nsew', columnspan=2)
-
-        self.msgBar = tk.Text(self.msgBarFrame, fg="red", bg="black", relief=tk.FLAT, highlightcolor="red", insertbackground="orange", font=self.font, cursor="pirate", highlightbackground="black",  height=4, insertwidth=10)
-        self.msgBar.grid(row=1, column=0, sticky='nsew')
-
         self.paned = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashrelief=tk.RAISED, sashwidth=10, cursor="spider", bg="black")
         self.paned.rowconfigure(0, weight=1)
-        self.paned.columnconfigure(0, weight=1)
-        self.paned.grid(row=1, column=1, sticky='nsew')
+        self.paned.columnconfigure(1, weight=1)
+        self.paned.grid(row=1, column=1, sticky='nsew', columnspan=2)
 
         self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=5)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky='nsew')
 
-        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap='none', relief=tk.FLAT, highlightcolor="#666", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
+        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="#666", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
         Percolator(self.txtPad).insertfilter(ColorDelegator())
         self.txtPad.grid(row=0, column=0, sticky='nsew')
         self.txtPad.focus_set()
         self.paned.add(self.mainTxtFrame)
+
         self.cposFrame = tk.Frame(self.root, bg="black", pady=5)
         self.cposFrame.rowconfigure(0, weight=1)
         self.cposFrame.columnconfigure(0, weight=1)
-        self.cposFrame.grid(row=2, column=1, sticky='nsew')
+        self.cposFrame.grid(row=2, column=1, sticky='nsew', columnspan=2)
         self.cpos = tk.Label(self.cposFrame, text='1,0', bg="black", fg="#777", font=self.font)
-        self.cpos.grid(row=0, column=0, sticky='w')
+        self.cpos.grid(row=0, column=0, sticky='sw')
 
     def add_py_tab(self, event=None):
         self.py_frame = tk.Frame(self.paned, bg="black")
@@ -133,7 +134,7 @@ class App:
     def add_new_tab(self, event=None):
         self.new_frame = tk.Frame(self.paned, bg="black")
         self.new_frame.grid(row=0, column=0, sticky='nsew')
-        self.new_txtPad = tk.Text(self.new_frame, fg="orange", bg="black", wrap='none', relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
+        self.new_txtPad = tk.Text(self.new_frame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
         self.new_txtPad.grid(row=0, column=1, sticky='nsew')
         self.new_frame.columnconfigure(0, weight=1)
         self.new_frame.rowconfigure(0, weight=1)
@@ -277,5 +278,33 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-#$%&*^ 13:58 cat me
-#$%&*^ 13:58 cat me.py
+#$%&*^ 14:10 cat me
+#$%&*^ 14:11 cat me.py
+#$%&*^ 14:12 cat me.py
+#$%&*^ 14:14 cat me.py
+
+#$%&*^ 14:15 cat me.py
+#$%&*^ 14:18 cat me.py
+#$%&*^ 14:19 cat me.py
+#$%&*^ 14:20 cat me.py
+#$%&*^ 14:21 cat me.py
+#$%&*^ 14:21 cat me.py
+#$%&*^ 14:22 cat me.py
+#$%&*^ 14:23 cat me.py
+#$%&*^ 14:23 cat me.py
+#$%&*^ 14:24 cat me.py
+#$%&*^ 14:25 cat me.py
+#$%&*^ 14:26 cat me.py
+
+#$%&*^ 14:27 cat me.py
+#$%&*^ 14:28 cat me.py
+#$%&*^ 14:28 cat me.py
+#$%&*^ 14:28 cat me.py
+#$%&*^ 14:29 cat me.py
+#$%&*^ 14:32 cat me.py
+#$%&*^ 14:38 cat me.py
+#$%&*^ 14:39 cat me.p
+#$%&*^ 14:40 cat me.py
+#$%&*^ 14:41 cat me.py
+#$%&*^ 14:41 cat me.py
+#$%&*^ 14:43 cat me.py
