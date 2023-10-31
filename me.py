@@ -158,7 +158,7 @@ class App:
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky='nsew')
 
-        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="#666", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black", insertwidth=10, spacing1=10, spacing3=10)
+        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="#666", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black", insertwidth=10, spacing1=10, spacing3=10, padx=10)
         Percolator(self.txtPad).insertfilter(ColorDelegator())
         self.txtPad.grid(row=0, column=0, sticky='nsew')
 
@@ -186,7 +186,7 @@ class App:
         self.new_frame.rowconfigure(0, weight=1)
         self.new_frame.grid(row=0, column=0, sticky='nsew')
 
-        self.new_txtPad = tk.Text(self.new_frame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black")
+        self.new_txtPad = tk.Text(self.new_frame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black", padx=10)
         self.new_txtPad.grid(row=0, column=0, sticky='nsew')
         self.paned.add(self.new_frame)
         self.txtPad_frames.append((self.new_frame, self.new_txtPad))
@@ -319,3 +319,4 @@ if __name__ == "__main__":
     root.mainloop()
 
 #$%&*^ 20:18 cat me.py
+#$%&*^ 20:25 cat me.py
