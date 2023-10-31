@@ -32,7 +32,6 @@ Improvements coming! 🕉🇵🇷🤓
 
 ---
 
-me.py:25:1: E302 expected 2 blank lines, found 1
 me.py:93:80: E501 line too long (222 > 79 characters)
 me.py:101:80: E501 line too long (226 > 79 characters)
 me.py:109:80: E501 line too long (108 > 79 characters)
