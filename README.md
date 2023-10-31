@@ -6,7 +6,6 @@ Development Operations: OpenBSD74 and dwm.
 
 Tested: Debian, Mint, Chimera(musl) & Kali Linux.
 
-**C:\>M$Winblows** NOT SUPPORTED!
 
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
 
@@ -17,6 +16,11 @@ Depends:
   python-idle : Syntax Highlighting
   
   python-tkinter : GUI Toolkit
+  
+
+ONLY RUNS IN Protected-mod on Win95
+
+**C:\>M$Winblows 7,8,9,10,11,12,13PRO-X NOT SUPPORTED!**
 
 ---
 
