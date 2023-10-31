@@ -22,6 +22,7 @@ import subprocess
 from idlelib.percolator import Percolator
 from idlelib.colorizer import ColorDelegator
 
+
 class App:
 
     def __init__(self, root):
