@@ -23,7 +23,7 @@ ONLY RUNS IN Protected-mod on Win95
 
 ---
 
-Improvements coming! 🕉🇵🇷🤓
+🕉 Improvements coming! 🇵🇷 | -🤓-
 
 
 #allerrorsmatter #0xfu #dfc #ghd
