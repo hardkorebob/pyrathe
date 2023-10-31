@@ -14,10 +14,10 @@ pyrathe has only the most essential features, so users are not intimidated by a 
 
 pyrathe is a Python3 code editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self.
 
-acronym for:
+acronym for: (&+1m a l33t_pirate)
 
 python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardkorebob/tinywm) {in: scrot below}
-@505 lines (468 loc) · 18.7 KB
+@505 lines (468 loc) · 18.7 KB 
 
 Tested: Debian, Mint, Chimera(musl) & Kali Linux.
 
