@@ -2,12 +2,13 @@
 # Application: PyRathe
 # Version: v.1
 # Filename: me.py
-# Written: Roberto Rodriguez Jr & ChatGPT 
+# Written: Roberto Rodriguez Jr & ChatGPT
 # 0.02: This editor rulez! (python rapid app & txt handling env)
-# Email: hardkorebob@gmail.com 
+# Email: hardkorebob@gmail.com
 # Web: https://HARDKOREBOB.github.io
 # Warranty: FREE WARRANTY 4 LIFE
 # License: This software is provided under PRIVATE LICENSE.
+
 
 import tkinter as tk
 import tkinter.font as font
@@ -20,7 +21,6 @@ import datetime
 import subprocess
 from idlelib.percolator import Percolator
 from idlelib.colorizer import ColorDelegator
-
 
 class App:
 
@@ -317,8 +317,4 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-#$%&*^ 20:03 cat me.py
-#$%&*^ 20:05 cat me.py
-#$%&*^ 20:08 cat me.py
-#$%&*^ 20:10 cat me.py
-#$%&*^ 20:15 cat me.py
+#$%&*^ 20:18 cat me.py
