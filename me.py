@@ -23,9 +23,11 @@ from idlelib.percolator import Percolator
 from idlelib.colorizer import ColorDelegator
 
 
+
 class App:
 
     def __init__(self, root):
+        super().__init__()
         self.root = root
         self.rootConfig()
         self.setup_keybindings()
@@ -36,6 +38,7 @@ class App:
     def rootConfig(self):
         self.root.columnconfigure(0, weight=0)
         self.root.columnconfigure(1, weight=1)
+        self.root.columnconfigure(2, weight=0)
         self.root.rowconfigure(0, weight=0)
         self.root.rowconfigure(1, weight=0)
         self.root.rowconfigure(2, weight=1)
@@ -55,7 +58,6 @@ class App:
         # ctrl a = begin of line
         # ctrl o = add a newline
         # ctrl y = paste
-
         self.root.bind_all("<Control-l>", self.clear_buffer)
         self.root.bind_all("<Control-s>", self.save_focused_to_file)
         self.root.bind_all("<Control-S>", self.save_me_to_file)
@@ -84,12 +86,13 @@ class App:
         self.myTimer()
         self.msgBar()
         self.textPad()
+        self.doSearch()
 
     def msgBar(self):
         self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10)
         self.msgBarFrame.rowconfigure(0, weight=1)
         self.msgBarFrame.columnconfigure(0, weight=1)
-        self.msgBarFrame.grid(row=1, column=1, sticky='nsew')
+        self.msgBarFrame.grid(row=1, column=1, sticky='nsew', columnspan=3)
 
         self.msgBar = tk.Text(self.msgBarFrame, fg="red", bg="black", relief=tk.FLAT, highlightcolor="red", insertbackground="orange", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=6)
         self.msgBar.grid(row=0, column=0, sticky='nsew')
@@ -98,17 +101,17 @@ class App:
         self.timerFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
         self.timerFrame.columnconfigure(0, weight=1)
         self.timerFrame.rowconfigure(0, weight=1)
-        self.timerFrame.grid(row=0, column=0, sticky='nsew', columnspan=2)
+        self.timerFrame.grid(row=0, column=1, sticky='nsew', columnspan=2)
         self.timerBar = tk.Text(self.timerFrame, fg="green", bg="black", relief=tk.FLAT, highlightcolor="green", insertbackground="green", font=self.font, cursor="pirate", highlightbackground="black", insertwidth=10, height=2)
         self.timerBar.grid(row=0, column=0, sticky='nsew')
 
-        self.timerLabelFrame = tk.Frame(self.root, bg="black", padx=10)
+        self.timerLabelFrame = tk.Frame(self.root, bg="black", padx=5, pady=15)
         self.timerLabelFrame.rowconfigure(0, weight=1)
         self.timerLabelFrame.columnconfigure(0, weight=1)
-        self.timerLabelFrame.grid(row=3, column=0, sticky='sw')
+        self.timerLabelFrame.grid(row=0, column=0, sticky='nw')
 
         self.timerLabel = tk.Label(self.timerLabelFrame, bg="black", fg="green", text='000', font=self.font)
-        self.timerLabel.grid(row=0, column=0, sticky='sw')
+        self.timerLabel.grid(row=0, column=0, sticky='nsew')
         self.timelineThread()
 
     def timelineThread(self):
@@ -128,43 +131,44 @@ class App:
             self.timerBar.insert("end", ">")
             self.update_timerLabel()
             time.sleep(60)
-
-    def update_cursor_position(self, event):
+    def update_cursor_position(self, event=None):
         focused = self.root.focus_get()
-        if isinstance(focused, tk.Text):
-            cursor_position = focused.index(tk.INSERT)
-            line, col = cursor_position.split('.')
-            self.cpos.configure(text=f"{line},{col}")
-            self.line_numbers.configure(state='normal')
-            self.line_numbers.delete('1.0', tk.END)
-            first, last = focused.yview()
-
-            first_line = int(first * float(focused.index('end').split('.')[0]))
-            last_line = int(last * float(focused.index('end').split('.')[0]))
-
-            line_numbers = "\n".join(str(i) for i in range(first_line+1, last_line))
-            self.line_numbers.insert('1.0', line_numbers)
-            self.line_numbers.configure(state='disabled')
-            self.line_numbers.yview_moveto(first)
+        try:
+            if isinstance(focused,  tk.Text):
+                cursor_position = focused.index(tk.INSERT)
+                line, col = cursor_position.split('.')
+                self.cpos.configure(text=f"{line},{col}")
+                self.line_numbers.configure(state='normal')
+                self.line_numbers.delete('1.0', tk.END)
+                first, last = focused.yview()
+                first_line = int(first * float(focused.index('end').split('.')[0]))
+                last_line = int(last * float(focused.index('end').split('.')[0]))
+                line_numbers = "\n".join(str(i) for i in range(first_line+1, last_line))
+                self.line_numbers.insert('1.0', line_numbers)
+                self.line_numbers.configure(state='disabled')
+                self.line_numbers.yview_moveto(first)
+        except KeyError:
+            pass 
 
     def textPad(self):
         self.paned = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashrelief=tk.RAISED, sashwidth=10, cursor="target", bg="black")
         self.paned.rowconfigure(0, weight=1)
         self.paned.columnconfigure(0, weight=1)
-        self.paned.grid(row=2, column=1, sticky='nsew')
+        self.paned.grid(row=2, column=1, sticky='nsew', columnspan=3)
 
         self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=10)
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky='nsew')
 
-        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="#666", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black", insertwidth=10, spacing1=10, spacing3=10, padx=10)
+        self.txtPad = tk.Text(self.mainTxtFrame, fg="orange", bg="black", wrap=tk.WORD, relief=tk.FLAT, highlightcolor="orange", insertbackground="red", font=self.font, cursor="heart", highlightbackground="black", insertwidth=4, spacing1=10, spacing3=10, padx=10)
         Percolator(self.txtPad).insertfilter(ColorDelegator())
         self.txtPad.grid(row=0, column=0, sticky='nsew')
 
         self.paned.add(self.mainTxtFrame)
         self.txtPad.focus_set()
-        self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
+
+        self.lineFrame = tk.Frame(self.root, bg="black", padx=10, pady=1)
         self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(1, weight=1)
         self.lineFrame.grid(row=2, column=0, sticky='nsew')
@@ -172,10 +176,10 @@ class App:
         self.line_numbers = tk.Text(self.lineFrame, width=5, relief=tk.FLAT, bg="#000", fg="#666", font=self.font, highlightbackground="black", cursor="spider", spacing1=10.5, spacing3=10)
         self.line_numbers.grid(row=0, column=0, sticky='nsew')
 
-        self.cposFrame = tk.Frame(self.root, bg="black", padx=10)
+        self.cposFrame = tk.Frame(self.root, bg="black", padx=10, pady=15)
         self.cposFrame.rowconfigure(0, weight=1)
         self.cposFrame.columnconfigure(0, weight=1)
-        self.cposFrame.grid(row=3, column=1, sticky='sw')
+        self.cposFrame.grid(row=3, column=0, sticky='sw')
 
         self.cpos = tk.Label(self.cposFrame, text='1,0', bg="black", fg="#777", font=self.font)
         self.cpos.grid(row=0, column=0, sticky='sw')
@@ -228,6 +232,74 @@ class App:
         match = re.match(r'^(\s+)', line)
         whitespace = match.group(0) if match else ""
         text.insert("insert", f"\n{whitespace}")
+
+    def doSearch(self):
+        self.searchFrame = tk.Frame(self.root, bg="#111", pady=15, padx=10)
+        self.searchFrame.rowconfigure(0, weight=1)
+        self.searchFrame.grid(row=3, column=2, sticky='se') 
+        self.searchFrame.columnconfigure(0, weight=0)
+        self.searchFrame.columnconfigure(1, weight=0)
+        self.searchFrame.columnconfigure(2, weight=0)
+        self.searchFrame.columnconfigure(3, weight=0)
+        
+        self.search_entry = tk.Entry(self.searchFrame, bg="black", fg="red")
+        self.search_entry.grid(row=0, column=0, sticky='nsew')
+        
+        self.replace_entry = tk.Entry(self.searchFrame, bg="black", fg="red")
+        self.replace_entry.grid(row=0, column=1, sticky='nsew')
+        
+        self.search_button = tk.Button(self.searchFrame, bg="black", fg="red", text='Search', command=self.search)
+        self.search_button.grid(row=0, column=2, sticky='nsew')
+        
+        self.replace_button = tk.Button(self.searchFrame, bg="black", fg="red", text='Replace', command=self.replace)
+        self.replace_button.grid(row=0, column=3, sticky='nsew')
+        
+        self.replace_all_button = tk.Button(self.searchFrame, bg="black", fg="red", text='Replace All', command=self.replace_all)
+        self.replace_all_button.grid(row=0, column=4, sticky='nsew')
+
+    def search(self):
+        focused = self.root.focus_get()
+        if isinstance(focused, tk.Text):
+            focused.tag_remove('found', '1.0', tk.END)
+            search_text = self.search_entry.get()
+            if search_text:
+                idx = '1.0'
+                while True:
+                    idx = focused.search(search_text, idx, nocase=1, stopindex=tk.END)
+                    if not idx: break
+                    lastidx = f'{idx}+{len(search_text)}c'
+                    focused.tag_add('found', idx, lastidx)
+                    idx = lastidx
+                focused.tag_config('found', background='green')
+
+    def replace(self):
+        focused = self.root.focus_get()
+        if isinstance(focused, tk.Text):
+            search_text = self.search_entry.get()
+            replace_text = self.replace_entry.get()
+            if search_text and replace_text:
+                idx = '1.0'
+                idx = focused.search(search_text, idx, nocase=1)
+                if idx:
+                    lastidx = f'{idx}+{len(search_text)}c'
+                    focused.delete(idx, lastidx)
+                    focused.insert(idx, replace_text)
+                    focused.tag_remove('found', '1.0', tk.END)
+                    focused.tag_add('found', idx, f'{idx}+{len(replace_text)}c')
+                    focused.tag_config('found', background='green')
+                    self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Replaced_ {search_text} {replace_text}\n")
+
+
+    def replace_all(self):
+        focused = self.root.focus_get()
+        if isinstance(focused, tk.Text):
+            search_text = self.search_entry.get()
+            replace_text = self.replace_entry.get()
+            content = self.txtPad.get("1.0", tk.END)
+            replaced_content = content.replace(search_text, replace_text)
+            self.txtPad.delete("1.0", tk.END)
+            self.txtPad.insert("1.0", replaced_content)
+            self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} ALL*Replaced_ {search_text} {replace_text}\n")
 
     def select_all_text(self, event):
         event.widget.tag_add("sel", "1.0", "end")
@@ -322,4 +394,48 @@ if __name__ == "__main__":
 #$%&*^ 20:18 cat me.py
 #$%&*^ 20:43 cat me.py
 #$%&*^ 22:05 cat me.py
-#$%&*^ 22:06 cat me.py
+#$%&*^ 23:04 cat me.py
+#$%&*^ 23:06 cat me.py
+#$%&*^ 23:08 cat me.py
+
+#$%&*^ 23:13 cat me.py
+
+#$%&*^ 23:16 cat me.py
+#$%&*^ 23:17 cat me.py
+#$%&*^ 23:19 cat me.py
+#$%&*^ 23:22 cat me.py
+
+#$%&*^ 23:25 cat me.py
+
+#$%&*^ 23:32 cat me.py
+
+#$%&*^ 23:53 cat me.py
+#$%&*^ 23:54 cat me.py
+#$%&*^ 23:55 cat me.py
+
+#$%&*^ 23:57 cat me.py
+#$%&*^ 23:58 cat me.py
+#$%&*^ 23:59 cat me.py
+#$%&*^ 00:01 cat me.py
+
+#$%&*^ 00:05 cat me.py
+#$%&*^ 00:07 cat me.py
+
+#$%&*^ 00:16 cat me.py
+#$%&*^ 00:18 cat me.py
+#$%&*^ 00:22 cat me.py
+#$%&*^ 00:25 cat me.py
+#$%&*^ 00:27 cat me.py
+#$%&*^ 00:27 cat me.py
+#$%&*^ 00:29 cat me.py
+#$%&*^ 00:37 cat me.py
+#$%&*^ 00:38 cat me.py
+#$%&*^ 00:38 cat me.py
+#$%&*^ 00:40 cat me.py
+#$%&*^ 00:41 cat me.py
+#$%&*^ 00:42 cat me.py
+#$%&*^ 00:43 cat me.py
+#$%&*^ 00:46 cat me.py
+#$%&*^ 00:47 cat me.py
+#$%&*^ 00:48 cat me.py
+#$%&*^ 00:48 cat me.py
