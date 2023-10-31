@@ -12,7 +12,7 @@ TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lin
 
 Llort Xinu, from The Cod Institute had this to say:
 
-   _pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces [_o](https://github.com/mu-editor/mu/blob/master/mu/logic.py)fDeath and 70,000 lines of boiler PLUS QT(yuck). Pheeeww..... But you can go use that thing if you want  Good luck chuck!. Im confused honestly how that thing is considered simple. What can you expect when you get designs from teachers. They teach not get heuristics done. This lil silly app here is truly THE micro editor._
+   _pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces [_o](https://github.com/mu-editor/mu/blob/master/mu/logic.py)fDeath and 70,000 lines of boiler PLUS QT(yuck). Pheeeww..... But you can go use that thing if you want...[] Good luck chuck!. Im confused honestly how that thing is considered simple. What can you expect when you get designs from teachers. They teach not get heuristics done. This lil silly app here is truly THE micro editor._
 
 pyrathe is a Python3 code editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self. @505 lines (468 loc) · 18.7 KB 
 
