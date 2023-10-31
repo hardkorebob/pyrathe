@@ -1,4 +1,19 @@
+WARNING! EDUCATIONAL PUERPOSES ONLY! THE MAN BEHIND ALL THIS IS REALLY A BIRD OF A FRIEND'S DOG.
+
 # pyrathe
+
+A SIMPLE PYTHON EDITOR 4 NEWBIE PROGRAMMERS. 4 REALZ_ 
+
+THE _BEST_ WAY TO LEARN CODE with mu: IS A WITH BUILDING YOUR VERY OWN _MU(micro)_ EDITOR> THIS THING HERE LADIES & GENTS IS BUILT IN ITSELF IN VA WITH <3 | BE KIND!
+
+TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lines);
+
+pyrathe is a Python3 code editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self.
+
+pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces _ofDeath and 70,000 lines of text PLUS QT(yuck). Pheeeww.....
+
+also known as
+
 python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardkorebob/tinywm) {in: scrot below}
 @505 lines (468 loc) · 18.7 KB
 
