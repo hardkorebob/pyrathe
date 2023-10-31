@@ -26,6 +26,8 @@ Tested: Debian, Mint, Chimera(musl) & Kali Linux.
 ![scrot](https://github.com/hardkorebob/pyrhate/blob/main/scrot.png)
 
 Depends:
+
+  python-3.10
   
   python-idle : Syntax
   
