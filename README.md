@@ -12,9 +12,9 @@ Tl;Dr :: hop'd on c_gpt - it_spat out some crap + i_learned = here we are :: Typ
 
 Depends:
   
-  python-idle : Syntax Highlighting
+  python-idle : Syntax
   
-  python-tkinter : GUI Toolkit
+  python-tkinter : GUI
   
 ---
 
