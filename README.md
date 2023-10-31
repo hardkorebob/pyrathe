@@ -2,6 +2,8 @@ WARNING! EDUCATIONAL PUERPOSES ONLY! THE MAN BEHIND ALL THIS IS REALLY A BIRD OF
 
 # pyrathe
 
+Tl;Dr :: hop'd on c_gpt - it_spat out some crap + i_learned = here we are :: Type (elite_h4x0r)
+
 A SIMPLE PYTHON EDITOR 4 NEWBIE PROGRAMMERS. 4 REALZ_ 
 
 THE _BEST_ WAY TO LEARN CODE with mu: IS A WITH BUILDING YOUR VERY OWN _MU(micro)_ EDITOR> THIS THING HERE LADIES & GENTS IS BUILT IN ITSELF IN VA WITH <3 | BE KIND!
@@ -18,8 +20,6 @@ python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardko
 @505 lines (468 loc) · 18.7 KB
 
 Tested: Debian, Mint, Chimera(musl) & Kali Linux.
-
-Tl;Dr :: hop'd on c_gpt - it_spat out some crap + i_learned = here we are :: Type (elite_h4x0r)
 
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
 
