@@ -442,7 +442,7 @@ class App:
             output = eval(code, globals())
             self.msgBar.insert(
                 "1.0",
-                f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')}\n# >>>{output}\n",
+                f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} >>> {output}\n",
             )
         except Exception as e:
             self.msgBar.insert(
@@ -503,4 +503,6 @@ if __name__ == "__main__":
     root.mainloop()
 
 #$%&*^ 01:25 cat me.py
-#$%&*^ 01:37 cat me.py
+#$%&*^ 17:33 cat me.py
+#$%&*^ 17:33 cat me.py
+#$%&*^ 17:34 cat me.py
