@@ -10,7 +10,7 @@ THE _BEST_ WAY TO LEARN CODE with mu: IS A WITH BUILDING YOUR VERY OWN _MU(micro
 
 TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lines); self-explanatory code with 0 comments.
 
-pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces _ofDeath and 70,000 lines of text PLUS QT(yuck). Pheeeww.....
+pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces _ofDeath and 70,000 lines of text PLUS QT(yuck). Pheeeww..... But you can go use that thing if you want(.)[https://github.com/mu-editor/mu/blob/master/mu/logic.py]  Good luck chuck! That alone is 3x my fully functioning editor. Im confused honestly how that thing is considered simple.
 
 pyrathe is a Python3 code editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self. @505 lines (468 loc) · 18.7 KB 
 
