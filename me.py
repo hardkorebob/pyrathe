@@ -214,6 +214,8 @@ class App:
         self.paned.add(self.term_frame)
 
     def del_new_tab(self, event=None):
+        command = "pkill xterm"
+        subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if self.txtPad_frames:
             last_frame, last_txtPad = self.txtPad_frames.pop()
             self.paned.forget(last_frame)
@@ -302,8 +304,6 @@ class App:
         return "break"
 
     def quit_program(self, event=None):
-        command = "pkill xterm"
-        subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         self.root.quit()
         return "break"
 
@@ -319,4 +319,5 @@ if __name__ == "__main__":
     root.mainloop()
 
 #$%&*^ 20:18 cat me.py
-#$%&*^ 20:25 cat me.py
+#$%&*^ 20:43 cat me.py
+#$%&*^ 20:46 cat me.py
