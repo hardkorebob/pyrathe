@@ -8,7 +8,7 @@ A SIMPLE PYTHON EDITOR 4 NEWBIE PROGRAMMERS. 4 REALZ_
 
 THE _BEST_ WAY TO LEARN CODE with mu: IS A WITH BUILDING YOUR VERY OWN _MU(micro)_ EDITOR> THIS THING HERE LADIES & GENTS IS BUILT IN ITSELF IN VA WITH <3 | BE KIND!
 
-TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lines); self-explanatory code with 0 comments.
+TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lines); self-explanatory code with #0 comments.
 
 Llort Xinu, from The Cod Institute had this to say:
 
