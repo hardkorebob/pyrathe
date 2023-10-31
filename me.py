@@ -102,6 +102,24 @@ class App:
         self.timerLabel.grid(row=0, column=0, sticky='sw')
         self.timelineThread()
 
+    def timelineThread(self):
+        self.char_line = threading.Thread(target=self.update_timerSymbol)
+        self.char_line.daemon = True
+        self.char_line.start()
+
+    def update_timerLabel(self, event=None):
+        cursor_position = self.timerBar.index(tk.INSERT)
+        line, col = cursor_position.split('.')
+        i = int(col)
+        c = int(line) - 1
+        self.timerLabel.configure(text=f"{str(c)}{str(i)}")
+
+    def update_timerSymbol(self):
+        while True:
+            self.timerBar.insert("end", ">")
+            self.update_timerLabel()
+            time.sleep(60)
+
     def textPad(self):
         self.paned = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashrelief=tk.RAISED, sashwidth=10, cursor="target", bg="black")
         self.paned.rowconfigure(0, weight=1)
@@ -174,24 +192,6 @@ class App:
             self.paned.forget(last_frame)
             last_frame.destroy()
         return "break"
-
-    def timelineThread(self):
-        self.char_line = threading.Thread(target=self.update_timeline)
-        self.char_line.daemon = True
-        self.char_line.start()
-
-    def update_time_position(self, event=None):
-        cursor_position = self.timerBar.index(tk.INSERT)
-        line, col = cursor_position.split('.')
-        i = int(col)
-        c = int(line) - 1
-        self.timerLabel.configure(text=f"{str(c)}{str(i)}")
-
-    def update_timeline(self):
-        while True:
-            self.timerBar.insert("end", ">")
-            self.update_time_position()
-            time.sleep(60)
 
     def update_cursor_position(self, event):
         focused = self.root.focus_get()
@@ -307,5 +307,3 @@ if __name__ == "__main__":
     root.configure(background="black")
     app = App(root)
     root.mainloop()
-
-#$%&*^ 19:57 cat me.py
