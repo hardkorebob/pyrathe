@@ -4,6 +4,7 @@ python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardko
 
 Tested: Debian, Mint, Chimera(musl) & Kali Linux.
 
+Tl;Dr :: hop on gtp, spat out some crap, i learned, here we are.
 
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
 
