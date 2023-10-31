@@ -211,6 +211,13 @@ class App:
             last_frame.destroy()
         return "break"
 
+    def add_indent(self, event):
+        text = event.widget
+        line = text.get("insert linestart", "insert")
+        match = re.match(r'^(\s+)', line)
+        whitespace = match.group(0) if match else ""
+        text.insert("insert", f"\n{whitespace}")
+
     def select_all_text(self, event):
         event.widget.tag_add("sel", "1.0", "end")
         return "break"
@@ -294,13 +301,6 @@ class App:
     def rss_program(self, event=None):
         os.execv(sys.executable, ['python3'] + sys.argv)
 
-    def add_indent(self, event):
-        text = event.widget
-        line = text.get("insert linestart", "insert")
-        match = re.match(r'^(\s+)', line)
-        whitespace = match.group(0) if match else ""
-        text.insert("insert", f"\n{whitespace}")
-
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -309,3 +309,4 @@ if __name__ == "__main__":
     root.mainloop()
 
 #$%&*^ 20:03 cat me.py
+#$%&*^ 20:05 cat me.py
