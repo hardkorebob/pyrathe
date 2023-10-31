@@ -274,7 +274,7 @@ class App:
         self.term_frame.rowconfigure(0, weight=1)
         self.term_frame.grid(row=0, column=0, sticky="nsew")
         wid = self.term_frame.winfo_id()
-        xterm = os.system("xterm -into %d -geometry 100x50 &" % wid)
+        xterm = os.system("xterm -into %d -geometry 200x50 &" % wid)
         self.txtPad_frames.append((self.term_frame, xterm))
         self.paned.add(self.term_frame)
 
@@ -502,4 +502,5 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-#$%&*^ 01:01 cat me.py
+#$%&*^ 01:25 cat me.py
+#$%&*^ 01:37 cat me.py
