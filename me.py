@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
-# Written by Roberto Rodriguez Jr
+# Written by Roberto Rodriguez Jr & ChatGPT
 # This editor rulez!
+# hardkorebob@gmail.com
+# Zettlekastenrhok v.999 [r.t.h.a.d.e]
+# Rapid Text Handling And Dev Environment
+# ratde.py: Rapid App & Text Dev Env
+# codwolf_Software HARDKOREBOB.github.io
+# Warranty: FREE WARRANTY 4 LIFE
+# License: This software is provided under PRIVATE LICENSE.
+# PyRathe v.1(python rapid app & txt handling env
 import tkinter as tk
 import tkinter.font as font
 import threading
@@ -312,3 +320,4 @@ if __name__ == "__main__":
 #$%&*^ 20:03 cat me.py
 #$%&*^ 20:05 cat me.py
 #$%&*^ 20:08 cat me.py
+#$%&*^ 20:10 cat me.py
