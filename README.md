@@ -2,7 +2,7 @@ WARNING! EDUCATIONAL PUERPOSES ONLY! THE MAN BEHIND ALL THIS IS REALLY A BIRD OF
 
 # pyrathe
 
-Tl;Dr :: hop'd on c_gpt - it_spat out some crap + i_learned = here we are :: Type (elite_h4x0r)
+_Tl;Dr :: hop'd on c_gpt - it_spat out some crap + i_learned = here we are :: Type (elite_h4x0r)_
 
 A SIMPLE PYTHON EDITOR 4 NEWBIE PROGRAMMERS. 4 REALZ_ 
 
