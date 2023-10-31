@@ -313,6 +313,7 @@ class App:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.geometry("999x666+100+100")
     root.title("#$%&*^  PyRathe   #allerrorsmatter")
     root.configure(background="black")
     app = App(root)
@@ -320,4 +321,5 @@ if __name__ == "__main__":
 
 #$%&*^ 20:18 cat me.py
 #$%&*^ 20:43 cat me.py
-#$%&*^ 20:46 cat me.py
+#$%&*^ 22:05 cat me.py
+#$%&*^ 22:06 cat me.py
