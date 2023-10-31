@@ -17,6 +17,8 @@ Depends:
 
 ---
 
+github.com/AlDanial/cloc v 1.94  T=0.02 s (48.9 files/s, 15686.9 lines/s)
+
 files          blank        comment           code 
 
 1             49             23            249 
