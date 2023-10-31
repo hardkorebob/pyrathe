@@ -10,7 +10,7 @@ THE _BEST_ WAY TO LEARN CODE with mu: IS A WITH BUILDING YOUR VERY OWN _MU(micro
 
 TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lines); self-explanatory code with 0 comments.
 
-Llort Xinu, from codwolf_Software had this to say:
+Llort Xinu, from The Cod Institute had this to say:
 
    _pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces [_](https://github.com/mu-editor/mu/blob/master/mu/logic.py)ofDeath and 70,000 lines of boiler PLUS QT(yuck). Pheeeww..... But you can go use that thing if you want  Good luck chuck!. Im confused honestly how that thing is considered simple. What can you expect when you get designs from teachers. They teach not get heuristics done. This lil silly app here is truly THE micro editor._
 
