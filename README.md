@@ -10,11 +10,11 @@ THE _BEST_ WAY TO LEARN CODE with mu: IS A WITH BUILDING YOUR VERY OWN _MU(micro
 
 TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lines); self-explanatory code with 0 comments.
 
-pyrathe is a Python3 code editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self.
-
 pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces _ofDeath and 70,000 lines of text PLUS QT(yuck). Pheeeww.....
 
-also known as
+pyrathe is a Python3 code editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self.
+
+acronym for:
 
 python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardkorebob/tinywm) {in: scrot below}
 @505 lines (468 loc) · 18.7 KB
