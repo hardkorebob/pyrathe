@@ -2,8 +2,6 @@
 python rapid app &amp; txt handling env & [tinywm](https://www.github.com/hardkorebob/tinywm) {in: scrot below}
 @505 lines (468 loc) · 18.7 KB
 
-Development Operations: OpenBSD74 and dwm.
-
 Tested: Debian, Mint, Chimera(musl) & Kali Linux.
 
 
