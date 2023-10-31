@@ -304,9 +304,11 @@ class App:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.title("#$%&*^  PyRathe   #allerrorsmatter")
     root.configure(background="black")
     app = App(root)
     root.mainloop()
 
 #$%&*^ 20:03 cat me.py
 #$%&*^ 20:05 cat me.py
+#$%&*^ 20:08 cat me.py
