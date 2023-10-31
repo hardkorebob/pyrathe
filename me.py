@@ -120,6 +120,24 @@ class App:
             self.update_timerLabel()
             time.sleep(60)
 
+    def update_cursor_position(self, event):
+        focused = self.root.focus_get()
+        if isinstance(focused, tk.Text):
+            cursor_position = focused.index(tk.INSERT)
+            line, col = cursor_position.split('.')
+            self.cpos.configure(text=f"{line},{col}")
+            self.line_numbers.configure(state='normal')
+            self.line_numbers.delete('1.0', tk.END)
+            first, last = focused.yview()
+
+            first_line = int(first * float(focused.index('end').split('.')[0]))
+            last_line = int(last * float(focused.index('end').split('.')[0]))
+
+            line_numbers = "\n".join(str(i) for i in range(first_line+1, last_line))
+            self.line_numbers.insert('1.0', line_numbers)
+            self.line_numbers.configure(state='disabled')
+            self.line_numbers.yview_moveto(first)
+
     def textPad(self):
         self.paned = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashrelief=tk.RAISED, sashwidth=10, cursor="target", bg="black")
         self.paned.rowconfigure(0, weight=1)
@@ -192,24 +210,6 @@ class App:
             self.paned.forget(last_frame)
             last_frame.destroy()
         return "break"
-
-    def update_cursor_position(self, event):
-        focused = self.root.focus_get()
-        if isinstance(focused, tk.Text):
-            cursor_position = focused.index(tk.INSERT)
-            line, col = cursor_position.split('.')
-            self.cpos.configure(text=f"{line},{col}")
-            self.line_numbers.configure(state='normal')
-            self.line_numbers.delete('1.0', tk.END)
-            first, last = focused.yview()
-
-            first_line = int(first * float(focused.index('end').split('.')[0]))
-            last_line = int(last * float(focused.index('end').split('.')[0]))
-
-            line_numbers = "\n".join(str(i) for i in range(first_line+1, last_line))
-            self.line_numbers.insert('1.0', line_numbers)
-            self.line_numbers.configure(state='disabled')
-            self.line_numbers.yview_moveto(first)
 
     def select_all_text(self, event):
         event.widget.tag_add("sel", "1.0", "end")
@@ -307,3 +307,5 @@ if __name__ == "__main__":
     root.configure(background="black")
     app = App(root)
     root.mainloop()
+
+#$%&*^ 20:03 cat me.py
