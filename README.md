@@ -8,7 +8,7 @@ A SIMPLE PYTHON EDITOR 4 NEWBIE PROGRAMMERS. 4 REALZ_
 
 THE _BEST_ WAY TO LEARN CODE with mu: IS A WITH BUILDING YOUR VERY OWN _MU(micro)_ EDITOR> THIS THING HERE LADIES & GENTS IS BUILT IN ITSELF IN VA WITH <3 | BE KIND!
 
-TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lines);
+TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lines); self-explanatory code with 0 comments.
 
 pyrathe is a Python3 code editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self.
 
