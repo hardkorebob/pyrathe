@@ -354,7 +354,7 @@ class App:
         )
         self.url_entry.grid(row=0, column=5, sticky="nsew", padx=3)
         self.url_button = tk.Button(
-            self.searchFrame, bg="black", fg="red", text="GET", command=self.getUrldata
+            self.searchFrame, bg="black", fg="red", text="Go", command=self.getUrldata
         )
         self.url_button.grid(row=0, column=6, sticky="nsew", padx=3)
 
@@ -611,3 +611,7 @@ if __name__ == "__main__":
     root.mainloop()
 
 
+
+
+#$%&*^ 14:16 cat me.py
+#$%&*^ 14:17 cat me.py
