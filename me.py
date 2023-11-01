@@ -364,9 +364,13 @@ class App:
 
     def getUrldata(self, event=None): 
         url = self.url_entry.get()
-        self.getUrl = requests.get(url) 
-        self.txtPad.insert("1.0", f"{self.getUrl.text}\n")
-        self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} GET HTTP_ {url}\n")
+        try:
+            response = requests.get(url, timeout=5) 
+            self.txtPad.insert("1.0", f"{response.text}\n")
+            status_msg = f"GET {url} HTTP/1.1 {response.status_code} {response.reason}"
+            self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {status_msg}\n")
+        except requests.exceptions.RequestException as e:
+            self.msgBar.insert("1.0", f"Error: {str(e)}\n")
 
     def search(self, event=None):
         focused = self.txtPad.focus_get()
@@ -593,4 +597,5 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-#$%&*^ 04:47 cat me.py
+#$%&*^ 01:25 meow me.py
+#$%&*^ 04:58 cat me.py
