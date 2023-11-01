@@ -75,7 +75,7 @@ class App:
         self.root.bind_all("<Control-X>", self.add_term_tab)
         self.root.bind_all("<Control-Z>", self.add_py_tab)
         self.root.bind_all("<Control-u>", self.backkill)
-        self.root.bind_all("<Return>", self.add_indent)
+        self.root.bind_all("<Control-o>", self.add_indent)
         self.root.bind_all("<Control-f>", self.get_fun_fact)
         self.root.bind_all("<Control-w>", self.weather)
         self.root.bind_all("<Control-g>", self.goto_next_search)
@@ -309,6 +309,7 @@ class App:
         match = re.match(r"^(\s+)", line)
         whitespace = match.group(0) if match else ""
         text.insert("insert", f"\n{whitespace}")
+        return "break"
 
     def createUtilBar(self):
         self.searchFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
@@ -592,74 +593,4 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-#$%&*^ 01:25 meow me.py
-#$%&*^ 17:33 meow me.py
-#$%&*^ 17:33 meow me.py
-#$%&*^ 20:54 meow me.py
-#$%&*^ 20:54 meow me.py
-#$%&*^ 20:56 meow me.py
-#$%&*^ 20:57 meow me.py
-#$%&*^ 20:58 meow me.py
-#$%&*^ 21:01 meow me.py
-#$%&*^ 21:02 meow me.py
-#$%&*^ 21:02 meow me.py
-#$%&*^ 00:55 meow me.py
-
-#$%&*^ 01:00 meow me.py
-#$%&*^ 01:01 meow me.py
-#$%&*^ 01:10 meow me.py
-#$%&*^ 01:13 meow me.py
-#$%&*^ 01:34 meow me.py
-#$%&*^ 01:38 meow me.py
-#$%&*^ 01:40 meow me.py
-#$%&*^ 01:42 meow me.py
-#$%&*^ 01:43 meow me.py
-#$%&*^ 01:44 meow me.py
-#$%&*^ 01:48 meow me.py
-#$%&*^ 01:49 meow me.py
-
-#$%&*^ 01:53 meow me.py
-#$%&*^ 01:56 meow me.py
-#$%&*^ 02:02 meow me.py
-#$%&*^ 02:11 meow me.py
-#$%&*^ 02:14 meow me.py
-#$%&*^ 02:15 meow me.py
-#$%&*^ 02:22 meow me.py
-#$%&*^ 02:24 meow me.py
-#$%&*^ 02:26 meow me.py
-#$%&*^ 02:33 meow me.py
-
-
-
-
-#$%&*^ 02:35 cat me.py
-#$%&*^ 02:37 cat me.py
-#$%&*^ 02:39 cat me.py
-#$%&*^ 02:43 cat me.py
-#$%&*^ 02:46 cat me.py
-#$%&*^ 02:48 cat me.py
-#$%&*^ 02:49 cat me.py
-#$%&*^ 02:53 cat me.py
-#$%&*^ 02:55 cat me.py
-#$%&*^ 03:00 cat me.py
-#$%&*^ 03:03 cat me.py
-#$%&*^ 03:09 cat me.py
-#$%&*^ 03:12 cat me.py
-#$%&*^ 03:40 cat me.py
-#$%&*^ 03:41 cat me.py
-#$%&*^ 03:43 cat me.py
-
-#$%&*^ 03:52 cat me.py
-#$%&*^ 03:54 cat me.py
-#$%&*^ 03:54 
-#$%&*^ 03:56 cat me.py
-#$%&*^ 03:58 cat me.py
-#$%&*^ 04:00 cat me.py
-#$%&*^ 04:04 cat me.py
-#$%&*^ 04:06 cat me.py
-#$%&*^ 04:08 cat me.py
-#$%&*^ 04:25 cat me.py
-#$%&*^ 04:26 cat me.py
-#$%&*^ 04:26 cat me.py
-
-#$%&*^ 04:33 cat me.py
+#$%&*^ 04:47 cat me.py
