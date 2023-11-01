@@ -81,6 +81,8 @@ class App:
         self.root.bind_all("<Control-u>", self.backkill)
         self.root.bind_all("<Control-z>", self.add_indent)
         self.root.bind_all("<Control-f>", self.get_fun_fact)
+        self.root.bind_all("<Control-w>", self.weather)
+
 
 
     def pyrathe_init(self):
@@ -109,6 +111,7 @@ class App:
             highlightbackground="black",
             insertwidth=10,
             height=6,
+            wrap=tk.WORD,
         )
         self.msgBar.grid(row=0, column=0, sticky="nsew")
 
@@ -386,12 +389,36 @@ class App:
                 f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} ALL*Replaced_ {search_text} {replace_text}\n",
             )
 
+    def weather(self, event=None):
+        command = "curl http://wttr.in > w ; perl ./fmtw w | head -7"
+        try:
+            weather = subprocess.run(
+                command,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+            if weather.returncode == 0:
+                self.msgBar.insert("1.0", f"{weather.stdout}")
+            else:
+                self.msgBar.insert(
+                    "1.0",
+                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')}\n{weather.stderr}\n",
+                )
+        except Exception as e:
+            self.msgBar.insert(
+                "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')}\n{str(e)}\n"
+            )
+        return "break"
+
+
     def get_fun_fact(self, event=None): 
         url = "https://uselessfacts.jsph.pl/random.json?language=en"
         self.response = requests.request("GET", url)   
         self.data = json.loads(self.response.text)
         useless_fact = self.data['text']
-        event.widget.insert("1.0", f"{useless_fact}")
+        self.msgBar.insert("1.0", f"{useless_fact}\n")
         return "break"
 
     def select_all_text(self, event):
@@ -532,3 +559,13 @@ if __name__ == "__main__":
 
 #$%&*^ 01:00 cat me.py
 #$%&*^ 01:01 cat me.py
+#$%&*^ 01:10 cat me.py
+#$%&*^ 01:13 cat me.py
+#$%&*^ 01:34 cat me.py
+#$%&*^ 01:38 cat me.py
+#$%&*^ 01:40 cat me.py
+#$%&*^ 01:42 cat me.py
+#$%&*^ 01:43 cat me.py
+#$%&*^ 01:44 cat me.py
+#$%&*^ 01:48 cat me.py
+#$%&*^ 01:49 cat me.py
