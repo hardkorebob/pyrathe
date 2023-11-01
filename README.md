@@ -46,7 +46,7 @@ ONLY RUNS in Protected-mod on Win95
 
 ---
 
-🕉 Improvements coming! 🇵🇷 | -🤓- ... && a big shout to a dude faking to be another dude's bro, [No](https://www.youtube.com/watch?v=bJQj1uKtnus&pp=ygUbbm8gYm9pbGVycGxhdGUgY3VsdCBvZiBkb25l) Boilerplate... you turned me into CODwolf. Big hug and thanks! But a true thank you very much to all(in: *time) the hackers dead & alive hacking with me. Maybe one day you will see this ;) RIP Angelo
+🕉 Improvements coming! 🇵🇷 | -🤓- ... && a big shout to a dude faking to be another dude's bro, [No](https://www.youtube.com/watch?v=bJQj1uKtnus&pp=ygUbbm8gYm9pbGVycGxhdGUgY3VsdCBvZiBkb25l) Boilerplate... you turned me into CODwolf. Big hug and thanks! But a true thank you very much to all(in: *time) the hackers dead & alive hacking with me. Maybe one day you will see this ;)
 
 
 #allerrorsmatter #0xfu #dfc #ghd
@@ -54,3 +54,5 @@ ONLY RUNS in Protected-mod on Win95
 #hacktheplanet! #codwolf
 
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
+
+RIP Angelo 222019 :'(
