@@ -32,7 +32,7 @@ tested: debian, mint, chimera(musl) & kali linux.
 
 Depends:
 
-  python-3.10
+  python3
   
   python-idle : Syntax
   
