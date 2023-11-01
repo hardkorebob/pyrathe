@@ -2,28 +2,27 @@ WARNING! EDUCATIONAL PUERPOSES ONLY! THE MAN BEHIND ALL THIS IS REALLY dA BIRD O
 
 # pyrathe
 
-_Tl;Dr :: hop'd on c_gpt - it_spat out some crap + i_learned = here we are :: Type (elite_h4x0r)_
+tl;dr :: hop'd on c_gpt - it_spat out some crap + i_learned = here we are :: type (elite_h4x0r)
 
-A SIMPLE PYTHON EDITOR 4 NEWBIE PROGRAMMERS. 4 REALZ_ 
+a simple python editor 4 newbie programmers. 4 realz_
 
-THE _BEST_ WAY TO LEARN CODE with mu: IS A WITH BUILDING YOUR VERY OWN _MU(micro)_ EDITOR> THIS THING HERE LADIES & GENTS IS BUILT IN ITSELF IN VA WITH <3 | BE KIND!
+the best way to learn code with mu: is a with building your very own mu(micro) editor> this thing here ladies & gents is built in itself in va with <3 | be kind!
 
-TRULY THE SIMPLEST AND EASIEST WAY TO LEARN PYTHON. in isinstance(JUST, <600 lines); self-explanatory code with #0 comments.
+truly the simplest and easiest way to learn python. in isinstance(just, <600 lines); self-explanatory code with #0 comments.
 
-Llort Xinu, from The Cod Institute had this to say:
+Llort Xinu, from The COD Institute had this to say:
 
-   _pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces [_o](https://github.com/mu-editor/mu/blob/master/mu/logic.py)fDeath and 70,000 lines of boiler PLUS QT(yuck). Pheeeww..... But you can go use that thing if you want...[] Good luck chuck!. Im confused honestly how that thing is considered simple. What can you expect when you get designs from teachers. They teach not get heuristics done. This lil silly app here is truly THE micro editor._
+pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces _ofdeath and 70,000 lines of boiler plus qt(yuck). pheeeww..... but you can go use that thing if you want...[] good luck chuck!. im confused honestly how that thing is considered simple. what can you expect when you get designs from teachers. they teach not get heuristics done. this lil silly app here is truly the micro editor.
 
-pyrathe is a Python3 code editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self. @505 lines (468 loc) · 18.7 KB 
+pyrathe is a python3 code editor for beginner programmers based on 0 feedback from anyone but an ai and my artistic self. @505 lines (468 loc) · 18.7 kb
 
+acronym for:
 
-acronym for: 
+python rapid app & txt handling env | $(&+1m a l33t_pirate)
 
-python rapid app &amp; txt handling env | $(&+1m a l33t_pirate)
+& tinywm {in: scrot below}
 
-& [tinywm](https://www.github.com/hardkorebob/tinywm) {in: scrot below} 
-
-Tested: Debian, Mint, Chimera(musl) & Kali Linux.
+tested: debian, mint, chimera(musl) & kali linux.
 
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
 
