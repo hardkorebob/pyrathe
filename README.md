@@ -46,7 +46,7 @@ ONLY RUNS in Protected-mod on Win95
 
 ---
 
-🕉 Improvements coming! 🇵🇷 | -🤓-
+🕉 Improvements coming! 🇵🇷 | -🤓- ... && a big shout to a dude faking to be another dude's bro, No Boiler Plate... you turned me into CODwoldf!!!! Maybe one day you will see this ;)
 
 
 #allerrorsmatter #0xfu #dfc #ghd
