@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.11
 # Application: PyRathe
 # Version: v.1
 # Filename: me.py
@@ -87,6 +87,8 @@ class App:
         self.s_name = 0
         self.s_filetype = "_txt"
         self.txtPad_frames = []
+        self.last_index = None
+        self.occurrences = []
         self.myTimer()
         self.wtrFrame()
         self.msgBar()
@@ -96,7 +98,7 @@ class App:
         self.get_fun_fact()
 
     def myTimer(self):
-        self.timerFrame = tk.Frame(self.root, bg="black", pady=2, padx=10)
+        self.timerFrame = tk.Frame(self.root, bg="black", pady=1, padx=10)
         self.timerFrame.columnconfigure(0, weight=0)
         self.timerFrame.columnconfigure(1, weight=1)
         self.timerFrame.rowconfigure(0, weight=1)
@@ -172,6 +174,7 @@ class App:
             insertwidth=10,
             height=12,
             wrap=tk.WORD,
+            setgrid=True
         )
         self.msgBar.grid(row=0, column=0, sticky="nsew")
 
@@ -202,19 +205,21 @@ class App:
             insertbackground="red",
             font=self.font,
             cursor="heart",
-            highlightbackground="black",
+            highlightbackground="#333",
             insertwidth=4,
             spacing1=9,
-            spacing3=10,
+            spacing3=9,
             padx=5,
             undo=True,
+            setgrid=True,
+
         )
         Percolator(self.txtPad).insertfilter(ColorDelegator())
         self.txtPad.grid(row=0, column=0, sticky="nsew")
         self.paned.add(self.mainTxtFrame)
         self.txtPad.focus_set()
 
-        self.lineFrame = tk.Frame(self.root, bg="black", padx=10, pady=8)
+        self.lineFrame = tk.Frame(self.root, bg="black", padx=10, pady=5)
         self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(0, weight=0)
         self.lineFrame.grid(row=2, column=0, sticky="nesw")
@@ -224,11 +229,12 @@ class App:
             bg="#000",
             fg="#666",
             font=self.font,
-            highlightbackground="black",
+            highlightbackground="#000",
             cursor="spider",
-            spacing1=10,
-            spacing3=10,
+            spacing1=9,
+            spacing3=9,
             width=5,
+            setgrid=True,
         )
         self.line_numbers.grid(row=0, column=0, sticky="nswe")
 
@@ -305,9 +311,10 @@ class App:
             insertbackground="red",
             font=self.font,
             cursor="heart",
-            highlightbackground="black",
+            highlightbackground="#333",
             padx=5,
             undo=True,
+            setgrid=True,
         )
         self.new_txtPad.grid(row=0, column=0, sticky="nsew")
         self.paned.add(self.new_frame)
@@ -463,32 +470,28 @@ class App:
         return "break"
 
     def search(self, event=None):
-        focused = self.root.focus_get()
-        if isinstance(focused, tk.Text):
-            focused.tag_remove("found", "1.0", tk.END)
-            self.search_text = self.search_entry.get()
-            if self.search_text:
-                idx = "1.0"
-                while True:
-                    idx = focused.search(
-                        self.search_text, idx, nocase=1, stopindex=tk.END
-                    )
-                    if not idx:
-                        break
-                    lastidx = f"{idx}+{len(self.search_text)}c"
-                    focused.tag_add("found", idx, lastidx)
-                    focused.tag_config("found", background="green")
-                    idx = lastidx
-                self.occurrences = list(focused.tag_ranges("found"))
+        self.txtPad.focus_set()
+        self.txtPad.tag_remove("found", "1.0", tk.END)
+        self.search_text = self.search_entry.get()
+        if self.search_text:
+            idx = "1.0"
+            while True:
+                idx = self.txtPad.search(self.search_text, idx, nocase=1, stopindex='end')
+                if not idx:
+                    break
+                lastidx = f"{idx}+{len(self.search_text)}c"
+                self.txtPad.tag_add("found", idx, lastidx)
+                idx = lastidx
+            self.occurrences = list(self.txtPad.tag_ranges("found"))
+            if self.occurrences:
+                self.last_index = 0
+                self.txtPad.mark_set("insert", self.occurrences[0])
+                self.txtPad.see(self.occurrences[0])
             else:
-                self.msgBar.insert(
-                        "1.0",
-                        f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {self.search_text} Not Found!\n",
-                    )
-                if self.occurrences:
-                    self.last_index = 0
-                    focused.mark_set("insert", self.occurrences[0])
-                    focused.see(self.occurrences[0])
+                self.msgBar.insert("1.0", "#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {self.search_text} not found!\n")
+        else:
+            self.msgBar.insert("1.0", "#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Enter text to search.\n")
+
 
     def goto_next_search(self, event=None):
         focused = self.root.focus_get()
@@ -552,15 +555,17 @@ class App:
                 cursor_position = focused.index(tk.INSERT)
                 line, col = cursor_position.split(".")
                 self.cpos.configure(text=f"{line},{col}")
+
                 self.line_numbers.configure(state="normal")
                 self.line_numbers.delete("1.0", tk.END)
                 first, last = focused.yview()
                 first_line = int(first * float(focused.index("end").split(".")[0]))
                 last_line = int(last * float(focused.index("end").split(".")[0]))
                 line_numbers = "\n".join(
-                    str(i) for i in range(first_line + 1, last_line)
+                    str(i) for i in range(first_line, last_line)
                 )
                 self.line_numbers.insert("1.0", line_numbers)
+                self.line_numbers.delete("end-1c", "end")
                 self.line_numbers.configure(state="disabled")
                 self.line_numbers.yview_moveto(first)
         except KeyError:
@@ -691,5 +696,3 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-
-#$%&*^ 17:47 cat me.py
