@@ -38,7 +38,7 @@ Depends:
   
   python-tkinter : GUI
 
-  pip install pywebio
+  pip install python-tr
   
   pip install requests
 
