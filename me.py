@@ -11,12 +11,12 @@
 
 import tkinter as tk
 import tkinter.font as font
-import threading
 import os
 import sys
 import re
 import time
 import datetime
+import threading
 import subprocess
 import requests
 from idlelib.percolator import Percolator
@@ -75,9 +75,11 @@ class App:
         self.root.bind_all("<Control-X>", self.add_term_tab)
         self.root.bind_all("<Control-Z>", self.add_py_tab)
         self.root.bind_all("<Control-u>", self.kill_line)
-        self.root.bind_all("<Control-o>", self.add_indent)
+        self.root.bind_all("<Control-I>", self.add_indent)
         self.root.bind_all("<Control-f>", self.get_fun_fact)
         self.root.bind_all("<Control-w>", self.weather)
+        self.root.bind_all("<Control-W>", self.full_weather)
+        self.root.bind_all("<Control-H>", self.gethistData)
         self.root.bind_all("<Control-g>", self.goto_next_search)
         self.root.bind_all("<Control-j>", self.goto_previous_search)
 
@@ -94,7 +96,7 @@ class App:
         self.get_fun_fact()
 
     def myTimer(self):
-        self.timerFrame = tk.Frame(self.root, bg="black", pady=5, padx=10)
+        self.timerFrame = tk.Frame(self.root, bg="black", pady=2, padx=10)
         self.timerFrame.columnconfigure(0, weight=0)
         self.timerFrame.columnconfigure(1, weight=1)
         self.timerFrame.rowconfigure(0, weight=1)
@@ -130,14 +132,14 @@ class App:
         c = int(line) - 1
         self.timerLabel.configure(text=f"{str(c)}{str(i)}min")
 
-    def update_timerSymbol(self):
+    def update_timerSymbol(self, event=None):
         while True:
             self.timerBar.insert("end", ">")
             self.update_timerLabel()
             time.sleep(60)
 
     def wtrFrame(self):
-        self.wtrFrame = tk.Frame(self.root, padx=10, pady=10, bg="black")
+        self.wtrFrame = tk.Frame(self.root, padx=10, bg="black")
         self.wtrFrame.rowconfigure(0, weight=0)
         self.wtrFrame.columnconfigure(0, weight=0)
         self.wtrFrame.grid(row=1, column=0, sticky="nsew")
@@ -182,11 +184,11 @@ class App:
             cursor="target",
             bg="black",
         )
-        self.paned.rowconfigure(2, weight=1)
-        self.paned.columnconfigure(1, weight=1)
+        self.paned.rowconfigure(0, weight=1)
+        self.paned.columnconfigure(0, weight=1)
         self.paned.grid(row=2, column=1, sticky="nsew", columnspan=2)
 
-        self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=11)
+        self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=10)
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky="nsew")
@@ -202,9 +204,9 @@ class App:
             cursor="heart",
             highlightbackground="black",
             insertwidth=4,
-            spacing1=10,
+            spacing1=9,
             spacing3=10,
-            padx=10,
+            padx=5,
             undo=True,
         )
         Percolator(self.txtPad).insertfilter(ColorDelegator())
@@ -212,8 +214,8 @@ class App:
         self.paned.add(self.mainTxtFrame)
         self.txtPad.focus_set()
 
-        self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
-        self.lineFrame.rowconfigure(0, weight=0)
+        self.lineFrame = tk.Frame(self.root, bg="black", padx=10, pady=8)
+        self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(0, weight=0)
         self.lineFrame.grid(row=2, column=0, sticky="nesw")
         self.line_numbers = tk.Text(
@@ -226,51 +228,43 @@ class App:
             cursor="spider",
             spacing1=10,
             spacing3=10,
-            width=4,
-            pady=3,
+            width=5,
         )
         self.line_numbers.grid(row=0, column=0, sticky="nswe")
-
-        self.cposFrame = tk.Frame(self.root, bg="black", padx=5, pady=15)
-        self.cposFrame.rowconfigure(0, weight=0)
-        self.cposFrame.columnconfigure(0, weight=0)
-        self.cposFrame.grid(row=3, column=0, sticky="nesw")
-        self.cpos = tk.Label(
-            self.cposFrame, text="1,0", bg="black", fg="#777", font=self.font
-        )
-        self.cpos.grid(row=0, column=0, sticky="sw")
 
     def createUtilBar(self):
         self.utilFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
         self.utilFrame.rowconfigure(0, weight=1)
-        self.utilFrame.columnconfigure(0, weight=0)
+        self.utilFrame.columnconfigure(0, weight=1)
         self.utilFrame.columnconfigure(1, weight=0)
         self.utilFrame.columnconfigure(2, weight=0)
         self.utilFrame.columnconfigure(3, weight=0)
         self.utilFrame.columnconfigure(4, weight=0)
-        self.utilFrame.columnconfigure(5, weight=1)
-        self.utilFrame.columnconfigure(6, weight=0)
+        self.utilFrame.columnconfigure(5, weight=0)
+        self.utilFrame.columnconfigure(6, weight=1)
         self.utilFrame.columnconfigure(7, weight=0)
         self.utilFrame.columnconfigure(8, weight=0)
-
-        self.utilFrame.grid(row=3, column=1, sticky="nsew")
-
+        self.utilFrame.grid(row=3, column=0, sticky="nsew", columnspan=2)
+        self.cpos = tk.Label(
+            self.utilFrame, text="1,0", bg="black", fg="#777", font=self.font,
+        )
+        self.cpos.grid(row=0, column=0, sticky="nsew")
         self.search_entry = tk.Entry(
             self.utilFrame, bg="black", fg="red", insertbackground="red"
         )
-        self.search_entry.grid(row=0, column=0, sticky="nsw", padx=2)
+        self.search_entry.grid(row=0, column=1, sticky="nsw", padx=2)
         self.replace_entry = tk.Entry(
             self.utilFrame, bg="black", fg="red", insertbackground="red"
         )
-        self.replace_entry.grid(row=0, column=1, sticky="nsw", padx=2)
+        self.replace_entry.grid(row=0, column=2, sticky="nsw", padx=2)
         self.search_button = tk.Button(
             self.utilFrame, bg="black", fg="#777", text="Search", command=self.search
         )
-        self.search_button.grid(row=0, column=2, sticky="nsw", padx=2)
+        self.search_button.grid(row=0, column=3, sticky="nsw", padx=2)
         self.replace_button = tk.Button(
             self.utilFrame, bg="black", fg="#777", text="Replace", command=self.replace
         )
-        self.replace_button.grid(row=0, column=3, sticky="nsw", padx=2)
+        self.replace_button.grid(row=0, column=4, sticky="nsw", padx=2)
         self.replace_all_button = tk.Button(
             self.utilFrame,
             bg="black",
@@ -278,7 +272,7 @@ class App:
             text="Replace All",
             command=self.replace_all,
         )
-        self.replace_all_button.grid(row=0, column=4, sticky="nsw", padx=3)
+        self.replace_all_button.grid(row=0, column=5, sticky="nsw", padx=3)
 
         self.url_entry = tk.Entry(
             self.utilFrame,
@@ -286,18 +280,18 @@ class App:
             fg="red",
             insertbackground="red",
         )
-        self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
+        self.url_entry.grid(row=0, column=6, sticky="ewns", padx=3)
         self.url_button = tk.Button(
             self.utilFrame, bg="black", fg="#777", text="Go", command=self.getUrldata
         )
-        self.url_button.grid(row=0, column=6, sticky="wens", padx=3)
+        self.url_button.grid(row=0, column=7, sticky="wens", padx=3)
         self.hist_button = tk.Button(
             self.utilFrame, bg="black", fg="#777", text="H", command=self.gethistData
         )
-        self.hist_button.grid(row=0, column=7, sticky="wens", padx=3)
+        self.hist_button.grid(row=0, column=8, sticky="wens", padx=3)
 
     def add_new_tab(self, event=None):
-        self.new_frame = tk.Frame(self.paned, bg="black")
+        self.new_frame = tk.Frame(self.paned, bg="black", padx=10)
         self.new_frame.columnconfigure(0, weight=1)
         self.new_frame.rowconfigure(0, weight=1)
         self.new_frame.grid(row=0, column=0, sticky="nsew")
@@ -312,7 +306,7 @@ class App:
             font=self.font,
             cursor="heart",
             highlightbackground="black",
-            padx=10,
+            padx=5,
             undo=True,
         )
         self.new_txtPad.grid(row=0, column=0, sticky="nsew")
@@ -469,8 +463,7 @@ class App:
         return "break"
 
     def search(self, event=None):
-        focused = self.txtPad.focus_get()
-        self.txtPad.focus_set()
+        focused = self.root.focus_get()
         if isinstance(focused, tk.Text):
             focused.tag_remove("found", "1.0", tk.END)
             self.search_text = self.search_entry.get()
@@ -487,6 +480,11 @@ class App:
                     focused.tag_config("found", background="green")
                     idx = lastidx
                 self.occurrences = list(focused.tag_ranges("found"))
+            else:
+                self.msgBar.insert(
+                        "1.0",
+                        f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {self.search_text} Not Found!\n",
+                    )
                 if self.occurrences:
                     self.last_index = 0
                     focused.mark_set("insert", self.occurrences[0])
@@ -714,3 +712,36 @@ if __name__ == "__main__":
 # $%&*^ 16:10 cat me.py
 # $%&*^ 16:13 cat me.py
 # $%&*^ 16:14 cat me.py
+
+#$%&*^ 16:21 cat me.py
+#$%&*^ 16:22 cat me.py
+#$%&*^ 16:27 cat me.py
+#$%&*^ 16:30 cat me.py
+#$%&*^ 16:33 cat me.py
+#$%&*^ 16:37 cat me.py
+#$%&*^ 16:45 cat me.py
+#$%&*^ 16:45 cat me.py
+#$%&*^ 16:46 cat me.py
+#$%&*^ 16:49 cat me.py
+#$%&*^ 16:51 cat me.py
+#$%&*^ 16:52 cat me.py
+#$%&*^ 16:56 cat me.py
+#$%&*^ 16:58 cat me.py
+#$%&*^ 16:59 cat me.py
+#$%&*^ 17:01 cat me.py
+#$%&*^ 17:02 cat me.py
+#$%&*^ 17:03 cat me.py
+#$%&*^ 17:05 cat me.py
+#$%&*^ 17:11 cat me.py
+#$%&*^ 17:13 cat me.py
+#$%&*^ 17:13 cat me.py
+
+#$%&*^ 17:19 cat me.py
+#$%&*^ 17:25 cat me.py
+#$%&*^ 17:26 cat me.py
+#$%&*^ 17:26 cat me.py
+#$%&*^ 17:27 cat me.py
+#$%&*^ 17:29 cat me.py
+#$%&*^ 17:33 cat me.py
+#$%&*^ 17:34 cat me.py
+#$%&*^ 17:35 cat me.py
