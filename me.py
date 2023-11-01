@@ -209,9 +209,9 @@ class App:
         self.txtPad.grid(row=0, column=0, sticky="nsew")
         self.paned.add(self.mainTxtFrame)
         self.txtPad.focus_set()
-        self.lineFrame = tk.Frame(self.root, bg="black", padx=10, pady=1)
-        self.lineFrame.rowconfigure(0, weight=1)
-        self.lineFrame.columnconfigure(1, weight=1)
+        self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
+        self.lineFrame.rowconfigure(0, weight=0)
+        self.lineFrame.columnconfigure(0, weight=0)
         self.lineFrame.grid(row=2, column=0, sticky="nsew")
         self.line_numbers = tk.Text(
             self.lineFrame,
@@ -222,7 +222,7 @@ class App:
             font=self.font,
             highlightbackground="black",
             cursor="spider",
-            spacing1=10.5,
+            spacing1=10,
             spacing3=10,
         )
         self.line_numbers.grid(row=0, column=0, sticky="nsew")
@@ -301,7 +301,7 @@ class App:
         text.insert("insert", f"\n{whitespace}")
 
     def doSearch(self):
-        self.searchFrame = tk.Frame(self.root, bg="#111", pady=15, padx=10)
+        self.searchFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
         self.searchFrame.rowconfigure(0, weight=1)
         self.searchFrame.grid(row=3, column=2, sticky="se")
         self.searchFrame.columnconfigure(0, weight=0)
@@ -309,17 +309,17 @@ class App:
         self.searchFrame.columnconfigure(2, weight=0)
         self.searchFrame.columnconfigure(3, weight=0)
         self.search_entry = tk.Entry(self.searchFrame, bg="black", fg="red")
-        self.search_entry.grid(row=0, column=0, sticky="nsew")
+        self.search_entry.grid(row=0, column=0, sticky="nsew", padx=3)
         self.replace_entry = tk.Entry(self.searchFrame, bg="black", fg="red")
-        self.replace_entry.grid(row=0, column=1, sticky="nsew")
+        self.replace_entry.grid(row=0, column=1, sticky="nsew", padx=3)
         self.search_button = tk.Button(
             self.searchFrame, bg="black", fg="red", text="Search", command=self.search
         )
-        self.search_button.grid(row=0, column=2, sticky="nsew")
+        self.search_button.grid(row=0, column=2, sticky="nsew", padx=3)
         self.replace_button = tk.Button(
             self.searchFrame, bg="black", fg="red", text="Replace", command=self.replace
         )
-        self.replace_button.grid(row=0, column=3, sticky="nsew")
+        self.replace_button.grid(row=0, column=3, sticky="nsew", padx=3)
         self.replace_all_button = tk.Button(
             self.searchFrame,
             bg="black",
@@ -327,7 +327,7 @@ class App:
             text="Replace All",
             command=self.replace_all,
         )
-        self.replace_all_button.grid(row=0, column=4, sticky="nsew")
+        self.replace_all_button.grid(row=0, column=4, sticky="nsew", padx=3)
 
     def search(self):
         focused = self.root.focus_get()
@@ -505,4 +505,12 @@ if __name__ == "__main__":
 #$%&*^ 01:25 cat me.py
 #$%&*^ 17:33 cat me.py
 #$%&*^ 17:33 cat me.py
-#$%&*^ 17:34 cat me.py
+#$%&*^ 20:54 cat me.py
+#$%&*^ 20:54 cat me.py
+#$%&*^ 20:56 cat me.py
+#$%&*^ 20:57 cat me.py
+#$%&*^ 20:58 cat me.py
+#$%&*^ 21:01 cat me.py
+#$%&*^ 21:02 cat me.py
+#$%&*^ 21:02 cat me.py
+#$%&*^ 21:03 cat me.py
