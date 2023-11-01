@@ -4,7 +4,7 @@ DISCLAIMER! FOR EDUCATIONAL/HUMOR PUERPOSES ONLY! #allerrorsmatter
 
 tl;dr :: hop'd on c_gpt - it_spat out some crap + i_learned = here we are :: type (elite_h4x0r)
 
-a "simple" python editor/plain text heaven, 4 newbie programmers. no cap.
+a "simple" python editor/plain text heaven/shell commander/raw http get/wttr.in/fun facts, 4 newbie programmers. no cap.
 
 the best way to learn code with mu: is a with building your very own mµ editor> this thing here ladies & gents is built in itself.
 
