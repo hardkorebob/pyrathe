@@ -36,8 +36,6 @@ class App:
         self.get_fun_fact()
         self.timelineThread()
 
-
-
     def rootConfig(self):
         self.root.columnconfigure(0, weight=0)
         self.root.columnconfigure(1, weight=1)
@@ -249,6 +247,58 @@ class App:
         )
         self.cpos.grid(row=0, column=0, sticky="sw")
 
+    def createUtilBar(self):
+        self.utilFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
+        self.utilFrame.rowconfigure(0, weight=1)
+        self.utilFrame.columnconfigure(0, weight=0)
+        self.utilFrame.columnconfigure(1, weight=0)
+        self.utilFrame.columnconfigure(2, weight=0)
+        self.utilFrame.columnconfigure(3, weight=0)
+        self.utilFrame.columnconfigure(4, weight=0)
+        self.utilFrame.columnconfigure(5, weight=1)
+        self.utilFrame.columnconfigure(6, weight=0)
+        self.utilFrame.columnconfigure(7, weight=0)
+        self.utilFrame.grid(row=3, column=1, sticky="nsew")
+
+        self.search_entry = tk.Entry(
+            self.utilFrame, bg="black", fg="red", insertbackground="red"
+        )
+        self.search_entry.grid(row=0, column=0, sticky="nsw", padx=2)
+        self.replace_entry = tk.Entry(
+            self.utilFrame, bg="black", fg="red", insertbackground="red"
+        )
+        self.replace_entry.grid(row=0, column=1, sticky="nsw", padx=2)
+        self.search_button = tk.Button(
+            self.utilFrame, bg="black", fg="#777", text="Search", command=self.search
+        )
+        self.search_button.grid(row=0, column=2, sticky="nsw", padx=2)
+        self.replace_button = tk.Button(
+            self.utilFrame, bg="black", fg="#777", text="Replace", command=self.replace
+        )
+        self.replace_button.grid(row=0, column=3, sticky="nsw", padx=2)
+        self.replace_all_button = tk.Button(
+            self.utilFrame,
+            bg="black",
+            fg="#777",
+            text="Replace All",
+            command=self.replace_all,
+        )
+        self.replace_all_button.grid(row=0, column=4, sticky="nsw", padx=3)
+
+        self.url_entry = tk.Entry(
+            self.utilFrame, bg="black", fg="red", insertbackground="red",
+        )
+        self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
+        self.url_button = tk.Button(
+            self.utilFrame, bg="black", fg="#777", text="Go", command=self.getUrldata
+        )
+        self.url_button.grid(row=0, column=6, sticky="wens", padx=3)
+        self.hist_button = tk.Button(
+            self.utilFrame, bg="black", fg="#777", text="H", command=self.gethistData
+        )
+        self.hist_button.grid(row=0, column=7, sticky="wens", padx=3)
+
+
     def add_new_tab(self, event=None):
         self.new_frame = tk.Frame(self.paned, bg="black")
         self.new_frame.columnconfigure(0, weight=1)
@@ -315,58 +365,6 @@ class App:
         whitespace = match.group(0) if match else ""
         text.insert("insert", f"\n{whitespace}")
         return "break"
-
-    def createUtilBar(self):
-        self.utilFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
-        self.utilFrame.rowconfigure(0, weight=1)
-        self.utilFrame.columnconfigure(0, weight=0)
-        self.utilFrame.columnconfigure(1, weight=0)
-        self.utilFrame.columnconfigure(2, weight=0)
-        self.utilFrame.columnconfigure(3, weight=0)
-        self.utilFrame.columnconfigure(4, weight=0)
-        self.utilFrame.columnconfigure(5, weight=1)
-        self.utilFrame.columnconfigure(6, weight=0)
-        self.utilFrame.columnconfigure(7, weight=0)
-
-        self.utilFrame.grid(row=3, column=1, sticky="nsew")
-
-        self.search_entry = tk.Entry(
-            self.utilFrame, bg="black", fg="red", insertbackground="red"
-        )
-        self.search_entry.grid(row=0, column=0, sticky="nsw", padx=2)
-        self.replace_entry = tk.Entry(
-            self.utilFrame, bg="black", fg="red", insertbackground="red"
-        )
-        self.replace_entry.grid(row=0, column=1, sticky="nsw", padx=2)
-        self.search_button = tk.Button(
-            self.utilFrame, bg="black", fg="red", text="Search", command=self.search
-        )
-        self.search_button.grid(row=0, column=2, sticky="nsw", padx=2)
-        self.replace_button = tk.Button(
-            self.utilFrame, bg="black", fg="red", text="Replace", command=self.replace
-        )
-        self.replace_button.grid(row=0, column=3, sticky="nsw", padx=2)
-        self.replace_all_button = tk.Button(
-            self.utilFrame,
-            bg="black",
-            fg="red",
-            text="Replace All",
-            command=self.replace_all,
-        )
-        self.replace_all_button.grid(row=0, column=4, sticky="nsw", padx=3)
-
-        self.url_entry = tk.Entry(
-            self.utilFrame, bg="black", fg="red", insertbackground="red",
-        )
-        self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
-        self.url_button = tk.Button(
-            self.utilFrame, bg="black", fg="red", text="Go", command=self.getUrldata
-        )
-        self.url_button.grid(row=0, column=6, sticky="wens", padx=3)
-        self.hist_button = tk.Button(
-            self.utilFrame, bg="black", fg="red", text="H", command=self.gethistData
-        )
-        self.hist_button.grid(row=0, column=7, sticky="wens", padx=3)
 
     def get_fun_fact(self, event=None):
         url = "https://uselessfacts.jsph.pl/random.json?language=en"
@@ -650,36 +648,4 @@ if __name__ == "__main__":
     root.mainloop()
 
 
-
-
-#$%&*^ 14:16 cat me.py
-#$%&*^ 14:17 cat me.py
-#$%&*^ 14:19 cat me.py
-#$%&*^ 14:19 cat me.py
-#$%&*^ 14:20 cat me.py
-#$%&*^ 14:21 cat me.py
-#$%&*^ 14:22 cat me.py
-#$%&*^ 14:22 cat me.py
-#$%&*^ 14:23 cat me.py
-#$%&*^ 14:23 cat me.py
-
-#$%&*^ 14:25 cat me.py
-#$%&*^ 14:26 cat me.py
-#$%&*^ 14:28 cat me.py
-#$%&*^ 14:29 cat me.py
-#$%&*^ 14:30 cat me.py
-#$%&*^ 14:30 cat me.py
-#$%&*^ 14:31 cat me.py
-#$%&*^ 14:33 cat me.py
-#$%&*^ 14:33 cat me.py
-#$%&*^ 14:38 cat me.py
-#$%&*^ 14:39 cat me.py
-#$%&*^ 14:48 cat me.py
-#$%&*^ 15:18 cat me.py
-
-#$%&*^ 15:26 cat me.py
-
-#$%&*^ 15:27 cat me.py
-#$%&*^ 15:28 cat me.py
-#$%&*^ 15:29 cat me.py
-#$%&*^ 15:36 cat me.py
+#$%&*^ 15:41 cat me.py
