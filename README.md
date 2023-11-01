@@ -1,4 +1,4 @@
-WARNING! EDUCATIONAL PUERPOSES ONLY! #allerrorsmatter
+DISCLAIMER! FOR EDUCATIONAL/HUMOR PUERPOSES ONLY! #allerrorsmatter
 
 # pyrathe
 
