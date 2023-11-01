@@ -42,6 +42,7 @@ Depends:
   
   pip install requests
 
+  perl 
   
 ---
 
