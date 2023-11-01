@@ -691,5 +691,5 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-#$%&*^ 15:41 cat me.py
-#$%&*^ 17:35 cat me.py
+
+#$%&*^ 17:47 cat me.py
