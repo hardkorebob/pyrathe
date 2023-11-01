@@ -110,7 +110,7 @@ class App:
             cursor="pirate",
             highlightbackground="black",
             insertwidth=10,
-            height=6,
+            height=8,
             wrap=tk.WORD,
         )
         self.msgBar.grid(row=0, column=0, sticky="nsew")
@@ -313,7 +313,7 @@ class App:
     def doSearch(self):
         self.searchFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
         self.searchFrame.rowconfigure(0, weight=1)
-        self.searchFrame.grid(row=3, column=2, sticky="se")
+        self.searchFrame.grid(row=3, column=1, sticky="nsew")
         self.searchFrame.columnconfigure(0, weight=0)
         self.searchFrame.columnconfigure(1, weight=0)
         self.searchFrame.columnconfigure(2, weight=0)
@@ -571,4 +571,6 @@ if __name__ == "__main__":
 #$%&*^ 01:49 cat me.py
 
 #$%&*^ 01:53 cat me.py
-#$%&*^ 01:54 cat me.py
+#$%&*^ 01:56 cat me.py
+#$%&*^ 02:02 cat me.py
+#$%&*^ 02:02 cat me.py
