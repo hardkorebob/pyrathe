@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Applimeowion: PyRathe
+# Application: PyRathe
 # Version: v.1
 # Filename: me.py
 # Written: Roberto Rodriguez Jr & ChatGPT
@@ -36,7 +36,6 @@ class App:
     def rootConfig(self):
         self.root.columnconfigure(0, weight=0)
         self.root.columnconfigure(1, weight=1)
-        self.root.columnconfigure(2, weight=0)
         self.root.rowconfigure(0, weight=0)
         self.root.rowconfigure(1, weight=0)
         self.root.rowconfigure(2, weight=1)
@@ -74,7 +73,7 @@ class App:
         self.root.bind_all("<Control-C>", self.del_new_tab)
         self.root.bind_all("<Control-X>", self.add_term_tab)
         self.root.bind_all("<Control-Z>", self.add_py_tab)
-        self.root.bind_all("<Control-u>", self.backkill)
+        self.root.bind_all("<Control-u>", self.kill_line)
         self.root.bind_all("<Control-o>", self.add_indent)
         self.root.bind_all("<Control-f>", self.get_fun_fact)
         self.root.bind_all("<Control-w>", self.weather)
@@ -94,7 +93,7 @@ class App:
         self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10)
         self.msgBarFrame.rowconfigure(0, weight=1)
         self.msgBarFrame.columnconfigure(0, weight=1)
-        self.msgBarFrame.grid(row=1, column=1, sticky="nsew", columnspan=3)
+        self.msgBarFrame.grid(row=1, column=1, sticky="nsew", columnspan=2)
         self.msgBar = tk.Text(
             self.msgBarFrame,
             fg="red",
@@ -112,7 +111,7 @@ class App:
         self.msgBar.grid(row=0, column=0, sticky="nsew")
 
     def myTimer(self):
-        self.timerFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
+        self.timerFrame = tk.Frame(self.root, bg="black", pady=15, padx=9)
         self.timerFrame.columnconfigure(0, weight=1)
         self.timerFrame.rowconfigure(0, weight=1)
         self.timerFrame.grid(row=0, column=1, sticky="nsew", columnspan=2)
@@ -124,15 +123,15 @@ class App:
             highlightcolor="green",
             insertbackground="green",
             font=self.font,
-            cursor="pirate",
+            cursor="shuttle",
             highlightbackground="black",
             insertwidth=10,
             height=2,
         )
         self.timerBar.grid(row=0, column=0, sticky="nsew")
         self.timerLabelFrame = tk.Frame(self.root, bg="black", padx=5, pady=15)
-        self.timerLabelFrame.rowconfigure(0, weight=1)
-        self.timerLabelFrame.columnconfigure(0, weight=1)
+        self.timerLabelFrame.rowconfigure(0, weight=0)
+        self.timerLabelFrame.columnconfigure(0, weight=0)
         self.timerLabelFrame.grid(row=0, column=0, sticky="nw")
         self.timerLabel = tk.Label(
             self.timerLabelFrame, bg="black", fg="green", text="000", font=self.font
@@ -165,7 +164,7 @@ class App:
                 cursor_position = focused.index(tk.INSERT)
                 line, col = cursor_position.split(".")
                 self.cpos.configure(text=f"{line},{col}")
-                self.line_numbers.configure(state="normal")
+                # self.line_numbers.configure(state="normal")
                 self.line_numbers.delete("1.0", tk.END)
                 first, last = focused.yview()
                 first_line = int(first * float(focused.index("end").split(".")[0]))
@@ -174,7 +173,7 @@ class App:
                     str(i) for i in range(first_line + 1, last_line)
                 )
                 self.line_numbers.insert("1.0", line_numbers)
-                self.line_numbers.configure(state="disabled")
+                # self.line_numbers.configure(state="disabled")
                 self.line_numbers.yview_moveto(first)
         except KeyError:
             pass
@@ -190,8 +189,9 @@ class App:
         )
         self.paned.rowconfigure(0, weight=1)
         self.paned.columnconfigure(0, weight=1)
-        self.paned.grid(row=2, column=1, sticky="nsew", columnspan=3)
-        self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=10)
+        self.paned.grid(row=2, column=1, sticky="nsew", columnspan=2)
+
+        self.mainTxtFrame = tk.Frame(self.paned, bg="black")
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky="nsew")
@@ -216,13 +216,13 @@ class App:
         self.txtPad.grid(row=0, column=0, sticky="nsew")
         self.paned.add(self.mainTxtFrame)
         self.txtPad.focus_set()
+
         self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
         self.lineFrame.rowconfigure(0, weight=0)
         self.lineFrame.columnconfigure(0, weight=0)
-        self.lineFrame.grid(row=2, column=0, sticky="nsew")
+        self.lineFrame.grid(row=2, column=0, sticky="nsw")
         self.line_numbers = tk.Text(
             self.lineFrame,
-            width=5,
             relief=tk.FLAT,
             bg="#000",
             fg="#666",
@@ -231,11 +231,14 @@ class App:
             cursor="spider",
             spacing1=10,
             spacing3=10,
+            width=4,
+            pady=3,
         )
-        self.line_numbers.grid(row=0, column=0, sticky="nsew")
+        self.line_numbers.grid(row=0, column=0, sticky="nswe")
+
         self.cposFrame = tk.Frame(self.root, bg="black", padx=10, pady=15)
-        self.cposFrame.rowconfigure(0, weight=1)
-        self.cposFrame.columnconfigure(0, weight=1)
+        self.cposFrame.rowconfigure(0, weight=0)
+        self.cposFrame.columnconfigure(0, weight=0)
         self.cposFrame.grid(row=3, column=0, sticky="sw")
         self.cpos = tk.Label(
             self.cposFrame, text="1,0", bg="black", fg="#777", font=self.font
@@ -347,7 +350,7 @@ class App:
         self.replace_all_button.grid(row=0, column=4, sticky="nsew", padx=3)
 
         self.url_entry = tk.Entry(
-            self.searchFrame, bg="black", fg="red", insertbackground="red", width=18
+            self.searchFrame, bg="black", fg="red", insertbackground="red"
         )
         self.url_entry.grid(row=0, column=5, sticky="nsew", padx=3)
         self.url_button = tk.Button(
@@ -494,7 +497,7 @@ class App:
         event.widget.mark_set("insert", "end")
         return "break"
 
-    def backkill(self, event):
+    def kill_line(self, event):
         event.widget.delete("insert linestart", "insert lineend")
         return "break"
 
@@ -607,4 +610,4 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-#$%&*^ 04:59 cat me.py
+
