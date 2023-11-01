@@ -37,6 +37,11 @@ Depends:
   python-idle : Syntax
   
   python-tkinter : GUI
+
+  pip install pywebio
+  
+  pip install requests
+
   
 ---
 
