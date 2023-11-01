@@ -80,15 +80,11 @@ class App:
         self.root.bind_all("<Control-w>", self.weather)
         self.root.bind_all("<Control-W>", self.full_weather)
         self.root.bind_all("<Control-H>", self.gethistData)
-        self.root.bind_all("<Control-g>", self.goto_next_search)
-        self.root.bind_all("<Control-j>", self.goto_previous_search)
 
     def pyrathe_init(self):
         self.s_name = 0
         self.s_filetype = "_txt"
         self.txtPad_frames = []
-        self.last_index = None
-        self.occurrences = []
         self.myTimer()
         self.wtrFrame()
         self.msgBar()
@@ -174,7 +170,6 @@ class App:
             insertwidth=10,
             height=12,
             wrap=tk.WORD,
-            setgrid=True
         )
         self.msgBar.grid(row=0, column=0, sticky="nsew")
 
@@ -211,8 +206,6 @@ class App:
             spacing3=9,
             padx=5,
             undo=True,
-            setgrid=True,
-
         )
         Percolator(self.txtPad).insertfilter(ColorDelegator())
         self.txtPad.grid(row=0, column=0, sticky="nsew")
@@ -234,7 +227,6 @@ class App:
             spacing1=9,
             spacing3=9,
             width=5,
-            setgrid=True,
         )
         self.line_numbers.grid(row=0, column=0, sticky="nswe")
 
@@ -246,10 +238,9 @@ class App:
         self.utilFrame.columnconfigure(2, weight=0)
         self.utilFrame.columnconfigure(3, weight=0)
         self.utilFrame.columnconfigure(4, weight=0)
-        self.utilFrame.columnconfigure(5, weight=0)
-        self.utilFrame.columnconfigure(6, weight=1)
+        self.utilFrame.columnconfigure(5, weight=1)
+        self.utilFrame.columnconfigure(6, weight=0)
         self.utilFrame.columnconfigure(7, weight=0)
-        self.utilFrame.columnconfigure(8, weight=0)
         self.utilFrame.grid(row=3, column=0, sticky="nsew", columnspan=2)
         self.cpos = tk.Label(
             self.utilFrame, text="1,0", bg="black", fg="#777", font=self.font,
@@ -263,14 +254,10 @@ class App:
             self.utilFrame, bg="black", fg="red", insertbackground="red"
         )
         self.replace_entry.grid(row=0, column=2, sticky="nsw", padx=2)
-        self.search_button = tk.Button(
-            self.utilFrame, bg="black", fg="#777", text="Search", command=self.search
-        )
-        self.search_button.grid(row=0, column=3, sticky="nsw", padx=2)
         self.replace_button = tk.Button(
             self.utilFrame, bg="black", fg="#777", text="Replace", command=self.replace
         )
-        self.replace_button.grid(row=0, column=4, sticky="nsw", padx=2)
+        self.replace_button.grid(row=0, column=3, sticky="nsw", padx=2)
         self.replace_all_button = tk.Button(
             self.utilFrame,
             bg="black",
@@ -278,7 +265,7 @@ class App:
             text="Replace All",
             command=self.replace_all,
         )
-        self.replace_all_button.grid(row=0, column=5, sticky="nsw", padx=3)
+        self.replace_all_button.grid(row=0, column=4, sticky="nsw", padx=3)
 
         self.url_entry = tk.Entry(
             self.utilFrame,
@@ -286,15 +273,15 @@ class App:
             fg="red",
             insertbackground="red",
         )
-        self.url_entry.grid(row=0, column=6, sticky="ewns", padx=3)
+        self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
         self.url_button = tk.Button(
             self.utilFrame, bg="black", fg="#777", text="Go", command=self.getUrldata
         )
-        self.url_button.grid(row=0, column=7, sticky="wens", padx=3)
+        self.url_button.grid(row=0, column=6, sticky="wens", padx=3)
         self.hist_button = tk.Button(
             self.utilFrame, bg="black", fg="#777", text="H", command=self.gethistData
         )
-        self.hist_button.grid(row=0, column=8, sticky="wens", padx=3)
+        self.hist_button.grid(row=0, column=7, sticky="wens", padx=3)
 
     def add_new_tab(self, event=None):
         self.new_frame = tk.Frame(self.paned, bg="black", padx=10)
@@ -314,7 +301,6 @@ class App:
             highlightbackground="#333",
             padx=5,
             undo=True,
-            setgrid=True,
         )
         self.new_txtPad.grid(row=0, column=0, sticky="nsew")
         self.paned.add(self.new_frame)
@@ -468,46 +454,6 @@ class App:
                 "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
             )
         return "break"
-
-    def search(self, event=None):
-        self.txtPad.focus_set()
-        self.txtPad.tag_remove("found", "1.0", tk.END)
-        self.search_text = self.search_entry.get()
-        if self.search_text:
-            idx = "1.0"
-            while True:
-                idx = self.txtPad.search(self.search_text, idx, nocase=1, stopindex='end')
-                if not idx:
-                    break
-                lastidx = f"{idx}+{len(self.search_text)}c"
-                self.txtPad.tag_add("found", idx, lastidx)
-                idx = lastidx
-            self.occurrences = list(self.txtPad.tag_ranges("found"))
-            if self.occurrences:
-                self.last_index = 0
-                self.txtPad.mark_set("insert", self.occurrences[0])
-                self.txtPad.see(self.occurrences[0])
-            else:
-                self.msgBar.insert("1.0", "#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {self.search_text} not found!\n")
-        else:
-            self.msgBar.insert("1.0", "#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Enter text to search.\n")
-
-
-    def goto_next_search(self, event=None):
-        focused = self.root.focus_get()
-        if self.occurrences and self.last_index is not None:
-            self.last_index = (self.last_index + 1) % len(self.occurrences)
-            focused.mark_set("insert", self.occurrences[self.last_index])
-            focused.see(self.occurrences[self.last_index])
-            return "break"
-
-    def goto_previous_search(self, event=None):
-        focused = self.root.focus_get()
-        if self.occurrences and self.last_index is not None:
-            self.last_index = (self.last_index - 1) % len(self.occurrences)
-            focused.mark_set("insert", self.occurrences[self.last_index])
-            focused.see(self.occurrences[self.last_index])
-            return "break"
 
     def replace(self):
         focused = self.root.focus_get()
@@ -695,4 +641,3 @@ if __name__ == "__main__":
     root.configure(background="black")
     app = App(root)
     root.mainloop()
-
