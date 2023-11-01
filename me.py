@@ -18,11 +18,7 @@ import re
 import time
 import datetime
 import subprocess
-import json 
 import requests 
-from pywebio.input import *
-from pywebio.output import *
-from pywebio.session import *
 from idlelib.percolator import Percolator
 from idlelib.colorizer import ColorDelegator
 
@@ -79,7 +75,7 @@ class App:
         self.root.bind_all("<Control-X>", self.add_term_tab)
         self.root.bind_all("<Control-Z>", self.add_py_tab)
         self.root.bind_all("<Control-u>", self.backkill)
-        self.root.bind_all("<Shift-Return>", self.add_indent)
+        self.root.bind_all("<Return>", self.add_indent)
         self.root.bind_all("<Control-f>", self.get_fun_fact)
         self.root.bind_all("<Control-w>", self.weather)
         self.root.bind_all("<Control-g>", self.goto_next_search)
@@ -94,7 +90,7 @@ class App:
         self.myTimer()
         self.msgBar()
         self.textPad()
-        self.doSearch()
+        self.createUtilBar()
 
     def msgBar(self):
         self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10)
@@ -112,7 +108,7 @@ class App:
             cursor="pirate",
             highlightbackground="black",
             insertwidth=10,
-            height=8,
+            height=12,
             wrap=tk.WORD,
         )
         self.msgBar.grid(row=0, column=0, sticky="nsew")
@@ -314,7 +310,7 @@ class App:
         whitespace = match.group(0) if match else ""
         text.insert("insert", f"\n{whitespace}")
 
-    def doSearch(self):
+    def createUtilBar(self):
         self.searchFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
         self.searchFrame.rowconfigure(0, weight=1)
         self.searchFrame.grid(row=3, column=1, sticky="nsew")
@@ -322,6 +318,11 @@ class App:
         self.searchFrame.columnconfigure(1, weight=0)
         self.searchFrame.columnconfigure(2, weight=0)
         self.searchFrame.columnconfigure(3, weight=0)
+        self.searchFrame.columnconfigure(4, weight=0)
+        self.searchFrame.columnconfigure(5, weight=1)
+        self.searchFrame.columnconfigure(6, weight=0)
+
+
         self.search_entry = tk.Entry(self.searchFrame, bg="black", fg="red", insertbackground="red")
         self.search_entry.grid(row=0, column=0, sticky="nsew", padx=3)
         self.replace_entry = tk.Entry(self.searchFrame, bg="black", fg="red", insertbackground="red")
@@ -342,6 +343,30 @@ class App:
             command=self.replace_all,
         )
         self.replace_all_button.grid(row=0, column=4, sticky="nsew", padx=3)
+
+        self.url_entry = tk.Entry(self.searchFrame, bg="black", fg="red", insertbackground="red", width=18)
+        self.url_entry.grid(row=0, column=5, sticky="nsew", padx=3)
+        self.url_button = tk.Button(
+            self.searchFrame, bg="black", fg="red", text="GET", command=self.getUrldata
+        )
+        self.url_button.grid(row=0, column=6, sticky="nsew", padx=3)
+
+    def get_fun_fact(self, event=None): 
+        url = "https://uselessfacts.jsph.pl/random.json?language=en"
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            fact = data.get('text', '')
+            self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {fact}\n")
+        else:
+            self.msgBar.insert("1.0", "Failed to fetch the fact.\n")
+
+    def getUrldata(self, event=None): 
+        url = self.url_entry.get()
+        self.getUrl = requests.get(url) 
+        self.txtPad.insert("1.0", f"{self.getUrl.text}\n")
+        self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} GET HTTP_ {url}\n")
+
     def search(self, event=None):
         focused = self.txtPad.focus_get()
         self.txtPad.focus_set()
@@ -382,7 +407,6 @@ class App:
                
     def replace(self):
         focused = self.root.focus_get()
-        self.txtPad.focus_set()
         if isinstance(focused, tk.Text):
             search_text = self.search_entry.get()
             replace_text = self.replace_entry.get()
@@ -443,15 +467,6 @@ class App:
             )
         return "break"
 
-
-    def get_fun_fact(self, event=None): 
-        url = "https://uselessfacts.jsph.pl/random.json?language=en"
-        self.response = requests.request("GET", url)   
-        self.data = json.loads(self.response.text)
-        useless_fact = self.data['text']
-        self.msgBar.insert("1.0", f"{useless_fact}\n")
-        return "break"
-
     def select_all_text(self, event):
         event.widget.tag_add("sel", "1.0", "end")
         return "break"
@@ -469,7 +484,9 @@ class App:
         return "break"
 
     def clear_buffer(self, event):
-        event.widget.delete("1.0", "end")
+        focused = self.txtPad.focus_get()
+        if isinstance(focused, tk.Text):
+            focused.delete("1.0", "end")
         return "break"
 
     def save_focused_to_file(self, event):
@@ -627,4 +644,22 @@ if __name__ == "__main__":
 #$%&*^ 03:00 cat me.py
 #$%&*^ 03:03 cat me.py
 #$%&*^ 03:09 cat me.py
-#$%&*^ 03:11 cat me.py
+#$%&*^ 03:12 cat me.py
+#$%&*^ 03:40 cat me.py
+#$%&*^ 03:41 cat me.py
+#$%&*^ 03:43 cat me.py
+
+#$%&*^ 03:52 cat me.py
+#$%&*^ 03:54 cat me.py
+#$%&*^ 03:54 
+#$%&*^ 03:56 cat me.py
+#$%&*^ 03:58 cat me.py
+#$%&*^ 04:00 cat me.py
+#$%&*^ 04:04 cat me.py
+#$%&*^ 04:06 cat me.py
+#$%&*^ 04:08 cat me.py
+#$%&*^ 04:25 cat me.py
+#$%&*^ 04:26 cat me.py
+#$%&*^ 04:26 cat me.py
+
+#$%&*^ 04:33 cat me.py
