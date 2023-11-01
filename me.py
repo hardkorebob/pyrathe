@@ -18,6 +18,11 @@ import re
 import time
 import datetime
 import subprocess
+import json 
+import requests 
+from pywebio.input import *
+from pywebio.output import *
+from pywebio.session import *
 from idlelib.percolator import Percolator
 from idlelib.colorizer import ColorDelegator
 
@@ -75,6 +80,8 @@ class App:
         self.root.bind_all("<Control-Z>", self.add_py_tab)
         self.root.bind_all("<Control-u>", self.backkill)
         self.root.bind_all("<Control-z>", self.add_indent)
+        self.root.bind_all("<Control-f>", self.get_fun_fact)
+
 
     def pyrathe_init(self):
         self.s_name = 0
@@ -379,6 +386,14 @@ class App:
                 f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} ALL*Replaced_ {search_text} {replace_text}\n",
             )
 
+    def get_fun_fact(self, event=None): 
+        url = "https://uselessfacts.jsph.pl/random.json?language=en"
+        self.response = requests.request("GET", url)   
+        self.data = json.loads(self.response.text)
+        useless_fact = self.data['text']
+        event.widget.insert("1.0", f"{useless_fact}")
+        return "break"
+
     def select_all_text(self, event):
         event.widget.tag_add("sel", "1.0", "end")
         return "break"
@@ -513,4 +528,7 @@ if __name__ == "__main__":
 #$%&*^ 21:01 cat me.py
 #$%&*^ 21:02 cat me.py
 #$%&*^ 21:02 cat me.py
-#$%&*^ 21:03 cat me.py
+#$%&*^ 00:55 cat me.py
+
+#$%&*^ 01:00 cat me.py
+#$%&*^ 01:01 cat me.py
