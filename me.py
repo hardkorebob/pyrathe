@@ -32,6 +32,8 @@ class App:
         self.font = font.nametofont("TkFixedFont")
         self.font.configure(size=11)
         self.pyrathe_init()
+        self.weather()
+
 
     def rootConfig(self):
         self.root.columnconfigure(0, weight=0)
@@ -633,4 +635,5 @@ if __name__ == "__main__":
 #$%&*^ 14:31 cat me.py
 #$%&*^ 14:33 cat me.py
 #$%&*^ 14:33 cat me.py
-#$%&*^ 14:34 cat me.py
+#$%&*^ 14:38 cat me.py
+#$%&*^ 14:39 cat me.py
