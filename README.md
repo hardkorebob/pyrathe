@@ -39,9 +39,9 @@ Depends:
   
 ---
 
-ONLY RUNS IN Protected-mod on Win95
+ONLY RUNS in Protected-mod on Win95
 
-**C:\\>M$Winblows 7,8,9,10,11,12,13PRO-X NOT SUPPORTED!**
+**C:\\>M$Winblows 7,8,9,10,11,12,13PRO-X.exe! #NOT SUPPORTED!**
 
 ---
 
