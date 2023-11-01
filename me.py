@@ -390,7 +390,7 @@ class App:
             )
 
     def weather(self, event=None):
-        command = "curl http://wttr.in > w ; perl ./fmtw w | head -7"
+        command = "curl http://wttr.in > w ; perl ./fmtw.pl w | head -7"
         try:
             weather = subprocess.run(
                 command,
@@ -569,3 +569,6 @@ if __name__ == "__main__":
 #$%&*^ 01:44 cat me.py
 #$%&*^ 01:48 cat me.py
 #$%&*^ 01:49 cat me.py
+
+#$%&*^ 01:53 cat me.py
+#$%&*^ 01:54 cat me.py
