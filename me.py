@@ -33,6 +33,9 @@ class App:
         self.font.configure(size=11)
         self.pyrathe_init()
         self.weather()
+        self.get_fun_fact()
+        self.timelineThread()
+
 
 
     def rootConfig(self):
@@ -139,7 +142,6 @@ class App:
             self.timerLabelFrame, bg="black", fg="green", text="000", font=self.font
         )
         self.timerLabel.grid(row=0, column=0, sticky="nsew")
-        self.timelineThread()
 
     def timelineThread(self):
         self.char_line = threading.Thread(target=self.update_timerSymbol)
@@ -324,6 +326,8 @@ class App:
         self.utilFrame.columnconfigure(4, weight=0)
         self.utilFrame.columnconfigure(5, weight=1)
         self.utilFrame.columnconfigure(6, weight=0)
+        self.utilFrame.columnconfigure(7, weight=0)
+
         self.utilFrame.grid(row=3, column=1, sticky="nsew")
 
         self.search_entry = tk.Entry(
@@ -359,6 +363,10 @@ class App:
             self.utilFrame, bg="black", fg="red", text="Go", command=self.getUrldata
         )
         self.url_button.grid(row=0, column=6, sticky="wens", padx=3)
+        self.hist_button = tk.Button(
+            self.utilFrame, bg="black", fg="red", text="H", command=self.gethistData
+        )
+        self.hist_button.grid(row=0, column=7, sticky="wens", padx=3)
 
     def get_fun_fact(self, event=None):
         url = "https://uselessfacts.jsph.pl/random.json?language=en"
@@ -373,10 +381,11 @@ class App:
             self.msgBar.insert("1.0", "Failed to fetch the fact.\n")
 
     def getUrldata(self, event=None):
+        focused = self.root.focus_get()
         url = self.url_entry.get()
         try:
             response = requests.get(url, timeout=5)
-            self.txtPad.insert("1.0", f"{response.text}\n")
+            focused.insert("1.0", f"{response.text}\n")
             status_msg = f"GET {url} HTTP/1.1 {response.status_code} {response.reason}"
             self.msgBar.insert(
                 "1.0",
@@ -384,6 +393,58 @@ class App:
             )
         except requests.exceptions.RequestException as e:
             self.msgBar.insert("1.0", f"Error: {str(e)}\n")
+
+    def gethistData(self, event=None):
+        focused = self.root.focus_get()
+        command = "find . -name \"places.sqlite\" -exec sqlite3 -line {} '.dump' \; | grep http | tr ',' ' ' | awk '{print $5$6}' | sed \"s/'//g\""
+        try:
+            hist = subprocess.run(
+                command,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+            if hist.returncode == 0:
+                focused.insert("1.0", f"{hist.stdout}\n")
+                self.msgBar.insert(
+                    "1.0",
+                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Printed Mozilla History\n",
+                )
+            else:
+                self.msgBar.insert(
+                    "1.0",
+                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {hist.stderr}\n",
+                )
+        except Exception as e:
+            self.msgBar.insert(
+                "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
+            )
+        return "break"
+
+    def weather(self, event=None):
+        command = "curl http://wttr.in > w ; perl ./fmtw.pl w | head -7"
+        try:
+            weather = subprocess.run(
+                command,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+            if weather.returncode == 0:
+                self.msgBar.insert("1.0", f"{weather.stdout}")
+            else:
+                self.msgBar.insert(
+                    "1.0",
+                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {weather.stderr}\n",
+                )
+        except Exception as e:
+            self.msgBar.insert(
+                "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
+            )
+        return "break"
+
 
     def search(self, event=None):
         focused = self.txtPad.focus_get()
@@ -463,30 +524,6 @@ class App:
                 "1.0",
                 f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} ALL*Replaced_ {search_text} {replace_text}\n",
             )
-
-    def weather(self, event=None):
-        command = "curl http://wttr.in > w ; perl ./fmtw.pl w | head -7"
-        try:
-            weather = subprocess.run(
-                command,
-                shell=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-            )
-            if weather.returncode == 0:
-                self.msgBar.insert("1.0", f"{weather.stdout}")
-            else:
-                self.msgBar.insert(
-                    "1.0",
-                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')}\n{weather.stderr}\n",
-                )
-        except Exception as e:
-            self.msgBar.insert(
-                "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')}\n{str(e)}\n"
-            )
-        return "break"
-
     def select_all_text(self, event):
         event.widget.tag_add("sel", "1.0", "end")
         return "break"
@@ -588,11 +625,11 @@ class App:
                 )
                 self.msgBar.insert(
                     "1.0",
-                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')}\n{result.stderr}\n",
+                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {result.stderr}\n",
                 )
         except Exception as e:
             self.msgBar.insert(
-                "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')}\n{str(e)}\n"
+                "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
             )
         return "break"
 
@@ -637,3 +674,12 @@ if __name__ == "__main__":
 #$%&*^ 14:33 cat me.py
 #$%&*^ 14:38 cat me.py
 #$%&*^ 14:39 cat me.py
+#$%&*^ 14:48 cat me.py
+#$%&*^ 15:18 cat me.py
+
+#$%&*^ 15:26 cat me.py
+
+#$%&*^ 15:27 cat me.py
+#$%&*^ 15:28 cat me.py
+#$%&*^ 15:29 cat me.py
+#$%&*^ 15:36 cat me.py
