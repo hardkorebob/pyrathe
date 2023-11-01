@@ -18,7 +18,7 @@ import re
 import time
 import datetime
 import subprocess
-import requests 
+import requests
 from idlelib.percolator import Percolator
 from idlelib.colorizer import ColorDelegator
 
@@ -80,8 +80,6 @@ class App:
         self.root.bind_all("<Control-w>", self.weather)
         self.root.bind_all("<Control-g>", self.goto_next_search)
         self.root.bind_all("<Control-j>", self.goto_previous_search)
-
-
 
     def pyrathe_init(self):
         self.s_name = 0
@@ -256,7 +254,7 @@ class App:
             wrap=tk.WORD,
             relief=tk.FLAT,
             highlightcolor="orange",
-            insertbackground="red", 
+            insertbackground="red",
             font=self.font,
             cursor="heart",
             highlightbackground="black",
@@ -323,10 +321,13 @@ class App:
         self.searchFrame.columnconfigure(5, weight=1)
         self.searchFrame.columnconfigure(6, weight=0)
 
-
-        self.search_entry = tk.Entry(self.searchFrame, bg="black", fg="red", insertbackground="red")
+        self.search_entry = tk.Entry(
+            self.searchFrame, bg="black", fg="red", insertbackground="red"
+        )
         self.search_entry.grid(row=0, column=0, sticky="nsew", padx=3)
-        self.replace_entry = tk.Entry(self.searchFrame, bg="black", fg="red", insertbackground="red")
+        self.replace_entry = tk.Entry(
+            self.searchFrame, bg="black", fg="red", insertbackground="red"
+        )
         self.replace_entry.grid(row=0, column=1, sticky="nsew", padx=3)
         self.search_button = tk.Button(
             self.searchFrame, bg="black", fg="red", text="Search", command=self.search
@@ -345,30 +346,37 @@ class App:
         )
         self.replace_all_button.grid(row=0, column=4, sticky="nsew", padx=3)
 
-        self.url_entry = tk.Entry(self.searchFrame, bg="black", fg="red", insertbackground="red", width=18)
+        self.url_entry = tk.Entry(
+            self.searchFrame, bg="black", fg="red", insertbackground="red", width=18
+        )
         self.url_entry.grid(row=0, column=5, sticky="nsew", padx=3)
         self.url_button = tk.Button(
             self.searchFrame, bg="black", fg="red", text="GET", command=self.getUrldata
         )
         self.url_button.grid(row=0, column=6, sticky="nsew", padx=3)
 
-    def get_fun_fact(self, event=None): 
+    def get_fun_fact(self, event=None):
         url = "https://uselessfacts.jsph.pl/random.json?language=en"
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
-            fact = data.get('text', '')
-            self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {fact}\n")
+            fact = data.get("text", "")
+            self.msgBar.insert(
+                "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {fact}\n"
+            )
         else:
             self.msgBar.insert("1.0", "Failed to fetch the fact.\n")
 
-    def getUrldata(self, event=None): 
+    def getUrldata(self, event=None):
         url = self.url_entry.get()
         try:
-            response = requests.get(url, timeout=5) 
+            response = requests.get(url, timeout=5)
             self.txtPad.insert("1.0", f"{response.text}\n")
             status_msg = f"GET {url} HTTP/1.1 {response.status_code} {response.reason}"
-            self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {status_msg}\n")
+            self.msgBar.insert(
+                "1.0",
+                f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {status_msg}\n",
+            )
         except requests.exceptions.RequestException as e:
             self.msgBar.insert("1.0", f"Error: {str(e)}\n")
 
@@ -381,7 +389,9 @@ class App:
             if self.search_text:
                 idx = "1.0"
                 while True:
-                    idx = focused.search(self.search_text, idx, nocase=1, stopindex=tk.END)
+                    idx = focused.search(
+                        self.search_text, idx, nocase=1, stopindex=tk.END
+                    )
                     if not idx:
                         break
                     lastidx = f"{idx}+{len(self.search_text)}c"
@@ -409,7 +419,7 @@ class App:
             focused.mark_set("insert", self.occurrences[self.last_index])
             focused.see(self.occurrences[self.last_index])
             return "break"
-               
+
     def replace(self):
         focused = self.root.focus_get()
         if isinstance(focused, tk.Text):
@@ -597,5 +607,4 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-#$%&*^ 01:25 meow me.py
-#$%&*^ 04:58 cat me.py
+#$%&*^ 04:59 cat me.py
