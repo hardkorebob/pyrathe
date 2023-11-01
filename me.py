@@ -32,8 +32,6 @@ class App:
         self.font = font.nametofont("TkFixedFont")
         self.font.configure(size=11)
         self.pyrathe_init()
-        self.weather()
-        self.get_fun_fact()
         self.timelineThread()
 
     def rootConfig(self):
@@ -88,9 +86,71 @@ class App:
         self.s_filetype = "_txt"
         self.txtPad_frames = []
         self.myTimer()
+        self.wtrFrame()
         self.msgBar()
         self.textPad()
         self.createUtilBar()
+        self.weather()
+        self.get_fun_fact()
+
+    def myTimer(self):
+        self.timerFrame = tk.Frame(self.root, bg="black", pady=5, padx=10)
+        self.timerFrame.columnconfigure(0, weight=0)
+        self.timerFrame.columnconfigure(1, weight=1)
+        self.timerFrame.rowconfigure(0, weight=1)
+        self.timerFrame.grid(row=0, column=0, sticky="nsew", columnspan=2)
+        self.timerLabel = tk.Label(
+            self.timerFrame, bg="black", fg="green", text="000", font=self.font
+        )
+        self.timerLabel.grid(row=0, column=0, sticky="new")
+        self.timerBar = tk.Text(
+            self.timerFrame,
+            fg="green",
+            bg="black",
+            relief=tk.FLAT,
+            highlightcolor="green",
+            insertbackground="green",
+            font=self.font,
+            cursor="shuttle",
+            highlightbackground="black",
+            insertwidth=10,
+            height=2,
+        )
+        self.timerBar.grid(row=0, column=1, sticky="nsew")
+
+    def timelineThread(self):
+        self.char_line = threading.Thread(target=self.update_timerSymbol)
+        self.char_line.daemon = True
+        self.char_line.start()
+
+    def update_timerLabel(self, event=None):
+        cursor_position = self.timerBar.index(tk.INSERT)
+        line, col = cursor_position.split(".")
+        i = int(col)
+        c = int(line) - 1
+        self.timerLabel.configure(text=f"{str(c)}{str(i)}min")
+
+    def update_timerSymbol(self):
+        while True:
+            self.timerBar.insert("end", ">")
+            self.update_timerLabel()
+            time.sleep(60)
+
+    def wtrFrame(self):
+        self.wtrFrame = tk.Frame(self.root, padx=10, pady=10, bg="black")
+        self.wtrFrame.rowconfigure(0, weight=0)
+        self.wtrFrame.columnconfigure(0, weight=0)
+        self.wtrFrame.grid(row=1, column=0, sticky="nsew")
+
+        self.fullW_button = tk.Button(
+            self.wtrFrame,
+            bg="black",
+            fg="#777",
+            text="🌞",
+            command=self.full_weather,
+            highlightbackground="black",
+        )
+        self.fullW_button.grid(row=0, column=0, sticky="wens")
 
     def msgBar(self):
         self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10)
@@ -112,73 +172,6 @@ class App:
             wrap=tk.WORD,
         )
         self.msgBar.grid(row=0, column=0, sticky="nsew")
-
-    def myTimer(self):
-        self.timerFrame = tk.Frame(self.root, bg="black", pady=15, padx=9)
-        self.timerFrame.columnconfigure(0, weight=1)
-        self.timerFrame.rowconfigure(0, weight=1)
-        self.timerFrame.grid(row=0, column=1, sticky="nsew", columnspan=2)
-        self.timerBar = tk.Text(
-            self.timerFrame,
-            fg="green",
-            bg="black",
-            relief=tk.FLAT,
-            highlightcolor="green",
-            insertbackground="green",
-            font=self.font,
-            cursor="shuttle",
-            highlightbackground="black",
-            insertwidth=10,
-            height=2,
-        )
-        self.timerBar.grid(row=0, column=0, sticky="nsew")
-        self.timerLabelFrame = tk.Frame(self.root, bg="black", padx=5, pady=15)
-        self.timerLabelFrame.rowconfigure(0, weight=0)
-        self.timerLabelFrame.columnconfigure(0, weight=0)
-        self.timerLabelFrame.grid(row=0, column=0, sticky="nw")
-        self.timerLabel = tk.Label(
-            self.timerLabelFrame, bg="black", fg="green", text="000", font=self.font
-        )
-        self.timerLabel.grid(row=0, column=0, sticky="nsew")
-
-    def timelineThread(self):
-        self.char_line = threading.Thread(target=self.update_timerSymbol)
-        self.char_line.daemon = True
-        self.char_line.start()
-
-    def update_timerLabel(self, event=None):
-        cursor_position = self.timerBar.index(tk.INSERT)
-        line, col = cursor_position.split(".")
-        i = int(col)
-        c = int(line) - 1
-        self.timerLabel.configure(text=f"{str(c)}{str(i)}")
-
-    def update_timerSymbol(self):
-        while True:
-            self.timerBar.insert("end", ">")
-            self.update_timerLabel()
-            time.sleep(60)
-
-    def update_cursor_position(self, event=None):
-        focused = self.root.focus_get()
-        try:
-            if isinstance(focused, tk.Text):
-                cursor_position = focused.index(tk.INSERT)
-                line, col = cursor_position.split(".")
-                self.cpos.configure(text=f"{line},{col}")
-                # self.line_numbers.configure(state="normal")
-                self.line_numbers.delete("1.0", tk.END)
-                first, last = focused.yview()
-                first_line = int(first * float(focused.index("end").split(".")[0]))
-                last_line = int(last * float(focused.index("end").split(".")[0]))
-                line_numbers = "\n".join(
-                    str(i) for i in range(first_line + 1, last_line)
-                )
-                self.line_numbers.insert("1.0", line_numbers)
-                # self.line_numbers.configure(state="disabled")
-                self.line_numbers.yview_moveto(first)
-        except KeyError:
-            pass
 
     def textPad(self):
         self.paned = tk.PanedWindow(
@@ -258,6 +251,8 @@ class App:
         self.utilFrame.columnconfigure(5, weight=1)
         self.utilFrame.columnconfigure(6, weight=0)
         self.utilFrame.columnconfigure(7, weight=0)
+        self.utilFrame.columnconfigure(8, weight=0)
+
         self.utilFrame.grid(row=3, column=1, sticky="nsew")
 
         self.search_entry = tk.Entry(
@@ -286,7 +281,10 @@ class App:
         self.replace_all_button.grid(row=0, column=4, sticky="nsw", padx=3)
 
         self.url_entry = tk.Entry(
-            self.utilFrame, bg="black", fg="red", insertbackground="red",
+            self.utilFrame,
+            bg="black",
+            fg="red",
+            insertbackground="red",
         )
         self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
         self.url_button = tk.Button(
@@ -297,7 +295,6 @@ class App:
             self.utilFrame, bg="black", fg="#777", text="H", command=self.gethistData
         )
         self.hist_button.grid(row=0, column=7, sticky="wens", padx=3)
-
 
     def add_new_tab(self, event=None):
         self.new_frame = tk.Frame(self.paned, bg="black")
@@ -420,8 +417,9 @@ class App:
             )
         return "break"
 
-    def weather(self, event=None):
-        command = "curl http://wttr.in > w ; perl ./fmtw.pl w | head -7"
+    def full_weather(self, event=None):
+        focused = self.root.focus_get()
+        command = "curl http://wttr.in > w ; perl ./fmtw.pl w"
         try:
             weather = subprocess.run(
                 command,
@@ -431,7 +429,11 @@ class App:
                 text=True,
             )
             if weather.returncode == 0:
-                self.msgBar.insert("1.0", f"{weather.stdout}")
+                self.msgBar.insert(
+                    "1.0",
+                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Full Weather Report\n",
+                )
+                focused.insert("1.0", f"{weather.stdout}\n")
             else:
                 self.msgBar.insert(
                     "1.0",
@@ -443,6 +445,28 @@ class App:
             )
         return "break"
 
+    def weather(self, event=None):
+        command = "curl http://wttr.in > w ; perl ./fmtw.pl w | head -7"
+        try:
+            weather = subprocess.run(
+                command,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+            if weather.returncode == 0:
+                self.msgBar.insert("1.0", f"{weather.stdout}\n")
+            else:
+                self.msgBar.insert(
+                    "1.0",
+                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {weather.stderr}\n",
+                )
+        except Exception as e:
+            self.msgBar.insert(
+                "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
+            )
+        return "break"
 
     def search(self, event=None):
         focused = self.txtPad.focus_get()
@@ -522,6 +546,28 @@ class App:
                 "1.0",
                 f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} ALL*Replaced_ {search_text} {replace_text}\n",
             )
+
+    def update_cursor_position(self, event=None):
+        focused = self.root.focus_get()
+        try:
+            if isinstance(focused, tk.Text):
+                cursor_position = focused.index(tk.INSERT)
+                line, col = cursor_position.split(".")
+                self.cpos.configure(text=f"{line},{col}")
+                self.line_numbers.configure(state="normal")
+                self.line_numbers.delete("1.0", tk.END)
+                first, last = focused.yview()
+                first_line = int(first * float(focused.index("end").split(".")[0]))
+                last_line = int(last * float(focused.index("end").split(".")[0]))
+                line_numbers = "\n".join(
+                    str(i) for i in range(first_line + 1, last_line)
+                )
+                self.line_numbers.insert("1.0", line_numbers)
+                self.line_numbers.configure(state="disabled")
+                self.line_numbers.yview_moveto(first)
+        except KeyError:
+            pass
+
     def select_all_text(self, event):
         event.widget.tag_add("sel", "1.0", "end")
         return "break"
@@ -647,5 +693,24 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
+# $%&*^ 15:41 cat me.py
+# $%&*^ 15:45 cat me.py
+# $%&*^ 15:51 cat me.py
+# $%&*^ 15:53 cat me.py
+# $%&*^ 15:53 cat me.py
+# $%&*^ 15:54 cat me.py
+# $%&*^ 15:55 cat me.py
+# $%&*^ 15:56 cat me.py
+# $%&*^ 15:57 cat me.py
+# $%&*^ 16:00 cat me.py
+# $%&*^ 16:01 cat me.py
 
-#$%&*^ 15:41 cat me.py
+# $%&*^ 16:02 cat me.py
+# $%&*^ 16:03 cat me.py
+# $%&*^ 16:04 cat me.py
+# $%&*^ 16:07 cat me.py
+# $%&*^ 16:08 cat me.py
+# $%&*^ 16:08
+# $%&*^ 16:10 cat me.py
+# $%&*^ 16:13 cat me.py
+# $%&*^ 16:14 cat me.py
