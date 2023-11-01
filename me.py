@@ -187,11 +187,11 @@ class App:
             cursor="target",
             bg="black",
         )
-        self.paned.rowconfigure(0, weight=1)
-        self.paned.columnconfigure(0, weight=1)
+        self.paned.rowconfigure(2, weight=1)
+        self.paned.columnconfigure(1, weight=1)
         self.paned.grid(row=2, column=1, sticky="nsew", columnspan=2)
 
-        self.mainTxtFrame = tk.Frame(self.paned, bg="black")
+        self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=11)
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky="nsew")
@@ -220,7 +220,7 @@ class App:
         self.lineFrame = tk.Frame(self.root, bg="black", padx=10)
         self.lineFrame.rowconfigure(0, weight=0)
         self.lineFrame.columnconfigure(0, weight=0)
-        self.lineFrame.grid(row=2, column=0, sticky="nsw")
+        self.lineFrame.grid(row=2, column=0, sticky="nesw")
         self.line_numbers = tk.Text(
             self.lineFrame,
             relief=tk.FLAT,
@@ -236,10 +236,10 @@ class App:
         )
         self.line_numbers.grid(row=0, column=0, sticky="nswe")
 
-        self.cposFrame = tk.Frame(self.root, bg="black", padx=10, pady=15)
+        self.cposFrame = tk.Frame(self.root, bg="black", padx=5, pady=15)
         self.cposFrame.rowconfigure(0, weight=0)
         self.cposFrame.columnconfigure(0, weight=0)
-        self.cposFrame.grid(row=3, column=0, sticky="sw")
+        self.cposFrame.grid(row=3, column=0, sticky="nesw")
         self.cpos = tk.Label(
             self.cposFrame, text="1,0", bg="black", fg="#777", font=self.font
         )
@@ -327,19 +327,19 @@ class App:
         self.search_entry = tk.Entry(
             self.searchFrame, bg="black", fg="red", insertbackground="red"
         )
-        self.search_entry.grid(row=0, column=0, sticky="nsew", padx=3)
+        self.search_entry.grid(row=0, column=0, sticky="nsew", padx=2)
         self.replace_entry = tk.Entry(
             self.searchFrame, bg="black", fg="red", insertbackground="red"
         )
-        self.replace_entry.grid(row=0, column=1, sticky="nsew", padx=3)
+        self.replace_entry.grid(row=0, column=1, sticky="nsew", padx=2)
         self.search_button = tk.Button(
             self.searchFrame, bg="black", fg="red", text="Search", command=self.search
         )
-        self.search_button.grid(row=0, column=2, sticky="nsew", padx=3)
+        self.search_button.grid(row=0, column=2, sticky="nsew", padx=2)
         self.replace_button = tk.Button(
             self.searchFrame, bg="black", fg="red", text="Replace", command=self.replace
         )
-        self.replace_button.grid(row=0, column=3, sticky="nsew", padx=3)
+        self.replace_button.grid(row=0, column=3, sticky="nsew", padx=2)
         self.replace_all_button = tk.Button(
             self.searchFrame,
             bg="black",
@@ -615,3 +615,11 @@ if __name__ == "__main__":
 
 #$%&*^ 14:16 cat me.py
 #$%&*^ 14:17 cat me.py
+#$%&*^ 14:19 cat me.py
+#$%&*^ 14:19 cat me.py
+#$%&*^ 14:20 cat me.py
+#$%&*^ 14:21 cat me.py
+#$%&*^ 14:22 cat me.py
+#$%&*^ 14:22 cat me.py
+#$%&*^ 14:23 cat me.py
+#$%&*^ 14:23 cat me.py
