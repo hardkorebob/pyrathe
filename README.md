@@ -14,7 +14,9 @@ Llort Xinu, from The COD Institute had this to say:
 
 pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces _[_o](https://github.com/mu-editor/mu/blob/master/mu/logic.py)fdeath and 70,000 lines of boiler plus qt(yuck). pheeeww..... but you can go use that thing if you want...[] good luck chuck!. im confused honestly how that thing is considered simple. what can you expect when you get designs from teachers. they teach not get heuristics done. this lil silly app here is truly the micro editor.
 
-pyrathe is a python3 code editor for beginner programmers based on 0 feedback from anyone but an ai and my artistic self. @505 lines (468 loc) · 18.7 kb
+pyrathe is a python3 code/free_terminal editor for beginner programmers based on 0 feedback from anyone but an ai and my artistic self. @505 lines (468 loc) · 18.7 kb
+
+One day I will show you how I use it...I have ScreenCasts saved up. This is actually version 20th, Ive made the samething differently. Why? To learn =-)
 
 acronym for:
 
