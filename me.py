@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Application: PyRathe
+# Applimeowion: PyRathe
 # Version: v.1
 # Filename: me.py
 # Written: Roberto Rodriguez Jr & ChatGPT
@@ -79,9 +79,11 @@ class App:
         self.root.bind_all("<Control-X>", self.add_term_tab)
         self.root.bind_all("<Control-Z>", self.add_py_tab)
         self.root.bind_all("<Control-u>", self.backkill)
-        self.root.bind_all("<Control-z>", self.add_indent)
+        self.root.bind_all("<Shift-Return>", self.add_indent)
         self.root.bind_all("<Control-f>", self.get_fun_fact)
         self.root.bind_all("<Control-w>", self.weather)
+        self.root.bind_all("<Control-g>", self.goto_next_search)
+        self.root.bind_all("<Control-j>", self.goto_previous_search)
 
 
 
@@ -214,6 +216,7 @@ class App:
             spacing1=10,
             spacing3=10,
             padx=10,
+            undo=True,
         )
         Percolator(self.txtPad).insertfilter(ColorDelegator())
         self.txtPad.grid(row=0, column=0, sticky="nsew")
@@ -257,11 +260,12 @@ class App:
             wrap=tk.WORD,
             relief=tk.FLAT,
             highlightcolor="orange",
-            insertbackground="red",
+            insertbackground="red", 
             font=self.font,
             cursor="heart",
             highlightbackground="black",
             padx=10,
+            undo=True,
         )
         self.new_txtPad.grid(row=0, column=0, sticky="nsew")
         self.paned.add(self.new_frame)
@@ -318,9 +322,9 @@ class App:
         self.searchFrame.columnconfigure(1, weight=0)
         self.searchFrame.columnconfigure(2, weight=0)
         self.searchFrame.columnconfigure(3, weight=0)
-        self.search_entry = tk.Entry(self.searchFrame, bg="black", fg="red")
+        self.search_entry = tk.Entry(self.searchFrame, bg="black", fg="red", insertbackground="red")
         self.search_entry.grid(row=0, column=0, sticky="nsew", padx=3)
-        self.replace_entry = tk.Entry(self.searchFrame, bg="black", fg="red")
+        self.replace_entry = tk.Entry(self.searchFrame, bg="black", fg="red", insertbackground="red")
         self.replace_entry.grid(row=0, column=1, sticky="nsew", padx=3)
         self.search_button = tk.Button(
             self.searchFrame, bg="black", fg="red", text="Search", command=self.search
@@ -338,30 +342,52 @@ class App:
             command=self.replace_all,
         )
         self.replace_all_button.grid(row=0, column=4, sticky="nsew", padx=3)
-
-    def search(self):
-        focused = self.root.focus_get()
+    def search(self, event=None):
+        focused = self.txtPad.focus_get()
+        self.txtPad.focus_set()
         if isinstance(focused, tk.Text):
             focused.tag_remove("found", "1.0", tk.END)
-            search_text = self.search_entry.get()
-            if search_text:
+            self.search_text = self.search_entry.get()
+            if self.search_text:
                 idx = "1.0"
                 while True:
-                    idx = focused.search(search_text, idx, nocase=1, stopindex=tk.END)
+                    idx = focused.search(self.search_text, idx, nocase=1, stopindex=tk.END)
                     if not idx:
                         break
-                    lastidx = f"{idx}+{len(search_text)}c"
+                    lastidx = f"{idx}+{len(self.search_text)}c"
                     focused.tag_add("found", idx, lastidx)
+                    focused.tag_config("found", background="green")
                     idx = lastidx
-                focused.tag_config("found", background="green")
+                self.occurrences = list(focused.tag_ranges("found"))
+                if self.occurrences:
+                    self.last_index = 0
+                    focused.mark_set("insert", self.occurrences[0])
+                    focused.see(self.occurrences[0])
 
+    def goto_next_search(self, event=None):
+        focused = self.root.focus_get()
+        if self.occurrences and self.last_index is not None:
+            self.last_index = (self.last_index + 1) % len(self.occurrences)
+            focused.mark_set("insert", self.occurrences[self.last_index])
+            focused.see(self.occurrences[self.last_index])
+            return "break"
+
+    def goto_previous_search(self, event=None):
+        focused = self.root.focus_get()
+        if self.occurrences and self.last_index is not None:
+            self.last_index = (self.last_index - 1) % len(self.occurrences)
+            focused.mark_set("insert", self.occurrences[self.last_index])
+            focused.see(self.occurrences[self.last_index])
+            return "break"
+               
     def replace(self):
         focused = self.root.focus_get()
+        self.txtPad.focus_set()
         if isinstance(focused, tk.Text):
             search_text = self.search_entry.get()
             replace_text = self.replace_entry.get()
             if search_text and replace_text:
-                idx = "1.0"
+                idx = focused.index(tk.INSERT)
                 idx = focused.search(search_text, idx, nocase=1)
                 if idx:
                     lastidx = f"{idx}+{len(search_text)}c"
@@ -373,6 +399,11 @@ class App:
                     self.msgBar.insert(
                         "1.0",
                         f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Replaced_ {search_text} {replace_text}\n",
+                    )
+                else:
+                    self.msgBar.insert(
+                        "1.0",
+                        f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {search_text} Not Found!\n",
                     )
 
     def replace_all(self):
@@ -544,33 +575,56 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-#$%&*^ 01:25 cat me.py
-#$%&*^ 17:33 cat me.py
-#$%&*^ 17:33 cat me.py
-#$%&*^ 20:54 cat me.py
-#$%&*^ 20:54 cat me.py
-#$%&*^ 20:56 cat me.py
-#$%&*^ 20:57 cat me.py
-#$%&*^ 20:58 cat me.py
-#$%&*^ 21:01 cat me.py
-#$%&*^ 21:02 cat me.py
-#$%&*^ 21:02 cat me.py
-#$%&*^ 00:55 cat me.py
+#$%&*^ 01:25 meow me.py
+#$%&*^ 17:33 meow me.py
+#$%&*^ 17:33 meow me.py
+#$%&*^ 20:54 meow me.py
+#$%&*^ 20:54 meow me.py
+#$%&*^ 20:56 meow me.py
+#$%&*^ 20:57 meow me.py
+#$%&*^ 20:58 meow me.py
+#$%&*^ 21:01 meow me.py
+#$%&*^ 21:02 meow me.py
+#$%&*^ 21:02 meow me.py
+#$%&*^ 00:55 meow me.py
 
-#$%&*^ 01:00 cat me.py
-#$%&*^ 01:01 cat me.py
-#$%&*^ 01:10 cat me.py
-#$%&*^ 01:13 cat me.py
-#$%&*^ 01:34 cat me.py
-#$%&*^ 01:38 cat me.py
-#$%&*^ 01:40 cat me.py
-#$%&*^ 01:42 cat me.py
-#$%&*^ 01:43 cat me.py
-#$%&*^ 01:44 cat me.py
-#$%&*^ 01:48 cat me.py
-#$%&*^ 01:49 cat me.py
+#$%&*^ 01:00 meow me.py
+#$%&*^ 01:01 meow me.py
+#$%&*^ 01:10 meow me.py
+#$%&*^ 01:13 meow me.py
+#$%&*^ 01:34 meow me.py
+#$%&*^ 01:38 meow me.py
+#$%&*^ 01:40 meow me.py
+#$%&*^ 01:42 meow me.py
+#$%&*^ 01:43 meow me.py
+#$%&*^ 01:44 meow me.py
+#$%&*^ 01:48 meow me.py
+#$%&*^ 01:49 meow me.py
 
-#$%&*^ 01:53 cat me.py
-#$%&*^ 01:56 cat me.py
-#$%&*^ 02:02 cat me.py
-#$%&*^ 02:02 cat me.py
+#$%&*^ 01:53 meow me.py
+#$%&*^ 01:56 meow me.py
+#$%&*^ 02:02 meow me.py
+#$%&*^ 02:11 meow me.py
+#$%&*^ 02:14 meow me.py
+#$%&*^ 02:15 meow me.py
+#$%&*^ 02:22 meow me.py
+#$%&*^ 02:24 meow me.py
+#$%&*^ 02:26 meow me.py
+#$%&*^ 02:33 meow me.py
+
+
+
+
+#$%&*^ 02:35 cat me.py
+#$%&*^ 02:37 cat me.py
+#$%&*^ 02:39 cat me.py
+#$%&*^ 02:43 cat me.py
+#$%&*^ 02:46 cat me.py
+#$%&*^ 02:48 cat me.py
+#$%&*^ 02:49 cat me.py
+#$%&*^ 02:53 cat me.py
+#$%&*^ 02:55 cat me.py
+#$%&*^ 03:00 cat me.py
+#$%&*^ 03:03 cat me.py
+#$%&*^ 03:09 cat me.py
+#$%&*^ 03:11 cat me.py
