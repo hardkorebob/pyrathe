@@ -691,57 +691,5 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
-# $%&*^ 15:41 cat me.py
-# $%&*^ 15:45 cat me.py
-# $%&*^ 15:51 cat me.py
-# $%&*^ 15:53 cat me.py
-# $%&*^ 15:53 cat me.py
-# $%&*^ 15:54 cat me.py
-# $%&*^ 15:55 cat me.py
-# $%&*^ 15:56 cat me.py
-# $%&*^ 15:57 cat me.py
-# $%&*^ 16:00 cat me.py
-# $%&*^ 16:01 cat me.py
-
-# $%&*^ 16:02 cat me.py
-# $%&*^ 16:03 cat me.py
-# $%&*^ 16:04 cat me.py
-# $%&*^ 16:07 cat me.py
-# $%&*^ 16:08 cat me.py
-# $%&*^ 16:08
-# $%&*^ 16:10 cat me.py
-# $%&*^ 16:13 cat me.py
-# $%&*^ 16:14 cat me.py
-
-#$%&*^ 16:21 cat me.py
-#$%&*^ 16:22 cat me.py
-#$%&*^ 16:27 cat me.py
-#$%&*^ 16:30 cat me.py
-#$%&*^ 16:33 cat me.py
-#$%&*^ 16:37 cat me.py
-#$%&*^ 16:45 cat me.py
-#$%&*^ 16:45 cat me.py
-#$%&*^ 16:46 cat me.py
-#$%&*^ 16:49 cat me.py
-#$%&*^ 16:51 cat me.py
-#$%&*^ 16:52 cat me.py
-#$%&*^ 16:56 cat me.py
-#$%&*^ 16:58 cat me.py
-#$%&*^ 16:59 cat me.py
-#$%&*^ 17:01 cat me.py
-#$%&*^ 17:02 cat me.py
-#$%&*^ 17:03 cat me.py
-#$%&*^ 17:05 cat me.py
-#$%&*^ 17:11 cat me.py
-#$%&*^ 17:13 cat me.py
-#$%&*^ 17:13 cat me.py
-
-#$%&*^ 17:19 cat me.py
-#$%&*^ 17:25 cat me.py
-#$%&*^ 17:26 cat me.py
-#$%&*^ 17:26 cat me.py
-#$%&*^ 17:27 cat me.py
-#$%&*^ 17:29 cat me.py
-#$%&*^ 17:33 cat me.py
-#$%&*^ 17:34 cat me.py
+#$%&*^ 15:41 cat me.py
 #$%&*^ 17:35 cat me.py
