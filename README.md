@@ -8,13 +8,13 @@ a "simple" python editor/plain text heaven/shell commander/raw http get/wttr.in/
 
 the best way to learn code with mu: is a with building your very own mµ editor> this thing here ladies & gents is built in itself.
 
-truly the simplest and easiest way to learn python + *nix. itsinstance(l, <700); self-explanatory code with #0 comments.
+truly the simplest and easiest way to learn python + *nix. itsinstance(l, <1000); self-explanatory code with #0 comments.
 
 Llort Xinu, from The COD Institute said:
 
 pyrathe has only the most essential features, so users are not intimidated by a superbly baffling interfaces _[_o](https://github.com/mu-editor/mu/blob/master/mu/logic.py)fdeath and 70,000 lines of boileramble plus... qt(yuck). pheeeww..... but you can go use that thing if you want...[bad signal]. good luck chuck!. he continued -... confused honestly how that thing, is considered simple. but what can you expect when you get designs from teachers. they teach, yes... not get heuristics done. pyrathe is tiny & a silly app but truly the micro editor. its secrets are yet to be discovered. for granted they will take thy... I mean the damn thing gives you the weather in the cleanest delivery I've ever seen. What's libnotify?
 
-pyrathe is a python3 code/free_terminal editor for beginner programmers based on 0 feedback from anyone but an ai and my artistic Self. @596 lines (549 loc) · 22.6 KB
+pyrathe is a python3 code/free_terminal editor for beginner programmers based on 0 feedback from anyone but an ai and my artistic Self.
 
 One day I will show you how I use it...I have [mkv]Screens_obs saved up. This is actually version 20th, Ive made the samething differently. Why? To learn =-)
 
