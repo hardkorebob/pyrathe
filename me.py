@@ -100,20 +100,31 @@ class App:
         self.get_fun_fact()
 
     def myTimer(self):
-        self.timerFrame = tk.Frame(self.root, bg="#444", pady=1, padx=10)
+        self.timerFrame = tk.Frame(self.root, bg="#444", pady=1, padx=10,)
         self.timerFrame.columnconfigure(0, weight=0)
         self.timerFrame.columnconfigure(1, weight=0)
         self.timerFrame.columnconfigure(2, weight=1)
         self.timerFrame.rowconfigure(0, weight=1)
         self.timerFrame.grid(row=0, column=0, sticky="nsew", columnspan=2)
+
         self.timerLabel = tk.Label(
-            self.timerFrame, bg="#444", fg="green", text="", font=self.font
+            self.timerFrame, 
+            bg="#444", 
+            fg="green", 
+            text="", 
+            font=self.font,
         )
-        self.timerLabel.grid(row=0, column=1, sticky="nesw")
+        self.timerLabel.grid(row=0, column=1, sticky="nsew")
+
         self.timerLabel2 = tk.Label(
-            self.timerFrame, bg="#444", fg="yellow", text="", font=self.font
+            self.timerFrame, 
+            bg="#444", 
+            fg="yellow", 
+            text="", 
+            font=self.font,
         )
         self.timerLabel2.grid(row=0, column=0, sticky="nsew")
+
         self.timerBar = tk.Text(
             self.timerFrame,
             fg="orange",
@@ -157,13 +168,11 @@ class App:
             time.sleep(1)  
             self.currentSymbolIndex = (self.currentSymbolIndex + 1) % len(self.timerSymbols)
 
-
     def wtrFrame(self):
         self.wtrFrame = tk.Frame(self.root, padx=10, bg="#444")
         self.wtrFrame.rowconfigure(0, weight=0)
         self.wtrFrame.columnconfigure(0, weight=0)
         self.wtrFrame.grid(row=1, column=0, sticky="nsew")
-
         self.fullW_button = tk.Button(
             self.wtrFrame,
             bg="#444",
@@ -172,7 +181,7 @@ class App:
             command=self.full_weather,
             highlightbackground="#444",
         )
-        self.fullW_button.grid(row=0, column=0, sticky="wens")
+        self.fullW_button.grid(row=0, column=0, sticky="nsew")
 
     def msgBar(self):
         self.msgBarFrame = tk.Frame(self.root, bg="#444", padx=10)
@@ -180,6 +189,7 @@ class App:
         self.msgBarFrame.columnconfigure(0, weight=1)
         self.msgBarFrame.columnconfigure(1, weight=1)
         self.msgBarFrame.grid(row=1, column=1, sticky="nsew")
+
         img = tk.PhotoImage(file=self.qr_file)
         self.qr_label = tk.Label(
             self.msgBarFrame,
@@ -189,6 +199,7 @@ class App:
         )
         self.qr_label.grid(row=0, column=1, sticky='nsew')
         self.qr_label.image = img
+
         self.msgBar = tk.Text(
             self.msgBarFrame,
             fg="red",
@@ -222,6 +233,7 @@ class App:
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky="nsew")
+
         self.txtPad = tk.Text(
             self.mainTxtFrame,
             fg="orange",
@@ -247,7 +259,8 @@ class App:
         self.lineFrame = tk.Frame(self.root, bg="#444", padx=10, pady=5)
         self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(0, weight=0)
-        self.lineFrame.grid(row=2, column=0, sticky="nesw")
+        self.lineFrame.grid(row=2, column=0, sticky="nsew")
+
         self.line_numbers = tk.Text(
             self.lineFrame,
             relief=tk.FLAT,
@@ -260,7 +273,7 @@ class App:
             spacing3=9,
             width=5,
         )
-        self.line_numbers.grid(row=0, column=0, sticky="nswe")
+        self.line_numbers.grid(row=0, column=0, sticky="nsew")
 
     def createUtilBar(self):
         self.utilFrame = tk.Frame(self.root, bg="#444", pady=15, padx=10)
@@ -274,20 +287,26 @@ class App:
         self.utilFrame.columnconfigure(6, weight=0)
         self.utilFrame.columnconfigure(7, weight=0)
         self.utilFrame.grid(row=3, column=0, sticky="nsew", columnspan=2)
+
         self.cpos = tk.Label(
-            self.utilFrame, text="1,0", bg="#444", fg="#777", font=self.font,
+            self.utilFrame, 
+            text="1,0", 
+            bg="#444", 
+            fg="#777", 
+            font=self.font,
         )
-        self.cpos.grid(row=0, column=0, sticky="nsew")
+        self.cpos.grid(row=0, column=0, sticky="nsw")
+
         self.qr_Entry = tk.Entry(
             self.utilFrame,
             bg="#444",
             fg="red",
             insertbackground="red",
             highlightbackground="#444",
-            cursor="spraycan"
-            
+            cursor="spraycan",
         )
         self.qr_Entry.grid(row=0, column=1, sticky='nsw')
+
         self.qr_Button = tk.Button(
             self.utilFrame,
             bg="#444", 
@@ -297,15 +316,17 @@ class App:
             highlightbackground="#444",
         )    
         self.qr_Button.grid(row=0, column=2, sticky='nsw')
+
         self.url_entry = tk.Entry(
             self.utilFrame,
             bg="#444",
             fg="red",
             insertbackground="red",
             highlightbackground="#444",
-            cursor="star"
+            cursor="star",
         )
         self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
+
         self.url_button = tk.Button(
             self.utilFrame, 
             bg="#444", 
@@ -317,6 +338,7 @@ class App:
             highlightbackground="#444",
         )
         self.url_button.grid(row=0, column=6, sticky="wens", padx=3)
+
         self.hist_button = tk.Button(
             self.utilFrame, 
             bg="#444", 
@@ -332,6 +354,7 @@ class App:
         self.new_frame.columnconfigure(0, weight=1)
         self.new_frame.rowconfigure(0, weight=1)
         self.new_frame.grid(row=0, column=0, sticky="nsew")
+
         self.new_txtPad = tk.Text(
             self.new_frame,
             fg="orange",
@@ -394,6 +417,7 @@ class App:
         img = tk.PhotoImage(file=self.qr_file)
         self.qr_label.configure(image=img)
         self.qr_label.image = img
+        self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {entry} _QR code.generated +Displayn:-0\n")
 
     def get_fun_fact(self, event=None):
         url = "https://uselessfacts.jsph.pl/random.json?language=en"
@@ -507,15 +531,12 @@ class App:
                 cursor_position = focused.index(tk.INSERT)
                 line, col = cursor_position.split(".")
                 self.cpos.configure(text=f"{line},{col}")
-
                 self.line_numbers.configure(state="normal")
                 self.line_numbers.delete("1.0", tk.END)
                 first, last = focused.yview()
                 first_line = int(first * float(focused.index("end").split(".")[0]))
                 last_line = int(last * float(focused.index("end").split(".")[0]))
-                line_numbers = "\n".join(
-                    str(i) for i in range(first_line, last_line)
-                )
+                line_numbers = "\n".join(str(i) for i in range(first_line, last_line))
                 self.line_numbers.insert("1.0", line_numbers)
                 self.line_numbers.delete("end-1c", "end")
                 self.line_numbers.configure(state="disabled")
@@ -658,3 +679,9 @@ if __name__ == "__main__":
 #$%&*^ 23:39 cat me.py
 #$%&*^ 23:45 cat me.py
 #$%&*^ 23:47 cat me.py
+#$%&*^ 00:09 cat me.py
+#$%&*^ 00:12 cat me.py
+#$%&*^ 00:13 cat me.py
+#$%&*^ 00:18 cat me.py
+#$%&*^ 00:22 cat me.py
+#$%&*^ 00:24 cat me.py
