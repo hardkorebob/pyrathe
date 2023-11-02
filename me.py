@@ -31,7 +31,7 @@ class App:
         self.rootConfig()
         self.setup_keybindings()
         self.font = font.nametofont("TkFixedFont")
-        self.font.configure(size=10)
+        self.font.configure(size=12)
         self.pyrathe_init()
         self.timelineThread()
 
@@ -506,7 +506,7 @@ class App:
 
     def gethistData(self, event=None):
         focused = self.root.focus_get()
-        command = "find . -name \"places.sqlite\" -exec sqlite3 -line {} '.dump' \; | grep http | tr ',' ' ' | awk '{print $5$6}' | sed \"s/'//g\""
+        command = "find ~ -name \"places.sqlite\" -exec sqlite3 -line {} '.dump' \; | grep http | tr ',' ' ' | awk '{print $5$6}' | sed \"s/'//g\""
         try:
             hist = subprocess.run(
                 command,
