@@ -107,12 +107,12 @@ class App:
         )
         self.timerLabel.grid(row=0, column=0, sticky="new")
         self.timerLabel2 = tk.Label(
-            self.timerFrame, bg="#444", fg="green", text="", font=self.font
+            self.timerFrame, bg="#444", fg="yellow", text="", font=self.font
         )
-        self.timerLabel2.grid(row=1, column=0, sticky="new")
+        self.timerLabel2.grid(row=1, column=0, sticky="nsw")
         self.timerBar = tk.Text(
             self.timerFrame,
-            fg="green",
+            fg="orange",
             bg="#444",
             relief=tk.FLAT,
             highlightcolor="green",
@@ -138,7 +138,7 @@ class App:
         line, col = cursor_position.split(".")
         i = int(col)
         c = int(line) - 1
-        self.timerLabel.configure(text=f"{str(c)}{str(i)}min")
+        self.timerLabel.configure(text=f"🕐  {str(c)}{str(i)}min")
 
     def update_timerSymbolLine(self, event=None):
         while True:
@@ -300,8 +300,10 @@ class App:
         self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
         self.url_button = tk.Button(
             self.utilFrame, bg="#444", 
-            fg="#777", 
-            text="Go", 
+            fg="black",
+            text="✅ 🕷",
+            #text="🕷",
+            #text="🕸", 
             command=self.getUrldata,           	
             highlightbackground="#444",
         )
@@ -310,7 +312,7 @@ class App:
             self.utilFrame, 
             bg="#444", 
             fg="#777", 
-            text="H", 
+            text="🔎 🕸", 
             command=self.gethistData,             
             highlightbackground="#444",
         )
@@ -750,4 +752,18 @@ if __name__ == "__main__":
 #$%&*^ 20:38 cat me.py
 #$%&*^ 20:41 cat me.py
 
-#$%&*^ 20:45 cat me.py
+#$%&*^ 20:50 cat me.py
+#$%&*^ 20:50 cat me.py
+#$%&*^ 20:51 cat me.py
+#$%&*^ 20:53 cat me.py
+#$%&*^ 20:53 cat me.py
+#$%&*^ 20:53 cat me.py
+#$%&*^ 20:55 cat me.py
+#$%&*^ 20:56 cat me.py
+#$%&*^ 20:57 cat me.py
+#$%&*^ 20:58 cat me.py
+#$%&*^ 20:59 cat me.py
+#$%&*^ 21:00 cat me.py
+#$%&*^ 21:01 cat me.py
+#$%&*^ 21:02 cat me.py
+#$%&*^ 21:03 cat me.py
