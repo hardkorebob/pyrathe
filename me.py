@@ -8,7 +8,7 @@
 # Web: https://HARDKOREBOB.github.io
 # Warranty: FREE WARRANTY 4 LIFE
 # License: This software is provided under PRIVATE LICENSE.
-from tkinter import *
+
 import tkinter as tk
 import tkinter.font as font
 import os
@@ -86,7 +86,8 @@ class App:
         self.s_name = 0
         self.s_filetype = "_txt"
         self.qr_seq = 0
-        self.qr_fname = f"qr{self.qr_seq}.png"
+        self.qr_fname = "qr.png"
+        self.qr_file = f"{self.qr_seq}{self.qr_fname}"
         self.txtPad_frames = []
         self.timerSymbols = ["|", "/", "-", "\\"]
         self.currentSymbolIndex = 0
@@ -179,7 +180,7 @@ class App:
         self.msgBarFrame.columnconfigure(0, weight=1)
         self.msgBarFrame.columnconfigure(1, weight=1)
         self.msgBarFrame.grid(row=1, column=1, sticky="nsew")
-        img = tk.PhotoImage(file=self.qr_fname)
+        img = tk.PhotoImage(file=self.qr_file)
         self.qr_label = tk.Label(
             self.msgBarFrame,
             image = img,
@@ -386,17 +387,17 @@ class App:
         return "break"
 
 
-    def qr_update(self):
-        img = tk.PhotoImage(file=self.qr_fname)
-        self.qr_label.configure(image=img)
-        self.qr_label.image = img
+
+        
 
     def mkQr(self):
         entry = self.qr_Entry.get()
         self.qrcode = qr.make_qr(entry)
-        self.qrcode.save(f"{self.qr_fname}", scale=5, border=0, light="#444")
-        self.qr_update()
-        return self.qr_fname
+        self.qrcode.save(self.qr_file, scale=5, border=0, light="#444") 
+        self.qr_seq += 1
+        img = tk.PhotoImage(file=self.qr_file)
+        self.qr_label.configure(image=img)
+        self.qr_label.image = img
 
 
 
@@ -660,122 +661,5 @@ if __name__ == "__main__":
     root.configure(background="#444")
     app = App(root)
     root.mainloop()
-
-
-#$%&*^ 17:47 cat me.py
-#$%&*^ 17:52 cat me.py
-#$%&*^ 17:53 cat me.py
-#$%&*^ 17:55 cat me.py
-#$%&*^ 18:01 cat me.py
-#$%&*^ 18:03 cat me.py
-
-#$%&*^ 18:24 cat me.py
-#$%&*^ 18:26 cat me.py
-#$%&*^ 18:28 cat me.py
-
-#$%&*^ 18:29 cat me.py
-#$%&*^ 18:31 cat me.py
-#$%&*^ 18:33 cat me.py
-#$%&*^ 18:35 cat me.py
-
-#$%&*^ 18:40 cat me.py
-#$%&*^ 18:42 cat me.py
-#$%&*^ 18:44 cat me.py
-#$%&*^ 18:45 cat me.py
-#$%&*^ 18:46 cat me.py
-#$%&*^ 18:47 cat me.py
-#$%&*^ 18:48 cat me.py
-#$%&*^ 18:49 cat me.py
-#$%&*^ 18:50 cat me.py
-#$%&*^ 18:51 cat me.py
-#$%&*^ 18:56 cat me.py
-#$%&*^ 18:57 cat me.py
-
-#$%&*^ 19:00 cat me.py
-#$%&*^ 19:02 cat me.py
-#$%&*^ 19:04 cat me.py
-#$%&*^ 19:05 cat me.py
-
-#$%&*^ 19:07 cat me.py
-#$%&*^ 19:09 cat me.py
-#$%&*^ 19:14 cat me.py
-
-#$%&*^ 19:21 cat me.py
-
-#$%&*^ 19:23 cat me.py
-#$%&*^ 19:26 cat me.py
-#$%&*^ 19:29 cat me.py
-#$%&*^ 19:30 cat me.py
-#$%&*^ 19:31 cat me.py
-#$%&*^ 19:34 cat me.py
-
-#$%&*^ 20:08 cat me.py
-
-#$%&*^ 20:09 cat me.py
-#$%&*^ 20:10 cat me.py
-#$%&*^ 20:10 cat me.py
-#$%&*^ 20:12 cat me.py
-#$%&*^ 20:14 cat me.py
-#$%&*^ 20:15 cat me.py
-#$%&*^ 20:16 cat me.py
-
-#$%&*^ 20:19 cat me.py
-
-#$%&*^ 20:19 cat me.py
-#$%&*^ 20:20 cat me.py
-#$%&*^ 20:26 cat me.py
-
-#$%&*^ 20:28 cat me.py
-#$%&*^ 20:29 cat me.py
-#$%&*^ 20:31 cat me.py
-#$%&*^ 20:32 cat me.py
-#$%&*^ 20:34 cat me.py
-#$%&*^ 20:36 cat me.py
-#$%&*^ 20:37 cat me.py
-#$%&*^ 20:37 cat me.py
-#$%&*^ 20:38 cat me.py
-#$%&*^ 20:41 cat me.py
-
-#$%&*^ 20:50 cat me.py
-#$%&*^ 20:50 cat me.py
-#$%&*^ 20:51 cat me.py
-#$%&*^ 20:53 cat me.py
-#$%&*^ 20:53 cat me.py
-#$%&*^ 20:53 cat me.py
-#$%&*^ 20:55 cat me.py
-#$%&*^ 20:56 cat me.py
-#$%&*^ 20:57 cat me.py
-#$%&*^ 20:58 cat me.py
-#$%&*^ 20:59 cat me.py
-#$%&*^ 21:00 cat me.py
-#$%&*^ 21:01 cat me.py
-#$%&*^ 21:02 cat me.py
-#$%&*^ 21:04 cat me.py
-#$%&*^ 21:12 cat me.py
-#$%&*^ 21:14 cat me.py
-#$%&*^ 21:14 cat me.py
-#$%&*^ 21:15 cat me.py
-#$%&*^ 21:48 cat me.py
-#$%&*^ 21:54 cat me.py
-#$%&*^ 21:55 cat me.py
-#$%&*^ 21:56 cat me.py
-#$%&*^ 21:59 cat me.py
-#$%&*^ 22:16 cat me.py
-#$%&*^ 22:18 cat me.py
-#$%&*^ 22:18 cat me.py
-#$%&*^ 22:19 cat me.py
-#$%&*^ 22:21 cat me.py
-#$%&*^ 22:31 cat me.py
-#$%&*^ 22:35 cat me.py
-#$%&*^ 22:36 cat me.py
-
-#$%&*^ 22:39 cat me.py
-#$%&*^ 22:40 cat me.py
-
-#$%&*^ 22:44 cat me.py
-#$%&*^ 22:46 cat me.py
-#$%&*^ 23:13  cat me.py
-#$%&*^ 23:19 cat me.py
-#$%&*^ 23:20 cat me.py
-#$%&*^ 23:21 cat me.py
-#$%&*^ 23:22 cat me.py
+#$%&*^ 23:39 cat me.py
+#$%&*^ 23:45 cat me.py
