@@ -448,8 +448,7 @@ class App:
     def mkQr(self):
         entry = self.qr_Entry.get()
         self.qrcode = qr.make_qr(entry)
-        self.qrcode.save(self.qr_file, scale=5, border=0, light="#444") 
-        self.qr_seq += 1
+        self.qrcode.save(self.qr_file, scale=5, border=0, light="#444")       
         img = tk.PhotoImage(file=self.qr_file)
         self.qr_label.configure(image=img)
         self.qr_label.image = img
@@ -742,3 +741,4 @@ if __name__ == "__main__":
     root.configure(background="#444")
     app = App(root)
     root.mainloop()
+
