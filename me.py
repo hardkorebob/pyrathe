@@ -385,11 +385,7 @@ class App:
             self.paned.forget(last_frame)
             last_frame.destroy()
         return "break"
-
-
-
-        
-
+       
     def mkQr(self):
         entry = self.qr_Entry.get()
         self.qrcode = qr.make_qr(entry)
@@ -398,8 +394,6 @@ class App:
         img = tk.PhotoImage(file=self.qr_file)
         self.qr_label.configure(image=img)
         self.qr_label.image = img
-
-
 
     def get_fun_fact(self, event=None):
         url = "https://uselessfacts.jsph.pl/random.json?language=en"
@@ -663,3 +657,4 @@ if __name__ == "__main__":
     root.mainloop()
 #$%&*^ 23:39 cat me.py
 #$%&*^ 23:45 cat me.py
+#$%&*^ 23:47 cat me.py
