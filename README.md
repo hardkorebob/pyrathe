@@ -29,6 +29,8 @@ tested: debian, mint, chimera(musl) & kali linux.
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
 
 ![scrot](https://github.com/hardkorebob/pyrhate/blob/main/scrot.png)
+![scrot2](https://github.com/hardkorebob/pyrhate/blob/main/scrot2.png)
+
 
 Depends:
 
