@@ -31,7 +31,7 @@ class App:
         self.rootConfig()
         self.setup_keybindings()
         self.font = font.nametofont("TkFixedFont")
-        self.font.configure(size=12)
+        self.font.configure(size=11)
         self.pyrathe_init()
         self.timelineThread()
 
@@ -93,8 +93,11 @@ class App:
         self.currentSymbolIndex = 0
         self.statusBar()
         self.actionFrame()
+        self.msgBuffer()
         self.textPad()
         self.createUtilBar()
+        self.weather()
+        self.get_fun_fact()
 
     def statusBar(self):
         self.statusBarFrame = tk.Frame(self.root, bg="#444", pady=1, padx=10,)
@@ -169,13 +172,8 @@ class App:
         self.actionFrame.rowconfigure(0, weight=0)
         self.actionFrame.rowconfigure(1, weight=0)
         self.actionFrame.rowconfigure(2, weight=0)
-        self.actionFrame.rowconfigure(3, weight=0)
-        self.actionFrame.rowconfigure(4, weight=0)
-        self.actionFrame.rowconfigure(5, weight=0)
         self.actionFrame.columnconfigure(0, weight=0)
-        self.actionFrame.columnconfigure(1, weight=1)
-        self.actionFrame.columnconfigure(2, weight=1)
-        self.actionFrame.grid(row=1, column=0, sticky="nsew", columnspan=2)
+        self.actionFrame.grid(row=1, column=0, sticky="nsew")
 
         self.fullWeather_button = tk.Button(
             self.actionFrame,
@@ -186,7 +184,7 @@ class App:
             highlightbackground="#444",
             font=self.font,
         )
-        self.fullWeather_button.grid(row=0, column=0, sticky="new")
+        self.fullWeather_button.grid(row=0, column=0, sticky="nsew")
 
         self.loadMe_button = tk.Button(
             self.actionFrame,
@@ -197,7 +195,7 @@ class App:
             highlightbackground="#444",
             font=self.font,
         )
-        self.loadMe_button.grid(row=1, column=0, sticky="new")
+        self.loadMe_button.grid(row=1, column=0, sticky="nsew")
 
         self.py_button = tk.Button(
             self.actionFrame,
@@ -208,7 +206,7 @@ class App:
             highlightbackground="#444",
             font=self.font,
         )
-        self.py_button.grid(row=2, column=0, sticky="new")
+        self.py_button.grid(row=2, column=0, sticky="nsew")
 
         self.term_button = tk.Button(
             self.actionFrame,
@@ -219,8 +217,7 @@ class App:
             highlightbackground="#444",
             font=self.font,
         )
-        self.term_button.grid(row=3, column=0, sticky="new")
-
+        self.term_button.grid(row=3, column=0, sticky="nsew")
         self.addtab_button = tk.Button(
             self.actionFrame,
             bg="#444",
@@ -230,21 +227,37 @@ class App:
             highlightbackground="#444",
             font=self.font,
         )
-        self.addtab_button.grid(row=4, column=0, sticky="new")
-
+        self.addtab_button.grid(row=4, column=0, sticky="nsew")
         self.kill_button = tk.Button(
             self.actionFrame,
             bg="#444",
             fg="red",
-            text="⊟", #⚠□",
+            text="⊟", #⚠□", #
             command=self.del_new_tab,
             highlightbackground="#444",
             font=self.font,
         )
-        self.kill_button.grid(row=5, column=0, sticky="new")
-        
+        self.kill_button.grid(row=5, column=0, sticky="nsew")
+
+    def msgBuffer(self):
+        self.msgBufferFrame = tk.Frame(self.root, bg="#444", padx=10)
+        self.msgBufferFrame.rowconfigure(0, weight=1)
+        self.msgBufferFrame.columnconfigure(0, weight=1)
+        self.msgBufferFrame.columnconfigure(1, weight=1)
+        self.msgBufferFrame.grid(row=1, column=1, sticky="nsew")
+
+        img = tk.PhotoImage(file=self.qr_file)
+        self.qr_label = tk.Label(
+            self.msgBufferFrame,
+            image = img,
+            bg="#444",
+            cursor="cross",
+        )
+        self.qr_label.grid(row=0, column=1, sticky='nsew')
+        self.qr_label.image = img
+
         self.msgBuffer = tk.Text(
-            self.actionFrame,
+            self.msgBufferFrame,
             fg="red",
             bg="#444",
             relief=tk.FLAT,
@@ -254,20 +267,10 @@ class App:
             cursor="pirate",
             highlightbackground="#444",
             insertwidth=10,
-            height=8,
+            height=12,
             wrap=tk.WORD,
         )
-        self.msgBuffer.grid(row=0, column=1, sticky="nsew", rowspan=6, padx=20)
-
-        img = tk.PhotoImage(file=self.qr_file)
-        self.qr_label = tk.Label(
-            self.actionFrame,
-            image = img,
-            bg="#444",
-            cursor="cross",
-        )
-        self.qr_label.grid(row=0, column=2, sticky='nsew',rowspan=5)
-        self.qr_label.image = img
+        self.msgBuffer.grid(row=0, column=0, sticky="nsew")
 
     def textPad(self):
         self.paned = tk.PanedWindow(
@@ -309,7 +312,7 @@ class App:
         self.paned.add(self.mainTxtFrame)
         self.txtPad.focus_set()
 
-        self.lineFrame = tk.Frame(self.root, bg="#444", padx=10)
+        self.lineFrame = tk.Frame(self.root, bg="#444", padx=10, pady=5)
         self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(0, weight=0)
         self.lineFrame.grid(row=2, column=0, sticky="nsew")
@@ -321,7 +324,6 @@ class App:
             fg="#777",
             font=self.font,
             highlightbackground="#444",
-            highlightcolor="#444",
             cursor="spider",
             spacing1=9,
             spacing3=9,
@@ -765,18 +767,4 @@ if __name__ == "__main__":
     root.configure(background="#444")
     app = App(root)
     root.mainloop()
-#$%&*^ 23:39 cat me.py
-#$%&*^ 23:45 cat me.py
-#$%&*^ 23:47 cat me.py
-#$%&*^ 00:09 cat me.py
-#$%&*^ 00:12 cat me.py
-#$%&*^ 00:13 cat me.py
-#$%&*^ 00:18 cat me.py
-#$%&*^ 00:22 cat me.py
-#$%&*^ 00:44 cat me.py
-#$%&*^ 00:48 cat me.py
-#$%&*^ 01:01 cat me.py
-#$%&*^ 01:11 cat me.py
-#$%&*^ 01:14 cat me.py
-#$%&*^ 01:15 cat me.py
-#$%&*^ 01:20 cat me.py
+    
