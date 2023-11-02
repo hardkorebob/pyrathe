@@ -94,25 +94,25 @@ class App:
         self.get_fun_fact()
 
     def myTimer(self):
-        self.timerFrame = tk.Frame(self.root, bg="black", pady=1, padx=10)
+        self.timerFrame = tk.Frame(self.root, bg="#444", pady=1, padx=10)
         self.timerFrame.columnconfigure(0, weight=0)
         self.timerFrame.columnconfigure(1, weight=1)
         self.timerFrame.rowconfigure(0, weight=1)
         self.timerFrame.grid(row=0, column=0, sticky="nsew", columnspan=2)
         self.timerLabel = tk.Label(
-            self.timerFrame, bg="black", fg="green", text="000", font=self.font
+            self.timerFrame, bg="#444", fg="green", text="", font=self.font
         )
         self.timerLabel.grid(row=0, column=0, sticky="new")
         self.timerBar = tk.Text(
             self.timerFrame,
             fg="green",
-            bg="black",
+            bg="#444",
             relief=tk.FLAT,
             highlightcolor="green",
             insertbackground="green",
             font=self.font,
             cursor="shuttle",
-            highlightbackground="black",
+            highlightbackground="#444",
             insertwidth=10,
             height=2,
         )
@@ -137,36 +137,36 @@ class App:
             time.sleep(60)
 
     def wtrFrame(self):
-        self.wtrFrame = tk.Frame(self.root, padx=10, bg="black")
+        self.wtrFrame = tk.Frame(self.root, padx=10, bg="#444")
         self.wtrFrame.rowconfigure(0, weight=0)
         self.wtrFrame.columnconfigure(0, weight=0)
         self.wtrFrame.grid(row=1, column=0, sticky="nsew")
 
         self.fullW_button = tk.Button(
             self.wtrFrame,
-            bg="black",
+            bg="#444",
             fg="#777",
             text="🌞",
             command=self.full_weather,
-            highlightbackground="black",
+            highlightbackground="#444",
         )
         self.fullW_button.grid(row=0, column=0, sticky="wens")
 
     def msgBar(self):
-        self.msgBarFrame = tk.Frame(self.root, bg="black", padx=10)
+        self.msgBarFrame = tk.Frame(self.root, bg="#444", padx=10)
         self.msgBarFrame.rowconfigure(0, weight=1)
         self.msgBarFrame.columnconfigure(0, weight=1)
         self.msgBarFrame.grid(row=1, column=1, sticky="nsew", columnspan=2)
         self.msgBar = tk.Text(
             self.msgBarFrame,
             fg="red",
-            bg="black",
+            bg="#444",
             relief=tk.FLAT,
             highlightcolor="red",
             insertbackground="orange",
             font=self.font,
             cursor="pirate",
-            highlightbackground="black",
+            highlightbackground="#444",
             insertwidth=10,
             height=12,
             wrap=tk.WORD,
@@ -180,20 +180,20 @@ class App:
             sashrelief=tk.RAISED,
             sashwidth=10,
             cursor="target",
-            bg="black",
+            bg="#444",
         )
         self.paned.rowconfigure(0, weight=1)
         self.paned.columnconfigure(0, weight=1)
         self.paned.grid(row=2, column=1, sticky="nsew", columnspan=2)
 
-        self.mainTxtFrame = tk.Frame(self.paned, bg="black", padx=10)
+        self.mainTxtFrame = tk.Frame(self.paned, bg="#444", padx=10)
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky="nsew")
         self.txtPad = tk.Text(
             self.mainTxtFrame,
             fg="orange",
-            bg="black",
+            bg="#444",
             wrap=tk.WORD,
             relief=tk.FLAT,
             highlightcolor="orange",
@@ -212,17 +212,17 @@ class App:
         self.paned.add(self.mainTxtFrame)
         self.txtPad.focus_set()
 
-        self.lineFrame = tk.Frame(self.root, bg="black", padx=10, pady=5)
+        self.lineFrame = tk.Frame(self.root, bg="#444", padx=10, pady=5)
         self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(0, weight=0)
         self.lineFrame.grid(row=2, column=0, sticky="nesw")
         self.line_numbers = tk.Text(
             self.lineFrame,
             relief=tk.FLAT,
-            bg="#000",
-            fg="#666",
+            bg="#444",
+            fg="#777",
             font=self.font,
-            highlightbackground="#000",
+            highlightbackground="#444",
             cursor="spider",
             spacing1=9,
             spacing3=9,
@@ -231,7 +231,7 @@ class App:
         self.line_numbers.grid(row=0, column=0, sticky="nswe")
 
     def createUtilBar(self):
-        self.utilFrame = tk.Frame(self.root, bg="black", pady=15, padx=10)
+        self.utilFrame = tk.Frame(self.root, bg="#444", pady=15, padx=10)
         self.utilFrame.rowconfigure(0, weight=1)
         self.utilFrame.columnconfigure(0, weight=1)
         self.utilFrame.columnconfigure(1, weight=0)
@@ -243,55 +243,71 @@ class App:
         self.utilFrame.columnconfigure(7, weight=0)
         self.utilFrame.grid(row=3, column=0, sticky="nsew", columnspan=2)
         self.cpos = tk.Label(
-            self.utilFrame, text="1,0", bg="black", fg="#777", font=self.font,
+            self.utilFrame, text="1,0", bg="#444", fg="#777", font=self.font,
         )
         self.cpos.grid(row=0, column=0, sticky="nsew")
         self.search_entry = tk.Entry(
-            self.utilFrame, bg="black", fg="red", insertbackground="red"
+            self.utilFrame, bg="#444", fg="red", insertbackground="red", highlightbackground="#444",
         )
         self.search_entry.grid(row=0, column=1, sticky="nsw", padx=2)
         self.replace_entry = tk.Entry(
-            self.utilFrame, bg="black", fg="red", insertbackground="red"
+            self.utilFrame, bg="#444", fg="red", insertbackground="red", highlightbackground="#444",
         )
         self.replace_entry.grid(row=0, column=2, sticky="nsw", padx=2)
         self.replace_button = tk.Button(
-            self.utilFrame, bg="black", fg="#777", text="Replace", command=self.replace
+            self.utilFrame, 
+            bg="#444", 
+            fg="#777", 
+            text="Replace", 
+            command=self.replace, 
+            highlightbackground="#444",
         )
         self.replace_button.grid(row=0, column=3, sticky="nsw", padx=2)
         self.replace_all_button = tk.Button(
             self.utilFrame,
-            bg="black",
+            bg="#444",
             fg="#777",
             text="Replace All",
             command=self.replace_all,
+            highlightbackground="#444",
         )
         self.replace_all_button.grid(row=0, column=4, sticky="nsw", padx=3)
 
         self.url_entry = tk.Entry(
             self.utilFrame,
-            bg="black",
+            bg="#444",
             fg="red",
             insertbackground="red",
+            highlightbackground="#444"
         )
         self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
         self.url_button = tk.Button(
-            self.utilFrame, bg="black", fg="#777", text="Go", command=self.getUrldata
+            self.utilFrame, bg="#444", 
+            fg="#777", 
+            text="Go", 
+            command=self.getUrldata,           	
+            highlightbackground="#444",
         )
         self.url_button.grid(row=0, column=6, sticky="wens", padx=3)
         self.hist_button = tk.Button(
-            self.utilFrame, bg="black", fg="#777", text="H", command=self.gethistData
+            self.utilFrame, 
+            bg="#444", 
+            fg="#777", 
+            text="H", 
+            command=self.gethistData,             
+            highlightbackground="#444",
         )
         self.hist_button.grid(row=0, column=7, sticky="wens", padx=3)
 
     def add_new_tab(self, event=None):
-        self.new_frame = tk.Frame(self.paned, bg="black", padx=10)
+        self.new_frame = tk.Frame(self.paned, bg="#444", padx=10)
         self.new_frame.columnconfigure(0, weight=1)
         self.new_frame.rowconfigure(0, weight=1)
         self.new_frame.grid(row=0, column=0, sticky="nsew")
         self.new_txtPad = tk.Text(
             self.new_frame,
             fg="orange",
-            bg="black",
+            bg="#444",
             wrap=tk.WORD,
             relief=tk.FLAT,
             highlightcolor="orange",
@@ -308,7 +324,7 @@ class App:
         self.new_txtPad.focus_set()
 
     def add_py_tab(self, event=None):
-        self.py_frame = tk.Frame(self.paned, bg="black")
+        self.py_frame = tk.Frame(self.paned, bg="#444")
         self.py_frame.columnconfigure(0, weight=1)
         self.py_frame.rowconfigure(0, weight=1)
         self.py_frame.grid(row=0, column=0, sticky="nsew")
@@ -318,7 +334,7 @@ class App:
         self.paned.add(self.py_frame)
 
     def add_term_tab(self, event=None):
-        self.term_frame = tk.Frame(self.paned, bg="black")
+        self.term_frame = tk.Frame(self.paned, bg="#444")
         self.term_frame.columnconfigure(0, weight=1)
         self.term_frame.rowconfigure(0, weight=1)
         self.term_frame.grid(row=0, column=0, sticky="nsew")
@@ -638,6 +654,69 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("999x666+100+100")
     root.title("#$%&*^  PyRathe   #allerrorsmatter")
-    root.configure(background="black")
+    root.configure(background="#444")
     app = App(root)
     root.mainloop()
+
+
+#$%&*^ 17:47 cat me.py
+#$%&*^ 17:52 cat me.py
+#$%&*^ 17:53 cat me.py
+#$%&*^ 17:55 cat me.py
+#$%&*^ 18:01 cat me.py
+#$%&*^ 18:03 cat me.py
+
+#$%&*^ 18:24 cat me.py
+#$%&*^ 18:26 cat me.py
+#$%&*^ 18:28 cat me.py
+
+#$%&*^ 18:29 cat me.py
+#$%&*^ 18:31 cat me.py
+#$%&*^ 18:33 cat me.py
+#$%&*^ 18:35 cat me.py
+
+#$%&*^ 18:40 cat me.py
+#$%&*^ 18:42 cat me.py
+#$%&*^ 18:44 cat me.py
+#$%&*^ 18:45 cat me.py
+#$%&*^ 18:46 cat me.py
+#$%&*^ 18:47 cat me.py
+#$%&*^ 18:48 cat me.py
+#$%&*^ 18:49 cat me.py
+#$%&*^ 18:50 cat me.py
+#$%&*^ 18:51 cat me.py
+#$%&*^ 18:56 cat me.py
+#$%&*^ 18:57 cat me.py
+
+#$%&*^ 19:00 cat me.py
+#$%&*^ 19:02 cat me.py
+#$%&*^ 19:04 cat me.py
+#$%&*^ 19:05 cat me.py
+
+#$%&*^ 19:07 cat me.py
+#$%&*^ 19:09 cat me.py
+#$%&*^ 19:14 cat me.py
+
+#$%&*^ 19:21 cat me.py
+
+#$%&*^ 19:23 cat me.py
+#$%&*^ 19:26 cat me.py
+#$%&*^ 19:29 cat me.py
+#$%&*^ 19:30 cat me.py
+#$%&*^ 19:31 cat me.py
+#$%&*^ 19:34 cat me.py
+
+#$%&*^ 20:08 cat me.py
+
+#$%&*^ 20:09 cat me.py
+#$%&*^ 20:10 cat me.py
+#$%&*^ 20:10 cat me.py
+#$%&*^ 20:12 cat me.py
+#$%&*^ 20:14 cat me.py
+#$%&*^ 20:15 cat me.py
+#$%&*^ 20:16 cat me.py
+
+#$%&*^ 20:19 cat me.py
+
+#$%&*^ 20:19 cat me.py
+#$%&*^ 20:20 cat me.py
