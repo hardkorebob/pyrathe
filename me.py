@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.11
+#!/usr/bin/env python3.10
 # Application: PyRathe
 # Version: v.1
 # Filename: me.py
@@ -8,7 +8,7 @@
 # Web: https://HARDKOREBOB.github.io
 # Warranty: FREE WARRANTY 4 LIFE
 # License: This software is provided under PRIVATE LICENSE.
-
+from tkinter import *
 import tkinter as tk
 import tkinter.font as font
 import os
@@ -19,6 +19,7 @@ import datetime
 import threading
 import subprocess
 import requests
+import segno as qr
 from idlelib.percolator import Percolator
 from idlelib.colorizer import ColorDelegator
 
@@ -84,6 +85,8 @@ class App:
     def pyrathe_init(self):
         self.s_name = 0
         self.s_filetype = "_txt"
+        self.qr_seq = 0
+        self.qr_fname = f"qr{self.qr_seq}.png"
         self.txtPad_frames = []
         self.timerSymbols = ["|", "/", "-", "\\"]
         self.currentSymbolIndex = 0
@@ -98,18 +101,18 @@ class App:
     def myTimer(self):
         self.timerFrame = tk.Frame(self.root, bg="#444", pady=1, padx=10)
         self.timerFrame.columnconfigure(0, weight=0)
-        self.timerFrame.columnconfigure(1, weight=1)
+        self.timerFrame.columnconfigure(1, weight=0)
+        self.timerFrame.columnconfigure(2, weight=1)
         self.timerFrame.rowconfigure(0, weight=1)
-        self.timerFrame.rowconfigure(1, weight=0)
         self.timerFrame.grid(row=0, column=0, sticky="nsew", columnspan=2)
         self.timerLabel = tk.Label(
             self.timerFrame, bg="#444", fg="green", text="", font=self.font
         )
-        self.timerLabel.grid(row=0, column=0, sticky="new")
+        self.timerLabel.grid(row=0, column=1, sticky="nesw")
         self.timerLabel2 = tk.Label(
             self.timerFrame, bg="#444", fg="yellow", text="", font=self.font
         )
-        self.timerLabel2.grid(row=1, column=0, sticky="nsw")
+        self.timerLabel2.grid(row=0, column=0, sticky="nsew")
         self.timerBar = tk.Text(
             self.timerFrame,
             fg="orange",
@@ -121,9 +124,9 @@ class App:
             cursor="shuttle",
             highlightbackground="#444",
             insertwidth=10,
-            height=2,
+            height=1,
         )
-        self.timerBar.grid(row=0, column=1, sticky="nsew", rowspan=2)
+        self.timerBar.grid(row=0, column=2, sticky="nsew")
 
     def timelineThread(self):
         self.char_line = threading.Thread(target=self.update_timerSymbol)
@@ -138,7 +141,7 @@ class App:
         line, col = cursor_position.split(".")
         i = int(col)
         c = int(line) - 1
-        self.timerLabel.configure(text=f"🕐  {str(c)}{str(i)}min")
+        self.timerLabel.configure(text=f"🕐     {str(c)}{str(i)}min")
 
     def update_timerSymbolLine(self, event=None):
         while True:
@@ -152,6 +155,7 @@ class App:
             self.timerLabel2.configure(text=symbol)
             time.sleep(1)  
             self.currentSymbolIndex = (self.currentSymbolIndex + 1) % len(self.timerSymbols)
+
 
     def wtrFrame(self):
         self.wtrFrame = tk.Frame(self.root, padx=10, bg="#444")
@@ -173,7 +177,16 @@ class App:
         self.msgBarFrame = tk.Frame(self.root, bg="#444", padx=10)
         self.msgBarFrame.rowconfigure(0, weight=1)
         self.msgBarFrame.columnconfigure(0, weight=1)
-        self.msgBarFrame.grid(row=1, column=1, sticky="nsew", columnspan=2)
+        self.msgBarFrame.columnconfigure(1, weight=1)
+        self.msgBarFrame.grid(row=1, column=1, sticky="nsew")
+        img = tk.PhotoImage(file=self.qr_fname)
+        self.qr_label = tk.Label(
+            self.msgBarFrame,
+            image = img,
+            bg="#444",
+        )
+        self.qr_label.grid(row=0, column=1, sticky='nsew')
+        self.qr_label.image = img
         self.msgBar = tk.Text(
             self.msgBarFrame,
             fg="red",
@@ -263,33 +276,24 @@ class App:
             self.utilFrame, text="1,0", bg="#444", fg="#777", font=self.font,
         )
         self.cpos.grid(row=0, column=0, sticky="nsew")
-        self.search_entry = tk.Entry(
-            self.utilFrame, bg="#444", fg="red", insertbackground="red", highlightbackground="#444",
-        )
-        self.search_entry.grid(row=0, column=1, sticky="nsw", padx=2)
-        self.replace_entry = tk.Entry(
-            self.utilFrame, bg="#444", fg="red", insertbackground="red", highlightbackground="#444",
-        )
-        self.replace_entry.grid(row=0, column=2, sticky="nsw", padx=2)
-        self.replace_button = tk.Button(
-            self.utilFrame, 
-            bg="#444", 
-            fg="#777", 
-            text="Replace", 
-            command=self.replace, 
-            highlightbackground="#444",
-        )
-        self.replace_button.grid(row=0, column=3, sticky="nsw", padx=2)
-        self.replace_all_button = tk.Button(
+        self.qr_Entry = tk.Entry(
             self.utilFrame,
             bg="#444",
-            fg="#777",
-            text="Replace All",
-            command=self.replace_all,
+            fg="red",
+            insertbackground="red",
             highlightbackground="#444",
+            
         )
-        self.replace_all_button.grid(row=0, column=4, sticky="nsw", padx=3)
-
+        self.qr_Entry.grid(row=0, column=1, sticky='nsw')
+        self.qr_Button = tk.Button(
+            self.utilFrame,
+            bg="#444", 
+            fg="#777", 
+            text="📷", 
+            command=self.mkQr,             
+            highlightbackground="#444",
+        )    
+        self.qr_Button.grid(row=0, column=2, sticky='nsw')
         self.url_entry = tk.Entry(
             self.utilFrame,
             bg="#444",
@@ -299,9 +303,10 @@ class App:
         )
         self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
         self.url_button = tk.Button(
-            self.utilFrame, bg="#444", 
+            self.utilFrame, 
+            bg="#444", 
             fg="black",
-            text="✅ 🕷",
+            text="✅",
             #text="🕷",
             #text="🕸", 
             command=self.getUrldata,           	
@@ -312,7 +317,7 @@ class App:
             self.utilFrame, 
             bg="#444", 
             fg="#777", 
-            text="🔎 🕸", 
+            text="🔎", 
             command=self.gethistData,             
             highlightbackground="#444",
         )
@@ -377,13 +382,20 @@ class App:
             last_frame.destroy()
         return "break"
 
-    def add_indent(self, event):
-        text = event.widget
-        line = text.get("insert linestart", "insert")
-        match = re.match(r"^(\s+)", line)
-        whitespace = match.group(0) if match else ""
-        text.insert("insert", f"\n{whitespace}")
-        return "break"
+
+    def qr_update(self):
+        img = tk.PhotoImage(file=self.qr_fname)
+        self.qr_label.configure(image=img)
+        self.qr_label.image = img
+
+    def mkQr(self):
+        entry = self.qr_Entry.get()
+        self.qrcode = qr.make_qr(entry)
+        self.qrcode.save(f"{self.qr_fname}", scale=5, border=0, light="#444")
+        self.qr_update()
+        return self.qr_fname
+
+
 
     def get_fun_fact(self, event=None):
         url = "https://uselessfacts.jsph.pl/random.json?language=en"
@@ -490,45 +502,6 @@ class App:
             )
         return "break"
 
-    def replace(self):
-        focused = self.root.focus_get()
-        if isinstance(focused, tk.Text):
-            search_text = self.search_entry.get()
-            replace_text = self.replace_entry.get()
-            if search_text and replace_text:
-                idx = focused.index(tk.INSERT)
-                idx = focused.search(search_text, idx, nocase=1)
-                if idx:
-                    lastidx = f"{idx}+{len(search_text)}c"
-                    focused.delete(idx, lastidx)
-                    focused.insert(idx, replace_text)
-                    focused.tag_remove("found", "1.0", tk.END)
-                    focused.tag_add("found", idx, f"{idx}+{len(replace_text)}c")
-                    focused.tag_config("found", background="green")
-                    self.msgBar.insert(
-                        "1.0",
-                        f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Replaced_ {search_text} {replace_text}\n",
-                    )
-                else:
-                    self.msgBar.insert(
-                        "1.0",
-                        f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {search_text} Not Found!\n",
-                    )
-
-    def replace_all(self):
-        focused = self.root.focus_get()
-        if isinstance(focused, tk.Text):
-            search_text = self.search_entry.get()
-            replace_text = self.replace_entry.get()
-            content = self.txtPad.get("1.0", tk.END)
-            replaced_content = content.replace(search_text, replace_text)
-            self.txtPad.delete("1.0", tk.END)
-            self.txtPad.insert("1.0", replaced_content)
-            self.msgBar.insert(
-                "1.0",
-                f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} ALL*Replaced_ {search_text} {replace_text}\n",
-            )
-
     def update_cursor_position(self, event=None):
         focused = self.root.focus_get()
         try:
@@ -551,6 +524,14 @@ class App:
                 self.line_numbers.yview_moveto(first)
         except KeyError:
             pass
+
+    def add_indent(self, event):
+        text = event.widget
+        line = text.get("insert linestart", "insert")
+        match = re.match(r"^(\s+)", line)
+        whitespace = match.group(0) if match else ""
+        text.insert("insert", f"\n{whitespace}")
+        return "break"
 
     def select_all_text(self, event):
         event.widget.tag_add("sel", "1.0", "end")
@@ -679,5 +660,115 @@ if __name__ == "__main__":
 
 
 #$%&*^ 17:47 cat me.py
+#$%&*^ 17:52 cat me.py
+#$%&*^ 17:53 cat me.py
+#$%&*^ 17:55 cat me.py
+#$%&*^ 18:01 cat me.py
+#$%&*^ 18:03 cat me.py
 
+#$%&*^ 18:24 cat me.py
+#$%&*^ 18:26 cat me.py
+#$%&*^ 18:28 cat me.py
+
+#$%&*^ 18:29 cat me.py
+#$%&*^ 18:31 cat me.py
+#$%&*^ 18:33 cat me.py
+#$%&*^ 18:35 cat me.py
+
+#$%&*^ 18:40 cat me.py
+#$%&*^ 18:42 cat me.py
+#$%&*^ 18:44 cat me.py
+#$%&*^ 18:45 cat me.py
+#$%&*^ 18:46 cat me.py
+#$%&*^ 18:47 cat me.py
+#$%&*^ 18:48 cat me.py
+#$%&*^ 18:49 cat me.py
+#$%&*^ 18:50 cat me.py
+#$%&*^ 18:51 cat me.py
+#$%&*^ 18:56 cat me.py
+#$%&*^ 18:57 cat me.py
+
+#$%&*^ 19:00 cat me.py
+#$%&*^ 19:02 cat me.py
+#$%&*^ 19:04 cat me.py
+#$%&*^ 19:05 cat me.py
+
+#$%&*^ 19:07 cat me.py
+#$%&*^ 19:09 cat me.py
+#$%&*^ 19:14 cat me.py
+
+#$%&*^ 19:21 cat me.py
+
+#$%&*^ 19:23 cat me.py
+#$%&*^ 19:26 cat me.py
+#$%&*^ 19:29 cat me.py
+#$%&*^ 19:30 cat me.py
+#$%&*^ 19:31 cat me.py
+#$%&*^ 19:34 cat me.py
+
+#$%&*^ 20:08 cat me.py
+
+#$%&*^ 20:09 cat me.py
+#$%&*^ 20:10 cat me.py
+#$%&*^ 20:10 cat me.py
+#$%&*^ 20:12 cat me.py
+#$%&*^ 20:14 cat me.py
+#$%&*^ 20:15 cat me.py
+#$%&*^ 20:16 cat me.py
+
+#$%&*^ 20:19 cat me.py
+
+#$%&*^ 20:19 cat me.py
+#$%&*^ 20:20 cat me.py
+#$%&*^ 20:26 cat me.py
+
+#$%&*^ 20:28 cat me.py
+#$%&*^ 20:29 cat me.py
+#$%&*^ 20:31 cat me.py
+#$%&*^ 20:32 cat me.py
+#$%&*^ 20:34 cat me.py
+#$%&*^ 20:36 cat me.py
+#$%&*^ 20:37 cat me.py
+#$%&*^ 20:37 cat me.py
+#$%&*^ 20:38 cat me.py
+#$%&*^ 20:41 cat me.py
+
+#$%&*^ 20:50 cat me.py
+#$%&*^ 20:50 cat me.py
+#$%&*^ 20:51 cat me.py
+#$%&*^ 20:53 cat me.py
+#$%&*^ 20:53 cat me.py
+#$%&*^ 20:53 cat me.py
+#$%&*^ 20:55 cat me.py
+#$%&*^ 20:56 cat me.py
+#$%&*^ 20:57 cat me.py
+#$%&*^ 20:58 cat me.py
+#$%&*^ 20:59 cat me.py
+#$%&*^ 21:00 cat me.py
+#$%&*^ 21:01 cat me.py
+#$%&*^ 21:02 cat me.py
 #$%&*^ 21:04 cat me.py
+#$%&*^ 21:12 cat me.py
+#$%&*^ 21:14 cat me.py
+#$%&*^ 21:14 cat me.py
+#$%&*^ 21:15 cat me.py
+#$%&*^ 21:48 cat me.py
+#$%&*^ 21:54 cat me.py
+#$%&*^ 21:55 cat me.py
+#$%&*^ 21:56 cat me.py
+#$%&*^ 21:59 cat me.py
+#$%&*^ 22:16 cat me.py
+#$%&*^ 22:18 cat me.py
+#$%&*^ 22:18 cat me.py
+#$%&*^ 22:19 cat me.py
+#$%&*^ 22:21 cat me.py
+#$%&*^ 22:31 cat me.py
+#$%&*^ 22:35 cat me.py
+#$%&*^ 22:36 cat me.py
+
+#$%&*^ 22:39 cat me.py
+#$%&*^ 22:40 cat me.py
+
+#$%&*^ 22:44 cat me.py
+#$%&*^ 22:46 cat me.py
+#$%&*^ 22:57 cat me.py
