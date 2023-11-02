@@ -226,8 +226,8 @@ class App:
         self.action_frame.rowconfigure(4, weight=0)
         self.action_frame.columnconfigure(0, weight=0)
         self.action_frame.columnconfigure(1, weight=1)
-        self.action_frame.columnconfigure(2, weight=1)
-        self.action_frame.columnconfigure(3, weight=1)
+        self.action_frame.columnconfigure(2, weight=0)
+        self.action_frame.columnconfigure(3, weight=0)
         self.action_frame.columnconfigure(4, weight=0)
 
         self.action_frame.grid(row=0, column=0, sticky="nsew")        
@@ -741,4 +741,5 @@ if __name__ == "__main__":
     root.configure(background="#444")
     app = App(root)
     root.mainloop()
+
 
