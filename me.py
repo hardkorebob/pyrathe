@@ -184,6 +184,7 @@ class App:
             self.msgBarFrame,
             image = img,
             bg="#444",
+            cursor="cross",
         )
         self.qr_label.grid(row=0, column=1, sticky='nsew')
         self.qr_label.image = img
@@ -282,6 +283,7 @@ class App:
             fg="red",
             insertbackground="red",
             highlightbackground="#444",
+            cursor="spraycan"
             
         )
         self.qr_Entry.grid(row=0, column=1, sticky='nsw')
@@ -299,7 +301,8 @@ class App:
             bg="#444",
             fg="red",
             insertbackground="red",
-            highlightbackground="#444"
+            highlightbackground="#444",
+            cursor="star"
         )
         self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
         self.url_button = tk.Button(
@@ -771,4 +774,8 @@ if __name__ == "__main__":
 
 #$%&*^ 22:44 cat me.py
 #$%&*^ 22:46 cat me.py
-#$%&*^ 22:57 cat me.py
+#$%&*^ 23:13  cat me.py
+#$%&*^ 23:19 cat me.py
+#$%&*^ 23:20 cat me.py
+#$%&*^ 23:21 cat me.py
+#$%&*^ 23:22 cat me.py
