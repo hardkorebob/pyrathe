@@ -86,38 +86,37 @@ class App:
         self.s_name = 0
         self.s_filetype = "_txt"
         self.qr_seq = 0
-        self.qr_fname = "qr.png"
-        self.qr_file = f"{self.qr_seq}{self.qr_fname}"
+        self.qr_ftype = "qr.png"
+        self.qr_file = f"{self.qr_seq}{self.qr_ftype}"
         self.txtPad_frames = []
         self.timerSymbols = ["|", "/", "-", "\\"]
         self.currentSymbolIndex = 0
-        self.myTimer()
-        self.wtrFrame()
-        self.msgBar()
+        self.statusBar()
+        self.actionFrame()
+        self.msgBuffer()
         self.textPad()
         self.createUtilBar()
         self.weather()
         self.get_fun_fact()
 
-    def myTimer(self):
-        self.timerFrame = tk.Frame(self.root, bg="#444", pady=1, padx=10,)
-        self.timerFrame.columnconfigure(0, weight=0)
-        self.timerFrame.columnconfigure(1, weight=0)
-        self.timerFrame.columnconfigure(2, weight=1)
-        self.timerFrame.rowconfigure(0, weight=1)
-        self.timerFrame.grid(row=0, column=0, sticky="nsew", columnspan=2)
+    def statusBar(self):
+        self.statusBarFrame = tk.Frame(self.root, bg="#444", pady=1, padx=10,)
+        self.statusBarFrame.columnconfigure(0, weight=0)
+        self.statusBarFrame.columnconfigure(1, weight=0)
+        self.statusBarFrame.columnconfigure(2, weight=1)
+        self.statusBarFrame.rowconfigure(0, weight=1)
+        self.statusBarFrame.grid(row=0, column=0, sticky="nsew", columnspan=2)
 
         self.timerLabel = tk.Label(
-            self.timerFrame, 
+            self.statusBarFrame, 
             bg="#444", 
             fg="green", 
-            text="", 
             font=self.font,
         )
         self.timerLabel.grid(row=0, column=1, sticky="nsew")
 
         self.timerLabel2 = tk.Label(
-            self.timerFrame, 
+            self.statusBarFrame, 
             bg="#444", 
             fg="yellow", 
             text="", 
@@ -126,7 +125,7 @@ class App:
         self.timerLabel2.grid(row=0, column=0, sticky="nsew")
 
         self.timerBar = tk.Text(
-            self.timerFrame,
+            self.statusBarFrame,
             fg="orange",
             bg="#444",
             relief=tk.FLAT,
@@ -168,31 +167,88 @@ class App:
             time.sleep(1)  
             self.currentSymbolIndex = (self.currentSymbolIndex + 1) % len(self.timerSymbols)
 
-    def wtrFrame(self):
-        self.wtrFrame = tk.Frame(self.root, padx=10, bg="#444")
-        self.wtrFrame.rowconfigure(0, weight=0)
-        self.wtrFrame.columnconfigure(0, weight=0)
-        self.wtrFrame.grid(row=1, column=0, sticky="nsew")
-        self.fullW_button = tk.Button(
-            self.wtrFrame,
+    def actionFrame(self):
+        self.actionFrame = tk.Frame(self.root, padx=10, bg="#444")
+        self.actionFrame.rowconfigure(0, weight=0)
+        self.actionFrame.rowconfigure(1, weight=0)
+        self.actionFrame.rowconfigure(2, weight=0)
+        self.actionFrame.columnconfigure(0, weight=0)
+        self.actionFrame.grid(row=1, column=0, sticky="nsew")
+
+        self.fullWeather_button = tk.Button(
+            self.actionFrame,
             bg="#444",
             fg="#777",
             text="🌞",
             command=self.full_weather,
             highlightbackground="#444",
+            font=self.font,
         )
-        self.fullW_button.grid(row=0, column=0, sticky="nsew")
+        self.fullWeather_button.grid(row=0, column=0, sticky="nsew")
 
-    def msgBar(self):
-        self.msgBarFrame = tk.Frame(self.root, bg="#444", padx=10)
-        self.msgBarFrame.rowconfigure(0, weight=1)
-        self.msgBarFrame.columnconfigure(0, weight=1)
-        self.msgBarFrame.columnconfigure(1, weight=1)
-        self.msgBarFrame.grid(row=1, column=1, sticky="nsew")
+        self.loadMe_button = tk.Button(
+            self.actionFrame,
+            bg="#444",
+            fg="#FFF",
+            text="😻",
+            command=self.loadMe,
+            highlightbackground="#444",
+            font=self.font,
+        )
+        self.loadMe_button.grid(row=1, column=0, sticky="nsew")
+
+        self.py_button = tk.Button(
+            self.actionFrame,
+            bg="#444",
+            fg="red",
+            text="🐍",
+            command=self.add_py_tab,
+            highlightbackground="#444",
+            font=self.font,
+        )
+        self.py_button.grid(row=2, column=0, sticky="nsew")
+
+        self.term_button = tk.Button(
+            self.actionFrame,
+            bg="#444",
+            fg="#000",
+            text="⊡⁁",
+            command=self.add_term_tab,
+            highlightbackground="#444",
+            font=self.font,
+        )
+        self.term_button.grid(row=3, column=0, sticky="nsew")
+        self.addtab_button = tk.Button(
+            self.actionFrame,
+            bg="#444",
+            fg="green",
+            text="⊞", #◫", 
+            command=self.add_new_tab,
+            highlightbackground="#444",
+            font=self.font,
+        )
+        self.addtab_button.grid(row=4, column=0, sticky="nsew")
+        self.kill_button = tk.Button(
+            self.actionFrame,
+            bg="#444",
+            fg="red",
+            text="⊟", #⚠□", #
+            command=self.del_new_tab,
+            highlightbackground="#444",
+            font=self.font,
+        )
+        self.kill_button.grid(row=5, column=0, sticky="nsew")
+
+    def msgBuffer(self):
+        self.msgBufferFrame = tk.Frame(self.root, bg="#444", padx=10)
+        self.msgBufferFrame.rowconfigure(0, weight=1)
+        self.msgBufferFrame.columnconfigure(0, weight=1)
+        self.msgBufferFrame.columnconfigure(1, weight=1)
+        self.msgBufferFrame.grid(row=1, column=1, sticky="nsew")
 
         img = tk.PhotoImage(file=self.qr_file)
         self.qr_label = tk.Label(
-            self.msgBarFrame,
+            self.msgBufferFrame,
             image = img,
             bg="#444",
             cursor="cross",
@@ -200,8 +256,8 @@ class App:
         self.qr_label.grid(row=0, column=1, sticky='nsew')
         self.qr_label.image = img
 
-        self.msgBar = tk.Text(
-            self.msgBarFrame,
+        self.msgBuffer = tk.Text(
+            self.msgBufferFrame,
             fg="red",
             bg="#444",
             relief=tk.FLAT,
@@ -214,7 +270,7 @@ class App:
             height=12,
             wrap=tk.WORD,
         )
-        self.msgBar.grid(row=0, column=0, sticky="nsew")
+        self.msgBuffer.grid(row=0, column=0, sticky="nsew")
 
     def textPad(self):
         self.paned = tk.PanedWindow(
@@ -304,6 +360,7 @@ class App:
             insertbackground="red",
             highlightbackground="#444",
             cursor="spraycan",
+            font=self.font,
         )
         self.qr_Entry.grid(row=0, column=1, sticky='nsw')
 
@@ -314,6 +371,7 @@ class App:
             text="📷", 
             command=self.mkQr,             
             highlightbackground="#444",
+            font=self.font,
         )    
         self.qr_Button.grid(row=0, column=2, sticky='nsw')
 
@@ -324,6 +382,7 @@ class App:
             insertbackground="red",
             highlightbackground="#444",
             cursor="star",
+            font=self.font,
         )
         self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
 
@@ -336,6 +395,7 @@ class App:
             #text="🕸", 
             command=self.getUrldata,           	
             highlightbackground="#444",
+            font=self.font,
         )
         self.url_button.grid(row=0, column=6, sticky="wens", padx=3)
 
@@ -346,6 +406,7 @@ class App:
             text="🔎", 
             command=self.gethistData,             
             highlightbackground="#444",
+            font=self.font,
         )
         self.hist_button.grid(row=0, column=7, sticky="wens", padx=3)
 
@@ -417,7 +478,7 @@ class App:
         img = tk.PhotoImage(file=self.qr_file)
         self.qr_label.configure(image=img)
         self.qr_label.image = img
-        self.msgBar.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {entry} _QR code.generated +Displayn:-0\n")
+        self.msgBuffer.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {entry} _QR code.generated +Displayn:-0\n")
 
     def get_fun_fact(self, event=None):
         url = "https://uselessfacts.jsph.pl/random.json?language=en"
@@ -425,11 +486,11 @@ class App:
         if response.status_code == 200:
             data = response.json()
             fact = data.get("text", "")
-            self.msgBar.insert(
+            self.msgBuffer.insert(
                 "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {fact}\n"
             )
         else:
-            self.msgBar.insert("1.0", "Failed to fetch the fact.\n")
+            self.msgBuffer.insert("1.0", "Failed to fetch the fact.\n")
 
     def getUrldata(self, event=None):
         focused = self.root.focus_get()
@@ -438,12 +499,12 @@ class App:
             response = requests.get(url, timeout=5)
             focused.insert("1.0", f"{response.text}\n")
             status_msg = f"GET {url} HTTP/1.1 {response.status_code} {response.reason}"
-            self.msgBar.insert(
+            self.msgBuffer.insert(
                 "1.0",
                 f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {status_msg}\n",
             )
         except requests.exceptions.RequestException as e:
-            self.msgBar.insert("1.0", f"Error: {str(e)}\n")
+            self.msgBuffer.insert("1.0", f"Error: {str(e)}\n")
 
     def gethistData(self, event=None):
         focused = self.root.focus_get()
@@ -458,17 +519,17 @@ class App:
             )
             if hist.returncode == 0:
                 focused.insert("1.0", f"{hist.stdout}\n")
-                self.msgBar.insert(
+                self.msgBuffer.insert(
                     "1.0",
                     f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Printed Mozilla History\n",
                 )
             else:
-                self.msgBar.insert(
+                self.msgBuffer.insert(
                     "1.0",
                     f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {hist.stderr}\n",
                 )
         except Exception as e:
-            self.msgBar.insert(
+            self.msgBuffer.insert(
                 "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
             )
         return "break"
@@ -485,18 +546,18 @@ class App:
                 text=True,
             )
             if weather.returncode == 0:
-                self.msgBar.insert(
+                self.msgBuffer.insert(
                     "1.0",
                     f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Full Weather Report\n",
                 )
                 focused.insert("1.0", f"{weather.stdout}\n")
             else:
-                self.msgBar.insert(
+                self.msgBuffer.insert(
                     "1.0",
                     f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {weather.stderr}\n",
                 )
         except Exception as e:
-            self.msgBar.insert(
+            self.msgBuffer.insert(
                 "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
             )
         return "break"
@@ -512,17 +573,47 @@ class App:
                 text=True,
             )
             if weather.returncode == 0:
-                self.msgBar.insert("1.0", f"{weather.stdout}\n")
+                self.msgBuffer.insert("1.0", f"{weather.stdout}\n")
             else:
-                self.msgBar.insert(
+                self.msgBuffer.insert(
                     "1.0",
                     f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {weather.stderr}\n",
                 )
         except Exception as e:
-            self.msgBar.insert(
+            self.msgBuffer.insert(
                 "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
             )
         return "break"
+
+    def loadMe(self):
+        focused = self.root.focus_get()
+        command = "cat me.py"
+        try:
+            if isinstance(focused, tk.Text):
+                me = subprocess.run(
+                command,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                )
+                if me.returncode == 0:
+                    focused.insert("1.0", f"{me.stdout}\n")
+                    self.msgBuffer.insert(
+                        "1.0",
+                        f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} meow me.py _loaded\n",
+                    )
+                else:
+                    self.msgBuffer.insert(
+                        "1.0",
+                        f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {me.stderr}\n",
+                    )
+        except Exception as e:
+            self.msgBuffer.insert(
+                "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
+            )
+        return "break"
+
 
     def update_cursor_position(self, event=None):
         focused = self.root.focus_get()
@@ -581,7 +672,7 @@ class App:
         self.s_name += 1
         with open(filename, "w") as file:
             file.write(content)
-        self.msgBar.insert(
+        self.msgBuffer.insert(
             "1.0",
             f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {filename} _Buffer Saved\n",
         )
@@ -593,7 +684,7 @@ class App:
         filename = "me.py"
         with open(filename, "w") as file:
             file.write(content)
-        self.msgBar.insert(
+        self.msgBuffer.insert(
             "1.0",
             f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {filename} _Myself & I Saved\n",
         )
@@ -605,7 +696,7 @@ class App:
         try:
             exec(code, globals())
         except Exception as e:
-            self.msgBar.insert(
+            self.msgBuffer.insert(
                 "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
             )
         return "break"
@@ -615,12 +706,12 @@ class App:
         code = focused.get("insert linestart", "insert lineend")
         try:
             output = eval(code, globals())
-            self.msgBar.insert(
+            self.msgBuffer.insert(
                 "1.0",
                 f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} >>> {output}\n",
             )
         except Exception as e:
-            self.msgBar.insert(
+            self.msgBuffer.insert(
                 "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
             )
         return "break"
@@ -641,7 +732,7 @@ class App:
                     "insert linestart",
                     f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} ",
                 )
-                self.msgBar.insert(
+                self.msgBuffer.insert(
                     "1.0",
                     f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {command}\n",
                 )
@@ -651,12 +742,12 @@ class App:
                     "insert linestart",
                     f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} ",
                 )
-                self.msgBar.insert(
+                self.msgBuffer.insert(
                     "1.0",
                     f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {result.stderr}\n",
                 )
         except Exception as e:
-            self.msgBar.insert(
+            self.msgBuffer.insert(
                 "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {str(e)}\n"
             )
         return "break"
@@ -684,4 +775,10 @@ if __name__ == "__main__":
 #$%&*^ 00:13 cat me.py
 #$%&*^ 00:18 cat me.py
 #$%&*^ 00:22 cat me.py
-#$%&*^ 00:24 cat me.py
+#$%&*^ 00:44 cat me.py
+#$%&*^ 00:48 cat me.py
+#$%&*^ 01:01 cat me.py
+#$%&*^ 01:11 cat me.py
+#$%&*^ 01:14 cat me.py
+#$%&*^ 01:15 cat me.py
+#$%&*^ 01:20 cat me.py
