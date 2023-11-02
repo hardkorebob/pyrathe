@@ -83,6 +83,16 @@ class App:
         self.root.bind_all("<Control-H>", self.gethistData)
 
     def pyrathe_init(self):
+        self.init()
+        self.statusBar()
+        self.actionFrame()
+        self.msgBuffer()
+        self.textPad()
+        self.createUtilBar()
+        self.weather()
+        self.get_fun_fact()
+
+    def init(self):
         self.s_name = 0
         self.s_filetype = "_txt"
         self.qr_seq = 0
@@ -91,13 +101,6 @@ class App:
         self.txtPad_frames = []
         self.timerSymbols = ["|", "/", "-", "\\"]
         self.currentSymbolIndex = 0
-        self.statusBar()
-        self.actionFrame()
-        self.msgBuffer()
-        self.textPad()
-        self.createUtilBar()
-        self.weather()
-        self.get_fun_fact()
 
     def statusBar(self):
         self.statusBarFrame = tk.Frame(self.root, bg="#444", pady=1, padx=10,)
@@ -767,4 +770,30 @@ if __name__ == "__main__":
     root.configure(background="#444")
     app = App(root)
     root.mainloop()
-    
+#$%&*^ 23:39 cat me.py
+#$%&*^ 23:45 cat me.py
+#$%&*^ 23:47 cat me.py
+#$%&*^ 00:09 cat me.py
+#$%&*^ 00:12 cat me.py
+#$%&*^ 00:13 cat me.py
+#$%&*^ 00:18 cat me.py
+#$%&*^ 00:22 cat me.py
+#$%&*^ 00:44 cat me.py
+#$%&*^ 00:48 cat me.py
+
+#$%&*^ 01:01 cat me.py
+
+#$%&*^ 01:11 cat me.py
+
+#$%&*^ 01:14 cat me.py
+#$%&*^ 01:15 cat me.py
+
+
+
+#$%&*^ 01:20 cat me.py
+
+
+
+
+
+
