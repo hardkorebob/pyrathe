@@ -40,6 +40,8 @@ Depends:
   
   pip install requests
 
+  pip install segno
+
   perl 
   
 ---
