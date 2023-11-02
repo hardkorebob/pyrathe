@@ -85,6 +85,8 @@ class App:
         self.s_name = 0
         self.s_filetype = "_txt"
         self.txtPad_frames = []
+        self.timerSymbols = ["|", "/", "-", "\\"]
+        self.currentSymbolIndex = 0
         self.myTimer()
         self.wtrFrame()
         self.msgBar()
@@ -98,11 +100,16 @@ class App:
         self.timerFrame.columnconfigure(0, weight=0)
         self.timerFrame.columnconfigure(1, weight=1)
         self.timerFrame.rowconfigure(0, weight=1)
+        self.timerFrame.rowconfigure(1, weight=0)
         self.timerFrame.grid(row=0, column=0, sticky="nsew", columnspan=2)
         self.timerLabel = tk.Label(
             self.timerFrame, bg="#444", fg="green", text="", font=self.font
         )
         self.timerLabel.grid(row=0, column=0, sticky="new")
+        self.timerLabel2 = tk.Label(
+            self.timerFrame, bg="#444", fg="green", text="", font=self.font
+        )
+        self.timerLabel2.grid(row=1, column=0, sticky="new")
         self.timerBar = tk.Text(
             self.timerFrame,
             fg="green",
@@ -116,12 +123,15 @@ class App:
             insertwidth=10,
             height=2,
         )
-        self.timerBar.grid(row=0, column=1, sticky="nsew")
+        self.timerBar.grid(row=0, column=1, sticky="nsew", rowspan=2)
 
     def timelineThread(self):
         self.char_line = threading.Thread(target=self.update_timerSymbol)
         self.char_line.daemon = True
         self.char_line.start()
+        self.char_line2 = threading.Thread(target=self.update_timerSymbolLine)
+        self.char_line2.daemon = True
+        self.char_line2.start()
 
     def update_timerLabel(self, event=None):
         cursor_position = self.timerBar.index(tk.INSERT)
@@ -130,11 +140,18 @@ class App:
         c = int(line) - 1
         self.timerLabel.configure(text=f"{str(c)}{str(i)}min")
 
-    def update_timerSymbol(self, event=None):
+    def update_timerSymbolLine(self, event=None):
         while True:
             self.timerBar.insert("end", ">")
             self.update_timerLabel()
             time.sleep(60)
+
+    def update_timerSymbol(self, event=None):
+        while True:
+            symbol = self.timerSymbols[self.currentSymbolIndex]
+            self.timerLabel2.configure(text=symbol)
+            time.sleep(1)  
+            self.currentSymbolIndex = (self.currentSymbolIndex + 1) % len(self.timerSymbols)
 
     def wtrFrame(self):
         self.wtrFrame = tk.Frame(self.root, padx=10, bg="#444")
@@ -720,3 +737,17 @@ if __name__ == "__main__":
 
 #$%&*^ 20:19 cat me.py
 #$%&*^ 20:20 cat me.py
+#$%&*^ 20:26 cat me.py
+
+#$%&*^ 20:28 cat me.py
+#$%&*^ 20:29 cat me.py
+#$%&*^ 20:31 cat me.py
+#$%&*^ 20:32 cat me.py
+#$%&*^ 20:34 cat me.py
+#$%&*^ 20:36 cat me.py
+#$%&*^ 20:37 cat me.py
+#$%&*^ 20:37 cat me.py
+#$%&*^ 20:38 cat me.py
+#$%&*^ 20:41 cat me.py
+
+#$%&*^ 20:45 cat me.py
