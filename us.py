@@ -1,8 +1,8 @@
 #!/usr/bin/env python3.10
 # Application: PyRathe3
 # Version: v.1
-# Filename: you.py
-# Written: Roberto Rodriguez Jr & just me this time
+# Filename: us.py
+# Written: Roberto Rodriguez Jr & just me this time(mostly)
 # 0.02: This editor rulez! (python rapid app & txt handling env)
 # Email: hardkorebob@gmail.com
 # Web: https://HARDKOREBOB.github.io
@@ -57,7 +57,7 @@ class Editor:
         self.s_name = 0
         self.s_filetype = "_txt"
         self.qr_file = "0qr.png"
-        self.me_file = "editor3.py"
+        self.me_file = "us.py"
         self.timerSymbols = ["|", "/", "-", "\\"]
         self.currentSymbolIndex = 0
         self.make_action()
@@ -578,6 +578,4 @@ if __name__ == "__main__":
     root.mainloop()
 
 
-#$%&*^ 03:23 cat editor3.py
 
-#$%&*^ 04:06 
