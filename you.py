@@ -31,13 +31,12 @@ class App:
         self.rootConfig()
         self.setup_keybindings()
         self.font = font.nametofont("TkFixedFont")
-        self.font.configure(size=12)
+        self.font.configure(size=13)
         self.pyrathe_init()
         self.timelineThread()
 
     def rootConfig(self):
-        self.root.columnconfigure(0, weight=0)
-        self.root.columnconfigure(1, weight=1)
+        self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
 
     def setup_keybindings(self):
@@ -80,11 +79,6 @@ class App:
         self.root.bind_all("<Control-H>", self.gethistData)
 
     def pyrathe_init(self):
-        self.init()
-        self.statusBar()
-        self.action()
-    
-    def init(self):
         self.s_name = 0
         self.s_filetype = "_txt"
         self.qr_file = "0qr.png"
@@ -92,87 +86,266 @@ class App:
         self.txtPad_frames = []
         self.timerSymbols = ["|", "/", "-", "\\"]
         self.currentSymbolIndex = 0
+        self.action()
+        self.get_fun_fact()
 
-    def statusBar(self):
-        self.status_frame = tk.Frame(self.root, bg="#444")
-        self.status_frame.rowconfigure(0, weight=0)
-        self.status_frame.columnconfigure(0, weight=0)
-        self.status_frame.grid(row=0, column=0, sticky='nswe')
+    def action(self):
+        self.paned = tk.PanedWindow(
+            self.root,
+            orient=tk.HORIZONTAL,
+            sashrelief=tk.RAISED,
+            sashwidth=10,
+            cursor="target",
+            bg="#444",
+        )
+        self.paned.rowconfigure(0, weight=1)
+        self.paned.columnconfigure(0, weight=1)
+        self.paned.grid(row=0, column=0, sticky="nsew")
+ 
+        self.action_frame = tk.Frame(self.paned, bg="#444", padx=1, pady=1)
+        self.action_frame.rowconfigure(0, weight=0)
+        self.action_frame.rowconfigure(1, weight=0)
+        self.action_frame.rowconfigure(2, weight=0)
+        self.action_frame.rowconfigure(3, weight=1)
+        self.action_frame.rowconfigure(4, weight=0)
 
-        self.timerLabel2 = tk.Label(
-            self.status_frame, 
+        self.action_frame.columnconfigure(0, weight=1)
+        self.action_frame.columnconfigure(1, weight=0)
+        self.action_frame.grid(row=0, column=0, sticky="nsew")
+
+        self.timerBar = tk.Text(
+            self.action_frame,
+            fg="yellow",
+            bg="#444",
+            relief=tk.FLAT,
+            highlightcolor="#555",
+            insertbackground="white",
+            font=self.font,
+            cursor="shuttle",
+            highlightbackground="#444",
+            insertwidth=10,
+            height=1,
+        )
+        self.timerBar.grid(row=0, column=0, sticky="nsew", pady=1, padx=1, columnspan=5)
+
+        self.timerLabel = tk.Label(
+            self.action_frame, 
             bg="#444", 
             fg="yellow", 
             font=self.font,
         )
-        self.timerLabel2.grid(row=0, column=0, sticky="nsew")
+        self.timerLabel.grid(row=1, column=4, sticky="nesw", pady=1, padx=1)
+        
+        self.url_entry = tk.Entry(
+            self.action_frame,
+            bg="#444",
+            fg="#000",
+            insertbackground="#000",
+            highlightbackground="#333",
+            cursor="star",
+            font=self.font,
+            relief=tk.FLAT,
+            width=100,
+        )
+        self.url_entry.grid(row=4, column=2, sticky="nsew", padx=1, pady=1)
 
-        self.fullWeather_button = tk.Button(
-            self.status_frame,
+        self.url_button = tk.Button(
+            self.action_frame, 
+            bg="#444", 
+            fg="#000",
+            text="🕷",
+            #text="✅",
+            #text="🕸", 
+            command=self.getUrldata,           	
+            highlightbackground="#444",
+            font=self.font,
+        )
+        self.url_button.grid(row=4, column=1, sticky="w", padx=1, pady=1)
+
+        self.hist_button = tk.Button(
+            self.action_frame, 
+            bg="#444", 
+            fg="#777", 
+            text="🔎", 
+            command=self.gethistData,             
+            highlightbackground="#444",
+            font=self.font,
+        )
+        self.hist_button.grid(row=4, column=3, sticky="w", padx=1, pady=1)
+
+        self.qr_Entry = tk.Entry(
+            self.action_frame,
+            bg="#444",
+            fg="red",
+            insertbackground="red",
+            highlightbackground="#333",
+            cursor="spraycan",
+            font=self.font,
+            relief=tk.FLAT,
+        )
+        self.qr_Entry.grid(row=4, column=3, sticky='nesw', padx=1, pady=1)
+
+        self.qr_Button = tk.Button(
+            self.action_frame,
+            bg="#444", 
+            fg="#777", 
+            text="📷", 
+            command=self.mkQr,             
+            highlightbackground="#444",
+            font=self.font,
+        )    
+        self.qr_Button.grid(row=4, column=4, sticky='nwse', padx=1, pady=1,)
+
+        self.msgBuffer = tk.Text(
+            self.action_frame,
+            fg="#777",
+            bg="#444",
+            relief=tk.FLAT,
+            highlightcolor="red",
+            insertbackground="white",
+            font=self.font,
+            cursor="pirate",
+            highlightbackground="#444",
+            insertwidth=10,
+            height=12,
+            wrap=tk.WORD,
+        )
+        self.msgBuffer.grid(row=2, column=0, sticky="nsew", padx=1, pady=1, columnspan=3)
+        
+        img = tk.PhotoImage(file=self.qr_file)
+        self.qr_label = tk.Label(
+            self.action_frame,
+            image = img,
+            bg="#444",
+            cursor="cross",
+        )
+        self.qr_label.grid(row=2, column=3, sticky='nsw', pady=1, padx=1, columnspan=2)
+        self.qr_label.image = img
+        
+        self.txtPad = tk.Text(
+            self.action_frame,
+            fg="orange",
+            bg="#444",
+            wrap=tk.WORD,
+            relief=tk.FLAT,
+            highlightcolor="orange",
+            insertbackground="red",
+            font=self.font,
+            cursor="heart",
+            highlightbackground="#333",
+            insertwidth=3,
+            spacing1=9,
+            spacing3=9,
+            padx=10,
+            undo=True,
+        )
+        Percolator(self.txtPad).insertfilter(ColorDelegator())
+        self.txtPad.grid(row=3, column=0, sticky="nsew", columnspan=5, pady=1, padx=1)
+
+        self.line_numbers = tk.Text(
+            self.action_frame,
+            relief=tk.FLAT,
             bg="#444",
             fg="#777",
+            font=self.font,
+            highlightbackground="orange",
+            highlightcolor="#555",
+            cursor="spider",
+            spacing1=9,
+            spacing3=9,
+            width=5,
+        )
+        self.line_numbers.grid(row=3, column=4, sticky="nsew", pady=1, padx=1)
+
+        self.cpos = tk.Label(
+            self.action_frame,
+            text="1,0", 
+            bg="#444", 
+            fg="#777", 
+            font=self.font,
+        )
+        self.cpos.grid(row=3, column=4, sticky="s", padx=1, pady=1)
+
+        self.timerLabel2 = tk.Label(
+            self.action_frame, 
+            bg="#444", 
+            fg="yellow", 
+            font=self.font,
+        )
+        self.timerLabel2.grid(row=0, column=1, sticky="nse", padx=1, pady=1)
+
+        self.fullWeather_button = tk.Button(
+            self.action_frame,
+            bg="#444",
             text="🌞",
             command=self.full_weather,
             highlightbackground="#444",
             font=self.font,
         )
-        self.fullWeather_button.grid(row=1, column=0, sticky="nsew")
+        self.fullWeather_button.grid(row=1, column=3, sticky="nsew", padx=1, pady=1)
 
         self.loadMe_button = tk.Button(
-            self.status_frame,
+            self.action_frame,
             bg="#444",
-            fg="#FFF",
+            fg="black",
             text="😻",
             command=self.loadMe,
             highlightbackground="#444",
             font=self.font,
+            pady=1,
         )
-        self.loadMe_button.grid(row=2, column=0, sticky="nsew")
+        self.loadMe_button.grid(row=4, column=0, sticky="nswe", padx=1, pady=1)
 
         self.py_button = tk.Button(
-            self.status_frame,
+            self.action_frame,
             bg="#444",
-            fg="red",
             text="🐍",
             command=self.add_py_tab,
             highlightbackground="#444",
             font=self.font,
+            pady=1,
         )
-        self.py_button.grid(row=3, column=0, sticky="nsew")
+        self.py_button.grid(row=0, column=3, sticky="nsw", padx=1, pady=1)
 
         self.term_button = tk.Button(
-            self.status_frame,
+            self.action_frame,
             bg="#444",
-            fg="#000",
+            fg="black",
             text="⊡⁁",
             command=self.add_term_tab,
             highlightbackground="#444",
             font=self.font,
+            pady=1,
         )
-        self.term_button.grid(row=4, column=0, sticky="nsew")
+        self.term_button.grid(row=2, column=4, sticky="nsew", padx=1)
 
         self.addtab_button = tk.Button(
-            self.status_frame,
+            self.action_frame,
             bg="#444",
             fg="green",
             text="⊞", #◫", 
             command=self.add_new_tab,
             highlightbackground="#444",
             font=self.font,
+            pady=1,
         )
-        self.addtab_button.grid(row=5, column=0, sticky="nsew")
+        self.addtab_button.grid(row=0, column=3, sticky="nse", padx=1, pady=1)
 
         self.kill_button = tk.Button(
-            self.status_frame,
+            self.action_frame,
             bg="#444",
             fg="red",
             text="⊟", #⚠□", #
             command=self.del_new_tab,
             highlightbackground="#444",
             font=self.font,
+            pady=1,
         )
-        self.kill_button.grid(row=6, column=0, sticky="nsew")
+        self.kill_button.grid(row=0, column=4, sticky="nswe", padx=1)
 
+        self.paned.add(self.action_frame)
+        self.txtPad.focus_set()
+        
 ################### KEEP HERE #################
 
     def timelineThread(self):
@@ -188,7 +361,7 @@ class App:
         line, col = cursor_position.split(".")
         i = int(col)
         c = int(line) - 1
-        self.timerLabel.configure(text=f"🕐 {str(c)}{str(i)}.min")
+        self.timerLabel.configure(text=f"🕐\n{str(c)}{str(i)}m")
 
     def update_timerSymbolLine(self, event=None):
         while True:
@@ -205,189 +378,8 @@ class App:
 
 ##########################################
 
-    def action(self):
-        self.paned = tk.PanedWindow(
-            self.root,
-            orient=tk.HORIZONTAL,
-            sashrelief=tk.RAISED,
-            sashwidth=10,
-            cursor="target",
-            bg="#444",
-        )
-        self.paned.rowconfigure(0, weight=1)
-        self.paned.columnconfigure(0, weight=1)
-        self.paned.grid(row=0, column=1, sticky="nsew")
-        
-        self.action_frame = tk.Frame(self.paned, bg="#444", padx=10,)
-        self.action_frame.rowconfigure(0, weight=0)
-        self.action_frame.rowconfigure(1, weight=0)
-        self.action_frame.rowconfigure(2, weight=0)
-        self.action_frame.rowconfigure(3, weight=1)
-        self.action_frame.rowconfigure(4, weight=0)
-        self.action_frame.columnconfigure(0, weight=0)
-        self.action_frame.columnconfigure(1, weight=1)
-        self.action_frame.columnconfigure(2, weight=0)
-        self.action_frame.columnconfigure(3, weight=0)
-        self.action_frame.columnconfigure(4, weight=0)
-
-        self.action_frame.grid(row=0, column=0, sticky="nsew")        
-
-        self.timerLabel = tk.Label(
-            self.action_frame, 
-            bg="#444", 
-            fg="green", 
-            font=self.font,
-        )
-        self.timerLabel.grid(row=0, column=1, sticky="nsw")
-
-        self.timerBar = tk.Text(
-            self.action_frame,
-            fg="green",
-            bg="#444",
-            relief=tk.FLAT,
-            highlightcolor="green",
-            insertbackground="red",
-            font=self.font,
-            cursor="shuttle",
-            highlightbackground="#444",
-            insertwidth=10,
-            height=1,
-        )
-        self.timerBar.grid(row=1, column=1, sticky="nsew", columnspan=3)
-
-        self.msgBuffer = tk.Text(
-            self.action_frame,
-            fg="#777",
-            bg="#444",
-            relief=tk.FLAT,
-            highlightcolor="red",
-            insertbackground="white",
-            font=self.font,
-            cursor="pirate",
-            highlightbackground="#444",
-            insertwidth=10,
-            height=12,
-            wrap=tk.WORD,
-        )
-        self.msgBuffer.grid(row=2, column=1, sticky="nsew", columnspan=4, pady=10)
-
-        img = tk.PhotoImage(file=self.qr_file)
-        self.qr_label = tk.Label(
-            self.action_frame,
-            image = img,
-            bg="#444",
-            cursor="cross",
-        )
-        self.qr_label.grid(row=1, column=4, sticky='nsew')
-        self.qr_label.image = img
-        
-        self.line_numbers = tk.Text(
-            self.action_frame,
-            relief=tk.FLAT,
-            bg="#444",
-            fg="#777",
-            font=self.font,
-            highlightbackground="#444",
-            highlightcolor="#444",
-            cursor="spider",
-            spacing1=9,
-            spacing3=9,
-            width=5,
-        )
-        self.line_numbers.grid(row=3, column=0, sticky="nsew")
-
-        self.txtPad = tk.Text(
-            self.action_frame,
-            fg="orange",
-            bg="#444",
-            wrap=tk.WORD,
-            relief=tk.FLAT,
-            highlightcolor="orange",
-            insertbackground="red",
-            font=self.font,
-            cursor="heart",
-            highlightbackground="#333",
-            insertwidth=4,
-            spacing1=9,
-            spacing3=9,
-            padx=5,
-            undo=True,
-        )
-        Percolator(self.txtPad).insertfilter(ColorDelegator())
-        self.txtPad.grid(row=3, column=1, sticky="nsew", columnspan=5)
-
-        self.cpos = tk.Label(
-            self.action_frame,
-            text="1,0", 
-            bg="#444", 
-            fg="#777", 
-            font=self.font,
-        )
-        self.cpos.grid(row=4, column=0, sticky="nsw")
-
-        self.url_entry = tk.Entry(
-            self.action_frame,
-            bg="#444",
-            fg="red",
-            insertbackground="red",
-            highlightbackground="#444",
-            cursor="star",
-            font=self.font,
-        )
-        self.url_entry.grid(row=4, column=1, sticky="ewns", padx=3, pady=5)
-
-        self.url_button = tk.Button(
-            self.action_frame, 
-            bg="#444", 
-            fg="black",
-            text="✅",
-            #text="🕷",
-            #text="🕸", 
-            command=self.getUrldata,           	
-            highlightbackground="#444",
-            font=self.font,
-        )
-        self.url_button.grid(row=4, column=2, sticky="wens", padx=3, pady=5)
-
-        self.hist_button = tk.Button(
-            self.action_frame, 
-            bg="#444", 
-            fg="#777", 
-            text="🔎", 
-            command=self.gethistData,             
-            highlightbackground="#444",
-            font=self.font,
-        )
-        self.hist_button.grid(row=4, column=3, sticky="wens", padx=3, pady=5)
-
-        self.qr_Entry = tk.Entry(
-            self.action_frame,
-            bg="#444",
-            fg="red",
-            insertbackground="red",
-            highlightbackground="#444",
-            cursor="spraycan",
-            font=self.font,
-        )
-        self.qr_Entry.grid(row=4, column=4, sticky='nesw', padx=3, pady=5)
-
-        self.qr_Button = tk.Button(
-            self.action_frame,
-            bg="#444", 
-            fg="#777", 
-            text="📷", 
-            command=self.mkQr,             
-            highlightbackground="#444",
-            font=self.font,
-        )    
-        self.qr_Button.grid(row=4, column=5, sticky='nesw', padx=3, pady=5)
-
-        self.paned.add(self.action_frame)
-        self.txtPad.focus_set()
-
-
     def add_new_tab(self, event=None):
-        self.new_frame = tk.Frame(self.paned, bg="#444", padx=10)
+        self.new_frame = tk.Frame(self.paned, bg="#444", padx=1)
         self.new_frame.columnconfigure(0, weight=1)
         self.new_frame.rowconfigure(0, weight=1)
         self.new_frame.grid(row=0, column=0, sticky="nsew")
@@ -398,12 +390,12 @@ class App:
             bg="#444",
             wrap=tk.WORD,
             relief=tk.FLAT,
-            highlightcolor="orange",
-            insertbackground="red",
+            highlightcolor="blue",
+            insertbackground="#000",
             font=self.font,
             cursor="heart",
             highlightbackground="#333",
-            padx=5,
+            padx=1,
             undo=True,
         )
         self.new_txtPad.grid(row=0, column=0, sticky="nsew")
@@ -417,7 +409,7 @@ class App:
         self.py_frame.rowconfigure(0, weight=1)
         self.py_frame.grid(row=0, column=0, sticky="nsew")
         wid = self.py_frame.winfo_id()
-        py_xterm = os.system("xterm -into %d -geometry 100x50 -e python3 &" % wid)
+        py_xterm = os.system("xterm -into %d -geometry 150x50 -e python3 &" % wid)
         self.txtPad_frames.append((self.py_frame, py_xterm))
         self.paned.add(self.py_frame)
 
@@ -427,7 +419,7 @@ class App:
         self.term_frame.rowconfigure(0, weight=1)
         self.term_frame.grid(row=0, column=0, sticky="nsew")
         wid = self.term_frame.winfo_id()
-        xterm = os.system("xterm -into %d -geometry 200x50 &" % wid)
+        xterm = os.system("xterm -into %d -geometry 150x50 &" % wid)
         self.txtPad_frames.append((self.term_frame, xterm))
         self.paned.add(self.term_frame)
 
@@ -564,6 +556,7 @@ class App:
         command = f"cat {self.me_file}"
         try:
             if isinstance(focused, tk.Text):
+                self.txtPad.focus_set()
                 me = subprocess.run(
                 command,
                 shell=True,
@@ -596,10 +589,11 @@ class App:
                 cursor_position = focused.index(tk.INSERT)
                 line, col = cursor_position.split(".")
                 self.cpos.configure(text=f"{line},{col}")
+
                 self.line_numbers.configure(state="normal")
                 self.line_numbers.delete("1.0", tk.END)
                 first, last = focused.yview()
-                first_line = int(first * float(focused.index("end").split(".")[0]))
+                first_line = int(first * float(focused.index("end").split(".")[0])) + 1
                 last_line = int(last * float(focused.index("end").split(".")[0]))
                 line_numbers = "\n".join(str(i) for i in range(first_line, last_line))
                 self.line_numbers.insert("1.0", line_numbers)
@@ -742,3 +736,4 @@ if __name__ == "__main__":
     app = App(root)
     root.mainloop()
 
+ 
