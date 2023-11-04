@@ -81,6 +81,8 @@ class App:
         self.root.bind_all("<Control-w>", self.weather)
         self.root.bind_all("<Control-W>", self.full_weather)
         self.root.bind_all("<Control-H>", self.gethistData)
+        self.root.bind_all("<Control-P>", self.loadMe)
+
 
     def pyrathe_init(self):
         self.init()
@@ -89,15 +91,12 @@ class App:
         self.msgBuffer()
         self.textPad()
         self.createUtilBar()
-        self.weather()
-        self.get_fun_fact()
 
     def init(self):
         self.s_name = 0
-        self.s_filetype = "_txt"
-        self.qr_seq = 0
-        self.qr_ftype = "qr.png"
-        self.qr_file = f"{self.qr_seq}{self.qr_ftype}"
+        self.s_filetype = "g"
+        
+        self.qr_file = "qr.png"
         self.txtPad_frames = []
         self.timerSymbols = ["|", "/", "-", "\\"]
         self.currentSymbolIndex = 0
@@ -113,7 +112,7 @@ class App:
         self.timerLabel = tk.Label(
             self.statusBarFrame, 
             bg="#444", 
-            fg="green", 
+            fg="yellow", 
             font=self.font,
         )
         self.timerLabel.grid(row=0, column=1, sticky="nsew")
@@ -129,7 +128,7 @@ class App:
 
         self.timerBar = tk.Text(
             self.statusBarFrame,
-            fg="orange",
+            fg="yellow",
             bg="#444",
             relief=tk.FLAT,
             highlightcolor="green",
@@ -192,7 +191,7 @@ class App:
         self.loadMe_button = tk.Button(
             self.actionFrame,
             bg="#444",
-            fg="#FFF",
+            fg="#000",
             text="😻",
             command=self.loadMe,
             highlightbackground="#444",
@@ -393,8 +392,8 @@ class App:
             self.utilFrame, 
             bg="#444", 
             fg="black",
-            text="✅",
-            #text="🕷",
+            text="🕷",
+            #text="✅",
             #text="🕸", 
             command=self.getUrldata,           	
             highlightbackground="#444",
@@ -477,7 +476,6 @@ class App:
         entry = self.qr_Entry.get()
         self.qrcode = qr.make_qr(entry)
         self.qrcode.save(self.qr_file, scale=5, border=0, light="#444") 
-        self.qr_seq += 1
         img = tk.PhotoImage(file=self.qr_file)
         self.qr_label.configure(image=img)
         self.qr_label.image = img
@@ -588,7 +586,7 @@ class App:
             )
         return "break"
 
-    def loadMe(self):
+    def loadMe(self, event=None):
         focused = self.root.focus_get()
         command = "cat me.py"
         try:
@@ -770,27 +768,11 @@ if __name__ == "__main__":
     root.configure(background="#444")
     app = App(root)
     root.mainloop()
-#$%&*^ 23:39 cat me.py
-#$%&*^ 23:45 cat me.py
-#$%&*^ 23:47 cat me.py
-#$%&*^ 00:09 cat me.py
-#$%&*^ 00:12 cat me.py
-#$%&*^ 00:13 cat me.py
-#$%&*^ 00:18 cat me.py
-#$%&*^ 00:22 cat me.py
-#$%&*^ 00:44 cat me.py
-#$%&*^ 00:48 cat me.py
-
-#$%&*^ 01:01 cat me.py
-
-#$%&*^ 01:11 cat me.py
-
-#$%&*^ 01:14 cat me.py
-#$%&*^ 01:15 cat me.py
 
 
 
-#$%&*^ 01:20 cat me.py
+
+
 
 
 
