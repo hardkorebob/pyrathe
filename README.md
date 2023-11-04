@@ -34,7 +34,7 @@ tested: debian, mint, chimera(musl) & kali linux.
 
 Depends:
 
-  python3.10 (Version thats on OpenBSD. Shows UTF8 emojis) The versions on Linux distros dont see emoji. :(
+  python-3.10.13 (OpenBSD74 pkg-ver. Shows UTF8 emojis correctly) The current version on Linux distros dont display emoji. :(
   
   python-idle : Syntax
   
