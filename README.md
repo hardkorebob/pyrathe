@@ -63,4 +63,4 @@ ONLY RUNS in Protected-mod on Win95
 
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
 
-RIP Angelo 222019 :'(
+RIP Angelo 222019 [:'(](https://wapa.tv/noticias/locales/desgarrador-v-deo-muestra-el-momento-en-que-ocurri-el-accidente-fatal-en-caguas/article_618df4aa-282e-5dbe-8a76-dab290b6108b.html)
