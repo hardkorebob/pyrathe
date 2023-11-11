@@ -1,13 +1,4 @@
-#!/usr/bin/env python3.10
-# Application: PyRathe
-# Version: v.1
-# Filename: me.py
-# Written: Roberto Rodriguez Jr & ChatGPT
-# 0.02: This editor rulez! (python rapid app & txt handling env)
-# Email: hardkorebob@gmail.com
-# Web: https://HARDKOREBOB.github.io
-# Warranty: FREE WARRANTY 4 LIFE
-# License: This software is provided under PRIVATE LICENSE.
+#!/usr/bin/env python3
 
 import tkinter as tk
 import tkinter.font as font
@@ -31,7 +22,7 @@ class App:
         self.rootConfig()
         self.setup_keybindings()
         self.font = font.nametofont("TkFixedFont")
-        self.font.configure(size=11)
+        self.font.configure(size=12)
         self.pyrathe_init()
         self.timelineThread()
 
@@ -59,11 +50,12 @@ class App:
         # ctrl y = paste
         self.root.bind_all("<Control-l>", self.clear_buffer)
         self.root.bind_all("<Control-s>", self.save_focused_to_file)
-        self.root.bind_all("<Control-S>", self.save_me_to_file)
+    #    self.root.bind_all("<Control-S>", self.save_me_to_file)
         self.root.bind_all("<Control-Alt-a>", self.select_all_text)
         self.root.bind_all("<Control-n>", self.top_of_buffer)
         self.root.bind_all("<Control-m>", self.bottom_of_buffer)
-        self.root.bind_all("<Control-Shift-Return>", self.execute_python_code)
+        self.root.bind_all("<Control-Shift-Alt-Return>", self.execute_python_code)
+        self.root.bind_all("<Control-U>", self.stay_indent)
         self.root.bind_all("<Control-Alt-Return>", self.eval_python_code)
         self.root.bind_all("<Control-Return>", self.execute_sh_command)
         self.root.bind_all("<Control-Alt-a>", self.select_all_text)
@@ -81,7 +73,7 @@ class App:
         self.root.bind_all("<Control-w>", self.weather)
         self.root.bind_all("<Control-W>", self.full_weather)
         self.root.bind_all("<Control-H>", self.gethistData)
-        self.root.bind_all("<Control-P>", self.loadMe)
+#        self.root.bind_all("<Control-P>", self.loadMe)
 
 
     def pyrathe_init(self):
@@ -102,7 +94,7 @@ class App:
         self.currentSymbolIndex = 0
 
     def statusBar(self):
-        self.statusBarFrame = tk.Frame(self.root, bg="#444", pady=1, padx=10,)
+        self.statusBarFrame = tk.Frame(self.root, bg="#444", pady=10)
         self.statusBarFrame.columnconfigure(0, weight=0)
         self.statusBarFrame.columnconfigure(1, weight=0)
         self.statusBarFrame.columnconfigure(2, weight=1)
@@ -112,7 +104,7 @@ class App:
         self.timerLabel = tk.Label(
             self.statusBarFrame, 
             bg="#444", 
-            fg="yellow", 
+            fg="orange", 
             font=self.font,
         )
         self.timerLabel.grid(row=0, column=1, sticky="nsew")
@@ -121,7 +113,6 @@ class App:
             self.statusBarFrame, 
             bg="#444", 
             fg="yellow", 
-            text="", 
             font=self.font,
         )
         self.timerLabel2.grid(row=0, column=0, sticky="nsew")
@@ -154,9 +145,9 @@ class App:
         line, col = cursor_position.split(".")
         i = int(col)
         c = int(line) - 1
-        self.timerLabel.configure(text=f"🕐     {str(c)}{str(i)}min")
+        self.timerLabel.configure(text=f"{str(c)}{str(i)}min")
 
-    def update_timerSymbolLine(self, event=None):
+    def update_timerSymbolLine(self, event=None): # Dont move these funcs
         while True:
             self.timerBar.insert("end", ">")
             self.update_timerLabel()
@@ -170,21 +161,22 @@ class App:
             self.currentSymbolIndex = (self.currentSymbolIndex + 1) % len(self.timerSymbols)
 
     def actionFrame(self):
-        self.actionFrame = tk.Frame(self.root, padx=10, bg="#444")
+        self.actionFrame = tk.Frame(self.root, bg="#444", padx=5)
         self.actionFrame.rowconfigure(0, weight=0)
         self.actionFrame.rowconfigure(1, weight=0)
-        self.actionFrame.rowconfigure(2, weight=0)
+       #self.actionFrame.rowconfigure(2, weight=0)
         self.actionFrame.columnconfigure(0, weight=0)
         self.actionFrame.grid(row=1, column=0, sticky="nsew")
 
         self.fullWeather_button = tk.Button(
             self.actionFrame,
             bg="#444",
-            fg="#777",
-            text="🌞",
+            fg="yellow",
+            text="W",
             command=self.full_weather,
             highlightbackground="#444",
             font=self.font,
+            takefocus=False,
         )
         self.fullWeather_button.grid(row=0, column=0, sticky="nsew")
 
@@ -196,19 +188,21 @@ class App:
             command=self.loadMe,
             highlightbackground="#444",
             font=self.font,
+            takefocus=False,
         )
-        self.loadMe_button.grid(row=1, column=0, sticky="nsew")
+        self.loadMe_button.grid(row=7, column=0, sticky="nsew")
 
         self.py_button = tk.Button(
             self.actionFrame,
             bg="#444",
-            fg="red",
-            text="🐍",
+            fg="green",
+            text="Py",
             command=self.add_py_tab,
             highlightbackground="#444",
             font=self.font,
+            takefocus=False,
         )
-        self.py_button.grid(row=2, column=0, sticky="nsew")
+        self.py_button.grid(row=1, column=0, sticky="nsew")
 
         self.term_button = tk.Button(
             self.actionFrame,
@@ -218,6 +212,7 @@ class App:
             command=self.add_term_tab,
             highlightbackground="#444",
             font=self.font,
+            takefocus=False,
         )
         self.term_button.grid(row=3, column=0, sticky="nsew")
         self.addtab_button = tk.Button(
@@ -228,6 +223,7 @@ class App:
             command=self.add_new_tab,
             highlightbackground="#444",
             font=self.font,
+            takefocus=False,
         )
         self.addtab_button.grid(row=4, column=0, sticky="nsew")
         self.kill_button = tk.Button(
@@ -238,14 +234,28 @@ class App:
             command=self.del_new_tab,
             highlightbackground="#444",
             font=self.font,
+            takefocus=False,
         )
         self.kill_button.grid(row=5, column=0, sticky="nsew")
 
+#        self.saveMe_button = tk.Button(
+#            self.actionFrame,
+#            bg="#444",
+#            fg="blue",
+#            text="S",
+#            command=self.save_me_to_file,
+#            highlightbackground="#444",
+#            font=self.font,
+#            takefocus=False,
+#        )
+#        self.saveMe_button.grid(row=6, column=0, sticky="nsew")
+
     def msgBuffer(self):
-        self.msgBufferFrame = tk.Frame(self.root, bg="#444", padx=10)
+        self.msgBufferFrame = tk.Frame(self.root, bg="#444")
         self.msgBufferFrame.rowconfigure(0, weight=1)
         self.msgBufferFrame.columnconfigure(0, weight=1)
-        self.msgBufferFrame.columnconfigure(1, weight=1)
+        self.msgBufferFrame.columnconfigure(1, weight=0)
+        self.msgBufferFrame.columnconfigure(2, weight=0)
         self.msgBufferFrame.grid(row=1, column=1, sticky="nsew")
 
         img = tk.PhotoImage(file=self.qr_file)
@@ -255,15 +265,25 @@ class App:
             bg="#444",
             cursor="cross",
         )
-        self.qr_label.grid(row=0, column=1, sticky='nsew')
+        self.qr_label.grid(row=0, column=1, sticky='nsw')
         self.qr_label.image = img
+        
+        img2 = tk.PhotoImage(file="palnet0.png")
+        self.pl_label = tk.Label(
+            self.msgBufferFrame,
+            image = img2,
+            bg="#444",
+            cursor="cross",
+        )
+        self.pl_label.grid(row=0, column=2, sticky='nsew', padx=15)
+        self.pl_label.image = img2
 
         self.msgBuffer = tk.Text(
             self.msgBufferFrame,
             fg="red",
             bg="#444",
             relief=tk.FLAT,
-            highlightcolor="red",
+            highlightcolor="#555",
             insertbackground="orange",
             font=self.font,
             cursor="pirate",
@@ -287,7 +307,7 @@ class App:
         self.paned.columnconfigure(0, weight=1)
         self.paned.grid(row=2, column=1, sticky="nsew", columnspan=2)
 
-        self.mainTxtFrame = tk.Frame(self.paned, bg="#444", padx=10)
+        self.mainTxtFrame = tk.Frame(self.paned, bg="#444", )
         self.mainTxtFrame.rowconfigure(0, weight=1)
         self.mainTxtFrame.columnconfigure(0, weight=1)
         self.mainTxtFrame.grid(row=0, column=0, sticky="nsew")
@@ -295,10 +315,10 @@ class App:
         self.txtPad = tk.Text(
             self.mainTxtFrame,
             fg="orange",
-            bg="#444",
+            bg="#333",
             wrap=tk.WORD,
             relief=tk.FLAT,
-            highlightcolor="orange",
+            highlightcolor="#333",
             insertbackground="red",
             font=self.font,
             cursor="heart",
@@ -306,7 +326,7 @@ class App:
             insertwidth=4,
             spacing1=9,
             spacing3=9,
-            padx=5,
+            
             undo=True,
         )
         Percolator(self.txtPad).insertfilter(ColorDelegator())
@@ -314,7 +334,7 @@ class App:
         self.paned.add(self.mainTxtFrame)
         self.txtPad.focus_set()
 
-        self.lineFrame = tk.Frame(self.root, bg="#444", padx=10, pady=5)
+        self.lineFrame = tk.Frame(self.root, bg="#444")
         self.lineFrame.rowconfigure(0, weight=1)
         self.lineFrame.columnconfigure(0, weight=0)
         self.lineFrame.grid(row=2, column=0, sticky="nsew")
@@ -322,34 +342,28 @@ class App:
         self.line_numbers = tk.Text(
             self.lineFrame,
             relief=tk.FLAT,
-            bg="#444",
-            fg="#777",
+            bg="#333",
+            fg="#EEE",
             font=self.font,
             highlightbackground="#444",
             cursor="spider",
             spacing1=9,
             spacing3=9,
-            width=5,
+            width=6,
+            padx=5,
         )
         self.line_numbers.grid(row=0, column=0, sticky="nsew")
 
     def createUtilBar(self):
-        self.utilFrame = tk.Frame(self.root, bg="#444", pady=15, padx=10)
+        self.utilFrame = tk.Frame(self.root, bg="#444",)
         self.utilFrame.rowconfigure(0, weight=1)
         self.utilFrame.columnconfigure(0, weight=1)
-        self.utilFrame.columnconfigure(1, weight=0)
-        self.utilFrame.columnconfigure(2, weight=0)
-        self.utilFrame.columnconfigure(3, weight=0)
-        self.utilFrame.columnconfigure(4, weight=0)
-        self.utilFrame.columnconfigure(5, weight=1)
-        self.utilFrame.columnconfigure(6, weight=0)
-        self.utilFrame.columnconfigure(7, weight=0)
         self.utilFrame.grid(row=3, column=0, sticky="nsew", columnspan=2)
 
         self.cpos = tk.Label(
             self.utilFrame, 
             text="1,0", 
-            bg="#444", 
+            bg="#EEE", 
             fg="#777", 
             font=self.font,
         )
@@ -364,18 +378,19 @@ class App:
             cursor="spraycan",
             font=self.font,
         )
-        self.qr_Entry.grid(row=0, column=1, sticky='nsw')
+        self.qr_Entry.grid(row=0, column=1, sticky='nsw', pady=10,)
 
         self.qr_Button = tk.Button(
             self.utilFrame,
             bg="#444", 
             fg="#777", 
-            text="📷", 
+            text="QR", 
             command=self.mkQr,             
             highlightbackground="#444",
             font=self.font,
+            takefocus=False,
         )    
-        self.qr_Button.grid(row=0, column=2, sticky='nsw')
+        self.qr_Button.grid(row=0, column=2, sticky='nsew', pady=10,)
 
         self.url_entry = tk.Entry(
             self.utilFrame,
@@ -386,34 +401,34 @@ class App:
             cursor="star",
             font=self.font,
         )
-        self.url_entry.grid(row=0, column=5, sticky="ewns", padx=3)
+        self.url_entry.grid(row=0, column=5, sticky="ewns", pady=10,)
 
         self.url_button = tk.Button(
             self.utilFrame, 
             bg="#444", 
             fg="black",
-            text="🕷",
-            #text="✅",
-            #text="🕸", 
+            text="Get",
             command=self.getUrldata,           	
             highlightbackground="#444",
             font=self.font,
+            takefocus=False,
         )
-        self.url_button.grid(row=0, column=6, sticky="wens", padx=3)
+        self.url_button.grid(row=0, column=6, sticky="wens", pady=10,)
 
         self.hist_button = tk.Button(
             self.utilFrame, 
             bg="#444", 
             fg="#777", 
-            text="🔎", 
+            text="links", 
             command=self.gethistData,             
             highlightbackground="#444",
             font=self.font,
+            takefocus=False,
         )
-        self.hist_button.grid(row=0, column=7, sticky="wens", padx=3)
+        self.hist_button.grid(row=0, column=7, sticky="wens", pady=10,)
 
     def add_new_tab(self, event=None):
-        self.new_frame = tk.Frame(self.paned, bg="#444", padx=10)
+        self.new_frame = tk.Frame(self.paned, bg="#444", )
         self.new_frame.columnconfigure(0, weight=1)
         self.new_frame.rowconfigure(0, weight=1)
         self.new_frame.grid(row=0, column=0, sticky="nsew")
@@ -429,7 +444,7 @@ class App:
             font=self.font,
             cursor="heart",
             highlightbackground="#333",
-            padx=5,
+            
             undo=True,
         )
         self.new_txtPad.grid(row=0, column=0, sticky="nsew")
@@ -443,7 +458,7 @@ class App:
         self.py_frame.rowconfigure(0, weight=1)
         self.py_frame.grid(row=0, column=0, sticky="nsew")
         wid = self.py_frame.winfo_id()
-        py_xterm = os.system("xterm -into %d -geometry 100x50 -e python3 &" % wid)
+        py_xterm = os.system("st -w %d -g 200x40 -e python3 &" % wid)
         self.txtPad_frames.append((self.py_frame, py_xterm))
         self.paned.add(self.py_frame)
 
@@ -453,7 +468,7 @@ class App:
         self.term_frame.rowconfigure(0, weight=1)
         self.term_frame.grid(row=0, column=0, sticky="nsew")
         wid = self.term_frame.winfo_id()
-        xterm = os.system("xterm -into %d -geometry 200x50 &" % wid)
+        xterm = os.system("st -w %d -g 200x40 &" % wid)
         self.txtPad_frames.append((self.term_frame, xterm))
         self.paned.add(self.term_frame)
 
@@ -491,7 +506,7 @@ class App:
                 "1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {fact}\n"
             )
         else:
-            self.msgBuffer.insert("1.0", "Failed to fetch the fact.\n")
+            self.msgBuffer.insert("1.0", "#$%&*^ {datetime.datetime.now().strftime('%H:%M')} !Failed to fetch the fact.\n")
 
     def getUrldata(self, event=None):
         focused = self.root.focus_get()
@@ -505,7 +520,7 @@ class App:
                 f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {status_msg}\n",
             )
         except requests.exceptions.RequestException as e:
-            self.msgBuffer.insert("1.0", f"Error: {str(e)}\n")
+            self.msgBuffer.insert("1.0", f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} !Error: {str(e)}\n")
 
     def gethistData(self, event=None):
         focused = self.root.focus_get()
@@ -522,7 +537,7 @@ class App:
                 focused.insert("1.0", f"{hist.stdout}\n")
                 self.msgBuffer.insert(
                     "1.0",
-                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} Printed Mozilla History\n",
+                    f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} _Mozilla History\n",
                 )
             else:
                 self.msgBuffer.insert(
@@ -636,12 +651,20 @@ class App:
         except KeyError:
             pass
 
-    def add_indent(self, event):
+    def stay_indent(self, event):
         text = event.widget
         line = text.get("insert linestart", "insert")
         match = re.match(r"^(\s+)", line)
         whitespace = match.group(0) if match else ""
         text.insert("insert", f"\n{whitespace}")
+        return "break"
+
+    def add_indent(self, event):
+        text = event.widget
+        line = text.get("insert linestart", "insert")
+        match = re.match(r"^(\s+)", line)
+        whitespace = match.group(0) if match else ""
+        text.insert("insert", f"\n{whitespace}    ")
         return "break"
 
     def select_all_text(self, event):
@@ -679,7 +702,7 @@ class App:
         )
         return "break"
 
-    def save_me_to_file(self, event):
+    def save_me_to_file(self, event=None):
         focused = self.root.focus_get()
         content = focused.get("1.0", "end-1c")
         filename = "me.py"
@@ -687,7 +710,7 @@ class App:
             file.write(content)
         self.msgBuffer.insert(
             "1.0",
-            f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {filename} _Myself & I Saved\n",
+            f"#$%&*^ {datetime.datetime.now().strftime('%H:%M')} {filename} _Myself & I _Saved\n",
         )
         return "break"
 
@@ -764,18 +787,8 @@ class App:
 if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("999x666+100+100")
-    root.title("#$%&*^  PyRathe   #allerrorsmatter")
+    root.title("#$%&*^  PyRathe   #allerrorsmatter #0xFu    ~dislux-hapfyl")
     root.configure(background="#444")
     app = App(root)
     root.mainloop()
-
-
-
-
-
-
-
-
-
-
 
