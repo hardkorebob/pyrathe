@@ -24,7 +24,7 @@ python rapid app & txt handling env | $(&+1m a l33t_pirate)
 
 & [tinywm](https://www.github.com/hardkorebob/tinywm) {in: scrot below}
 
-tested: debian, mint, chimera(musl) & kali linux.
+tested: on a dell
 
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
 
