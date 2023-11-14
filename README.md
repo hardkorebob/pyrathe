@@ -2,7 +2,7 @@ DISCLAIMER! FOR EDUCATIONAL/HUMOR PUERPOSES ONLY! #allerrorsmatter
 
 # pyrathe
 
-a "simple" python editor/plain text heaven/shell commander/raw http get/wttr.in/fun facts-spitter/qr-code generator 4 all newbie/old programmers. no cap.
+a "simple" python editor/plain text heaven/shell commander/raw http get/wttr.in/fun facts-spitter/qr-code generator 4 all newbie/old programmers.
 
 a silly text pad, code/free_terminal editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self.
 
