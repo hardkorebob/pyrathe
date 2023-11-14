@@ -4,9 +4,9 @@ DISCLAIMER! FOR EDUCATIONAL/HUMOR PUERPOSES ONLY! #allerrorsmatter
 
 # pyrathe
 
-a "simple" python editor/plain text heaven/shell commander/raw http get/wttr.in/fun facts-spitter/qr-code generator.
+a "simple" python editor / plain text heaven / shell commander / raw http get / wttr.in weather / fun facts-spitter / qr-code generator.
 
-a silly text pad, code/free_terminal editor for beginner programmers based on 0 feedback from anyone but an AI and my artistic Self.
+a silly Ctrl-freak, text pad, freeForm_terminal "editor" for a beginner programmer (me) based on 0 feedback from anyone other than _ChatGPT AI and my artistic Supersoul. The Lord Krsna.
 
 One day I will show you how I use it...
 
