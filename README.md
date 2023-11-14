@@ -10,7 +10,7 @@ One day I will show you how I use it...
 
 acronym for:
 
-python rapid app & txt handling env
+python rapid app-dev & txt-handler env
 
 tested: on a dell
 
