@@ -26,11 +26,7 @@ Depends:
 
   python-3
   
-  python-idle : Syntax
-  
-  python-tkinter : GUI
-  
-  pip install requests, segno
+  pip install requests, segno, idle, tk, geopy
 
   perl 
   
