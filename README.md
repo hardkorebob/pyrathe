@@ -1,6 +1,6 @@
 DISCLAIMER! FOR EDUCATIONAL/HUMOR PUERPOSES ONLY! #allerrorsmatter 
 
-*Honestly I use this more than the terminal. I can spawn a terminal window and use Vim for RegEx. Just some automating the boring.*
+*I can spawn a terminal window and use Vim for RegEx. Just some automating the boring.*
 
 # pyrathe
 
