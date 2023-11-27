@@ -10,7 +10,6 @@ import datetime
 import threading
 import subprocess
 import requests
-import segno as qr
 from idlelib.percolator import Percolator
 from idlelib.colorizer import ColorDelegator
 from geopy.geocoders import Nominatim
