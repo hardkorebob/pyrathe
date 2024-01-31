@@ -25,7 +25,7 @@ tested: on a dell
 
 🕉 Improvements coming! 🇵🇷 | -🤓-
 
-#allerrorsmatter #0xfu #dfc #ghd
+#0xfu #dfc #ghd
 
 #hacktheplanet! #codwolf #ahdahwm
 
