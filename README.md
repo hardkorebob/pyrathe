@@ -1,10 +1,12 @@
 DISCLAIMER! FOR EDUCATIONAL/HUMOR PUERPOSES ONLY! #allerrorsmatter 
 
-*I can spawn a terminal window and use Vim for RegEx. Just some automating the boring.*
+*Just some automating the boring.*
 
 # pyrathe
 
-a "simple" python editor / plain text heaven / shell commander / raw http get / wttr.in weather / fun facts-spitter / qr-code generator.
+https://www.github.com/dislux-hapfyl/pynksh
+
+a "simple" python editor / plain text heaven / shell commander / i.d.e.
 
 a silly Ctrl-freak, text pad, freeForm_terminal "editor" for a beginner programmer (me) based on 0 feedback from anyone other than _ChatGPT AI and my artistic Supersoul. The Lord Krsna.
 
@@ -18,18 +20,6 @@ tested: on a dell
 
 🐡🐧🐍🐚🐈‍⬛🦤🏞🪡♥️🪄⏳️🎲🎯🧩🏅🎉
 
-![scrot](https://github.com/hardkorebob/pyrhate/blob/main/scrot.png)
-![scrot2](https://github.com/hardkorebob/pyrhate/blob/main/scrot2.png)
-
-
-Depends:
-
-  python-3
-  
-  pip install requests, segno, idle, tk, geopy
-
-  perl 
-  
 
 🕉 Improvements coming! 🇵🇷 | -🤓-
 
