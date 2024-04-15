@@ -8,7 +8,7 @@ a "simple" python editor / plain text heaven / shell commander / i.d.e.
 
 made with pynksh.lang.ksh 
 
-https://www.github.com/dislux-hapfyl/pynksh
+https://www.github.com/dislux-hapfyl/shimky
 
 a silly Ctrl-freak, text pad, freeForm_terminal "editor" for a beginner programmer (me) based on 0 feedback from anyone other than _ChatGPT AI and my artistic Supersoul. The Lord Krsna.
 
